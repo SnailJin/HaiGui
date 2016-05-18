@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/css/base.css">
+    <link rel="stylesheet" href="./static/css/jquery.datetimepicker.css">
+    <script style="text/javascript"  src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script style="text/javascript"  src="./static/js/base.js"></script>
+    <script style="text/javascript"  src="./static/js/common.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.datetimepicker.full.min.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <style>
+        .job .title{
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        var orderType ="start_time";
+        var title =null;
+       $(function(){
+           set_user_info_html();
+           loadOccupationList("start_time");
+           $("#start_time").addClass("selected");
+           $('.sort a').click(function(){
+               $('.sort a').removeClass("selected");
+               $(this).addClass("selected");
+               orderType=this.id;
+               loadOccupationList();
+           })
+            //搜索
+            $('.search-button').click(function(){
+                var search = $(this).parent().find('.search-input').val().trim();
+                if(search == ""){
+                    title=null;
+                }else{
+                    title=search;
+                }
+                loadOccupationList();
+            });
+       });
+       function loadOccupationList(){
+           formData.key="LoadOccupationList"
+           formData.body={title:null,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,city:null,order:"start_time",pageNo:1,pageSize:20};
+           formData.body.order=orderType;
+           formData.body.title=title;
+           $.ajax({
+               type: 'post',
+               url:url,
+               data:JSON.stringify(formData),
+               beforeSend: function(XMLHttpRequest){
+               },
+               success: function(data, textStatus){
+                   data = JSON.parse(data);
+                   if(data.code == 0){
+                       loadOccupationListToHtml(data.body.list)
+                   }else{
+                       return_error(data);
+                   }
+               },
+               complete: function(XMLHttpRequest, textStatus){
+               },
+               error: function(response){
+                   alert('网络异常!')
+               }
+           });
+
+       }
+       //加载列表到html
+       function loadOccupationListToHtml(occupationList){
+           $("#list").html("");
+           for(var i in occupationList){
+               var job =$("#job_clone").clone();
+               var occupation = occupationList[i];
+               job.find(".title").text(occupation.title);
+               job.find(".title").click(function(){
+                   var id = $(this).closest(".job").find("[name='occupationId']").val();
+                   window.location="job_detail.html?id="+id;
+               })
+               job.find(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
+               //job.find(".city").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
+               job.find(".workingAge").text(occupation.workingAge+"以上工作经验");
+               job.find(".time-info").text(occupation.startTime);
+               job.find(".category").text(occupation.category);
+               job.find("[name='occupationId']").val(occupation.occupationId);
+               $("#list").append(job.children());
+           }
+       }
+    </script>
+    <title>主页</title>
+</head>
+<body>
+<div id="header"></div>
+<div class="wap">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="user_info">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <img class="avatar-self" src="./static/images/avatar.gif">
+                        </div>
+                        <div class="col-xs-6 link">
+                            <div>
+                                <a href="acoount.html"><i class="glyphicon glyphicon-edit">个人信息</i></a>
+                            </div>
+                            <div style="border: 0px">
+                                <a href="change_password.html"><i class="glyphicon glyphicon-star">修改密码</i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row user-content">
+                        <p class="username-self"><h4 id="username">金李广</h4></p>
+                        <p id="email">jin521436@163.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-9 ">
+                <div class="row search">
+                    <div class="row">
+                        <div class="col-xs-12" style="padding-right: 10px">
+                            <input class="search-input" placeholder="&nbsp;请输入职位名称">
+                            <input class="search-button" type="submit" value="搜索  ">
+                        </div>
+                    </div>
+                    <ul class="filter-condition">
+                        <li>
+                            <span class="title">工作地点:</span>
+                            <a>北京</a>
+                            <a>上海</a>
+                            <a>杭州</a>
+                            <a>广州</a>
+                            <a class="btn-more" href="javascript:;">
+                                更多 
+                            </a>
+                        </li>
+                        <li>
+                            <span class="title">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪:</span>
+                            <a>10-15万</a>
+                            <a>15-20万</a>
+
+                            <a class="btn-more" href="javascript:;">
+                                更多 
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 排序 -->
+
+                <ul class="sort">
+                    <li>
+                        <span class="title">排序方式:</span>
+                        <a id="maximus_salary">薪水</a>
+                        <a id="start_time">默认</a>
+                    </li>
+                </ul>
+
+                <!--职位 -->
+                <div id="list"></div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 60px"></div>
+</div>
+<!-- 登录
+<div class="login-capacity">
+
+</div>
+ -->
+<div id="footer"></div>
+<!-- clone -->
+<div id="job_clone" style="display: none">
+    <div class="row job">
+        <input type="hidden" name="occupationId">
+        <div class="col-xs-6 job-info">
+            <div class="row">
+                <h4 class="title"></h4>
+            </div>
+            <div class="row">
+                <p class="job-desc">
+                    <span class="salary" style="border: 0px;padding-left: 0px;color: red;">15-20万</span>
+                    <span class="city">杭州</span>
+                    <span class="workingAge">1年以上工作经验</span>
+                </p>
+            </div>
+            <div class="row">
+                <p class="time-info">发布于1小时前</p>
+            </div>
+        </div>
+        <div class="col-xs-6 company">
+            <div class="row">
+                <h5 class="enerpriseName">拼爱网络有限公司</h5>
+            </div>
+            <div class="row">
+                <p class="category"> 移动互联网 · 企业服务 / 上市公司</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

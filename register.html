@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/css/base.css">
+    <link rel="stylesheet" href="./static/css/jquery.datetimepicker.css">
+    <script style="text/javascript"  src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script style="text/javascript"  src="./static/js/base.js"></script>
+    <script style="text/javascript"  src="./static/js/common.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.datetimepicker.full.min.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <script style="text/javascript"  src="./static/js/md5.js"></script>
+    <script style="ext/javascript">
+        $(function() {
+            $('#datetimepicker').datetimepicker({
+                format:'Y-m-d',
+                timepicker:false,
+                maxDate:new Date(new Date().setFullYear(new Date().getFullYear()-16)),
+                defaultDate:new Date(new Date().setFullYear(new Date().getFullYear()-18)),
+            })
+            //提交表单
+            $('[name="registerForm"]').bind('submit',function(){
+                var data =$(this).serializeObject();
+                var flag =validate_fileds(data);
+                if(!flag){
+                    return false;
+                }
+                if(data.type == 'personal'){
+                    formData.key="EmployeeRegister";
+                }else if(data.type == 'company' ){
+                    formData.key='EnterpriseRegister';
+                }else{
+                    var body=$('<p>请选择注册类型</p>')
+                    $.poplayer({body:body});
+                }
+
+                formData.body=data;
+                formData.body.password=hex_md5(formData.body.password);
+                formData.body.password1='';
+                formData.body.userNameType=1;
+                $.ajax({
+                    type: 'post',
+                    url:url,
+                    data:JSON.stringify(formData),
+                    beforeSend: function(XMLHttpRequest){
+                    },
+                    success: function(data, textStatus){
+                        data = JSON.parse(data);
+                        if(data.code == 0){
+                            var body=$('<p>'+'激活邮件已经发送的你，请注意查收!'+'</p>')
+                            $.poplayer({body:body});
+                        }else{
+                            return_error(data);
+                        }
+                    },
+                    complete: function(XMLHttpRequest, textStatus){
+                    },
+                    error: function(response){
+                        alert('网络异常!')
+                    }
+                });
+                return false;
+
+            });
+        });
+        //校验制字段
+        function validate_fileds(data){
+            var flag = true;
+            var intList = ['gender']
+            for(var name in data ){
+                if(data[name] ==undefined || data[name].length == 0){
+                    error = $('.'+name+'_error');
+                    nameS = error.closest(".form-group").eq(0).children().eq(0).html();
+                    nameS=nameS.replace(/\s+/g,"");
+                    error.html(nameS+"不能为空!");
+                    error.parent().show();
+                    flag=false;
+                }else{
+                    $('.'+name+'_error').parent().hide();
+                }
+                for(var temp in intList){
+                    if(name == intList[temp]){
+                        data[name]=parseInt(data[name]);
+                    }
+                }
+            }
+            if( $('.password1_error').is(':hidden') && data.password != data.password1){
+                $(".password1_error").html("两次密码输入不相同!").parent().show();
+                flag=false;
+            }
+            if( $('.userName_error').is(':hidden') && !verify_email(data.userName)){
+                $(".userName_error").html("邮箱格式不正确!").parent().show();
+                flag=false;
+            }
+            return flag;
+        }
+    </script>
+    <title>注册</title>
+</head>
+<body>
+<div id="header"></div>
+<div class="wap">
+    <div class="container">
+        <div class="form-panel round">
+            <div class="base-panel">
+                <div class="form-head">
+                    <h2>
+                        注册<poplayer></poplayer>
+
+                    </h2>
+                    <span class="triangle"></span>
+                </div>
+                <form class="form-horizontal" name="registerForm" method="post">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">类&#12288;&#12288;型</label>
+
+                        <div class="col-xs-9 radio">
+                            <p class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="type_error"></span></p>
+                            <label>
+                                <input type="radio" name="type" value="personal" checked>求职者
+                            </label>
+                            &#12288;
+                            <label>
+                                <input type="radio" name="type" value="company"  ng-model="user.type">企业
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">邮&#12288;&#12288;箱</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="userName_error"></span></span>
+                            <input type="text" class="form-control" name="userName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">性&#12288;&#12288;别</label>
+
+                        <div class="col-xs-9 radio">
+                            <p class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="gender_error"></span></p>
+                            <label>
+                                <input type="radio" name="gender" value="1"checked>男
+                            </label>
+                            &#12288;&#12288;&#12288;
+                            <label>
+                                <input type="radio" name="gender" value="2">女
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">昵&#12288;&#12288;称</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="name_error"></span></span>
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-controller="datetime">
+                        <label class="col-xs-3 control-label">出生日期</label>
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="birthday_error"></span></span>
+                            <input id="datetimepicker" type="text" class="form-control" name="birthday">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">密&#12288;&#12288;码</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="password_error"></span></span>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">确认密码</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="password1_error"></span></span>
+                            <input type="password" class="form-control" name="password1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-danger submit" >提交</button>
+                        </div>
+                        <div class="col-xs-4"></div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

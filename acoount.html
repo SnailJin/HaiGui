@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/css/base.css">
+    <link rel="stylesheet" href="./static/css/jquery.datetimepicker.css">
+    <script style="text/javascript"  src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script style="text/javascript"  src="./static/js/base.js"></script>
+    <script style="text/javascript"  src="./static/js/common.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <script>
+        $(function(){
+            loadEmployeeInformation();
+        });
+
+        function loadEmployeeInformation(){
+            formData.key="LoadEmployeeInformation";
+            $.ajax({
+                type: 'post',
+                url:url,
+                data:JSON.stringify(formData),
+                beforeSend: function(XMLHttpRequest){
+                },
+                success: function(data, textStatus){
+                    data = JSON.parse(data);
+                    if(data.code == 0){
+                        loadInfoToHtml(data.body);
+                    }else{
+                        return_error(data);
+                    }
+                },
+                complete: function(XMLHttpRequest, textStatus){
+                },
+                error: function(response){
+                    alert('网络异常!')
+                }
+            });
+        }
+        function loadInfoToHtml(data){
+            $.each(data,function(n,value){
+                if(value == undefined){
+                    flag =true;
+                }else{
+                    var name =$('[name="'+n+'"]');
+                    if($("[name='gender']").prop('tagName')=="LABEL"){
+                       if(value==1){
+                           name.text("女");
+                       }else{
+                           name.text("男");
+                       }
+                    }else{
+                        name.attr("placeholder",value).attr("readonly",true);
+                    }
+                }
+            })
+        }
+    </script>
+    <title>个人中心</title>
+</head>
+<body>
+<div id="header"></div>
+<div class="wap">
+    <div class="container">
+        <div class="form-panel round" style="padding: 0px 30px  0px 30px;">
+            <div class="base-panel">
+                <div class="form-head" style="position: relative;top:-40px;">
+                    <div>
+                        <img class="avatar-info" src="./static/images/avatar.gif" style="position: relative;left:40%;">
+                    </div>
+                </div>
+                <form class="form-horizontal" style="position: relative;top:-40px;">
+                    <input type="hidden" name="userId" />
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">姓&#12288;&#12288;名</label>
+
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="userName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">邮&#12288;&#12288;箱</label>
+
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">性&#12288;&#12288;别</label>
+
+                        <div class="col-xs-9 radio">
+                            <p class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="gender_error"></span></p>
+                            <label  name="gender">
+                                男
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">出生日期</label>
+
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="birthday">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-danger submit">提交</button>
+                        </div>
+                        <div class="col-xs-4"></div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

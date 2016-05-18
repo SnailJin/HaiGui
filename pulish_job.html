@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/css/base.css">
+    <link rel="stylesheet" href="./static/css/jquery.datetimepicker.css">
+    <script style="text/javascript"  src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script style="text/javascript"  src="./static/js/base.js"></script>
+    <script style="text/javascript"  src="./static/js/common.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.datetimepicker.full.min.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <script style="text/javascript">
+        var type = 1;
+        $(function() {
+            init();
+            $('#datetimepicker').datetimepicker({
+                format:'Y-m-d',
+                timepicker:false,
+                startDate:new Date(),
+                minDate:0,
+            });
+
+            set_company_info();
+            get_occupation_info();
+
+            $("form").bind("submit",function(){
+                var data =$(this).serializeObject();
+                //验证是否为空
+                var flag=true;
+                for(var name in data){
+                    if(data[name] ==undefined || data[name].length == 0){
+                        error = $('.'+name+'_error');
+                        nameS = error.closest(".form-group").eq(0).children().eq(0).html();
+                        error.html(nameS+"不能为空!");
+                        error.parent().show();
+                        flag=false;
+                    }else{
+                        $('.'+name+'_error').parent().hide();
+                        var intList=['workingAge','minimusSalary','maximusSalary','availableDays'];
+                        for(var i in intList){
+                            if(name==intList[i]){
+                                data[name]=parseInt(data[name]);
+                            }
+                        }
+                    }
+
+                };
+                if(!flag){
+                    return false;
+                }
+                formData.key="AddOccupation";
+                formData.body={}
+                formData.body=data;
+                $.ajax({
+                    type: 'post',
+                    url:url,
+                    data:JSON.stringify(formData),
+                    beforeSend: function(XMLHttpRequest){
+                    },
+                    success: function(data, textStatus){
+                        data = JSON.parse(data);
+                        if(data.code == 0){
+                            var body=$('<p>添加成功</p>');
+                            btnFunc=function(){
+                                window.location="company_index.html?type=1&id="+data.body.occupationId
+                            }
+                            $.poplayer({body:body,btnFunc:btnFunc});
+                        }else{
+                            return_error(data);
+                        }
+                    },
+                    complete: function(XMLHttpRequest, textStatus){
+                    },
+                    error: function(response){
+                        alert('网络异常!')
+                    }
+                });
+                return false;
+            });
+        });
+        function init(){
+            //薪水范围
+            var minimusSalaryS='';
+            var maximusSalaryS='';
+            for(var i =5 ;i<100;i++){
+                if(i==10){
+                    minimusSalaryS=minimusSalaryS+'<option value="'+i+'万" selected = "selected" >'+i+'万</option>';
+                }else{
+                    minimusSalaryS=minimusSalaryS+'<option value="'+i+'万">'+i+'万</option>';
+                }
+
+            }
+            for(var i =5 ;i<100;i++){
+                if(i == 20){
+                    maximusSalaryS=maximusSalaryS+'<option value="'+i+'万"   selected = "selected"">'+i+'万</option>';
+                }else{
+                    maximusSalaryS=maximusSalaryS+'<option value="'+i+'万">'+i+'万</option>';
+                }
+
+            }
+            maximusSalaryS=maximusSalaryS+'<option value="101">100万以上</option>';
+            $('[name="minimusSalary"]').html(minimusSalaryS);
+            $('[name="maximusSalary"]').html(maximusSalaryS);
+
+        }
+        //填充默认公司信息
+        function set_company_info(){
+            var user = get_user_info();
+            $("input[name='enerpriseName']").val(user.username);
+        }
+        //获取职位详情
+        function get_occupation_info(){
+            var id = get_url_param("id");
+            if(id == ''){
+                $('input[name="occupationId"]').remove();
+                return false;
+            }
+            $('.form-head h2,title').html("编辑职位");
+            $(".submit").html("保存");
+            $('input[name="occupationId"]').val(id);
+            formData.key="LoadOccupationDetail";
+            formData.body.occupationId=id;
+            $.ajax({
+                type: 'post',
+                url:url,
+                data:JSON.stringify(formData),
+                beforeSend: function(XMLHttpRequest){
+                },
+                success: function(data, textStatus){
+                    data = JSON.parse(data);
+                    if(data.code == 0){
+                        for(var name in data.body){
+                            var inputTemp =  $("input[name='"+name+"'],textarea[name='"+name+"']");
+                            if(inputTemp.length>0){
+                                inputTemp.val(data.body[name]);
+                            }else{
+                                $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]');
+                            }
+                        }
+                    }else{
+                        return_error(data);
+                        $(".submit").attr("disabled", true);
+                    }
+                },
+                complete: function(XMLHttpRequest, textStatus){
+                },
+                error: function(response){
+                    alert('网络异常!')
+                }
+            });
+        }
+
+    </script>
+    <title>发布信息</title>
+</head>
+<body>
+<header class="navbar navbar-static-top bs-docs-nav" id="top">
+    <div class="nav-inline">
+        <div class="logo">
+            <a href="/">
+                <img src="./static/images/log.png">
+            </a>
+        </div>
+
+        <ul class="nav-title">
+            <li><a href="company_index.html">首页</a></li>
+            <li><a href="company_acount.html">企业中心</a></li>
+            <li><a href="pulish_job.html">发布信息</a></li>
+            <li><a href="company_about.html">关于我们</a></li>
+        </ul>
+    </div>
+</header>
+<div class="wap">
+    <div class="container">
+        <div class="form-panel round">
+            <div class="base-panel">
+                <div class="form-head">
+                    <h2>
+                        发布信息
+                    </h2>
+                    <span class="triangle"></span>
+                </div>
+                <form class="form-horizontal" method="post">
+                    <input type="hidden" name="occupationId" value="">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">岗位名称</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="title_error"></span></span>
+                            <input type="text" class="form-control" name="title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">岗位类别</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="category_error"></span></span>
+                            <input type="text" class="form-control" name="category">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">薪水范围(元)</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="minimusSalary_error"></span></span>
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="maximusSalary_error"></span></span>
+                            <select class="form-control" name="minimusSalary" style="width: 40%;float: left;"></select>
+                            <hr style="width: 16%;float: left;border-top: 1px solid #333;margin-left: 5px;margin-right: 5px;" />
+                            <select class="form-control" name="maximusSalary" style="width: 40%;float: left;"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">地点</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="address_error"></span></span>
+                            <input type="text" class="form-control" name="address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">岗位有效天数</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="availableDaysS_error"></span></span>
+                            <select class="form-control" name="availableDays">
+                                 <option  value="30">30天</option>
+                                 <option  value="60">1个月</option>
+                                 <option  value="3*60">3个月</option>
+                                 <option  value="6*60">6个月</option>
+                                 <option  value="9*60">9个月</option>
+                                 <option  value="12*60">一年</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">工作年限</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="workingAge_error"></span></span>
+                            <input type="text" class="form-control" name="workingAge">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">岗位描述</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="decription_error"></span></span>
+                            <textarea class="form-control" name="decription" style="height: 100px"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">公司名称</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="enerpriseName_error"></span></span>
+                            <input type="text" class="form-control" name="enerpriseName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">公司描述</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="enterpriseDescription_error"></span></span>
+                            <textarea type="text" class="form-control" name="enterpriseDescription" style="height: 100px"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">岗位发布时间</label>
+
+                        <div class="col-xs-6 input-append date form_datetime">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="startTime_error"></span></span>
+                            <input id="datetimepicker" type="text" class="form-control" name="startTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">联系人</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="contactName_error"></span></span>
+                            <input type="text" class="form-control" name="contactName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">电话</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="contactPhone_error"></span></span>
+                            <input type="text" class="form-control" name="contactPhone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">接收邮箱</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="contactEmail_error"></span></span>
+                            <input type="text" class="form-control" name="contactEmail">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-danger submit">发布</button>
+                        </div>
+                        <div class="col-xs-4"></div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <p><a href="about.html#ours">关于我们</a> - <a href="about.html#contact">联系我们</a> CopyRight©2016-2020 king</p>
+</footer>
+</body>
+<script src="./static/js/bootstrap.min.js"></script>
+</html>

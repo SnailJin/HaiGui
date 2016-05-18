@@ -1,0 +1,354 @@
+/**  基本 **/
+html, body {
+    background-size: 100%;
+    height: 100%;
+    /**background-color: #EAE8E9;*/
+    font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+}
+.error-tip{
+    color: red;
+}
+.input_error{
+    color: red;
+    display: none;
+}
+/**   导航栏   **/
+header{
+    background-color:#fafafa ;
+    width: 100%;
+    z-index: 500;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.nav-inline{
+    width: 1000px;
+    margin: 0 auto;
+}
+.logo{
+    float: left;
+    padding: 15px 15px;
+}
+.logo img{
+    width: 97px;
+    height: 34px;
+}
+.nav-title,.nav-message{
+    margin: 0px;
+}
+.nav-title,.nav-title>li{
+    float: left;
+    list-style: none;
+
+}
+.nav-message,.nav-message>li{
+    float: right;
+    list-style: none;
+
+}
+.nav-message ul{
+    display: none;
+}
+.nav-message:hover ul{
+    display: block;
+}
+.nav-message li i{
+    line-height: 64px;
+    color: #6EC19E;
+    font-size: 19px;
+    cursor: pointer;
+}
+.header-info-list{
+    position: absolute;
+    line-height: 30px;
+    list-style: none;
+    background-color: white;
+    width: 100px;
+    color: black;
+    height: 100px;
+    padding: 10px 17px;
+    top: 50px;
+    font-size: 14px;
+    font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+}
+.nav-title li:hover,.nav-title li:hover a,.nav-title li:active a{
+    color: #fff;
+    background-color: #56CC99;
+}
+.nav-title a{
+    font-size: 16px;
+    height: 64px;
+    line-height: 64px;
+    padding: 0 20px;
+    text-decoration: none;
+    vertical-align: top;
+    color: #0f0f0f;
+}
+/*** 底部 **/
+footer{
+    background-color: #363636;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    z-index: 500;
+    height: 40px;
+    line-height: 40px;
+}
+footer>p,footer a,footer a:hover,footer a:active{
+    color: #ffffff;
+}
+
+/** body **/
+.container{
+    width: 1024px;
+}
+.form-panel{
+    width: 600px;
+    margin: 30px auto;
+    background-color:#fafafa;
+}
+.triangle{
+    top:-8px;
+    left: 5px;
+    width: 10px;
+    position: absolute;
+    display: block;
+    border-top: 8px solid transparent;
+    border-right: 15px solid #91cebe;
+}
+.control-label{
+    text-align: right;
+    margin-top:7px ;
+}
+.round {
+    border: 0px solid #dedede;
+    -moz-border-radius: 10px;      /* Gecko browsers */
+    -webkit-border-radius: 10px;   /* Webkit browsers */
+    border-radius:10px;            /* W3C syntax */
+}
+
+
+.user_info{
+    height: 300px;
+    padding: 15px;
+    border: 1px solid #e8e8e8;
+}
+.avatar-self{
+    width: 80px;
+    height: 80px;
+}
+.user_info .link div{
+    border-bottom: 1px solid #dddddd;
+    font-size: 16px;
+    padding: 8px 0px;
+}
+.user_info .user-content{
+    margin: 10px 0px;
+}
+
+.search{
+    padding: 0px 15px;
+
+}
+.search-input{
+    height: 37px;
+    width: 80%;
+    font-size: 14px;
+    border: 2px solid #00b38a;
+    cursor: pointer;
+    margin: 0px;
+}
+.search-button{
+    height: 37px;
+    width: 19.4%;
+    color: #FFF;
+    font-size: 18px;
+    border: 2px solid #00b38a;
+    background: #00b38a;
+    cursor: pointer;
+    position: relative;
+    left: -5px;
+    float: right;
+}
+
+.sort,.filter-condition{
+    background-color: #f6f6f6;
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #e8e8e8;
+    list-style:none;
+}
+.sort.title,.sort a,.filter-condition .title,.filter-condition a{
+    padding: 5px 8px;
+    height: 14px;
+    line-height: 14px;
+}
+.filter-condition li{
+    margin-bottom: 6px;
+}
+.sort .title,.filter-condition .title{
+    font-weight:600 ;
+    margin-right: 15px;
+}
+.sort a,.filter-condition a{
+    color: #555;
+    cursor:pointer;
+    background-color: transparent;
+    text-decoration: none;
+}
+.sort li a:hover,.sort li a:active, .filter-condition li a:hover,.filter-condition li a:active,.sort .selected{
+    background-color: #00b38a;
+    color: #fff;
+}
+.filter-condition .btn-more{
+    float: right;
+}
+
+.job{
+    border: 1px solid #e8e8e8;
+    padding: 15px 20px;
+    margin: 0 0 15px 0;
+}
+.job-info{
+    border-right: 1px dotted #8197a2;
+}
+.company{
+    padding: 0 5px 3px 40px;
+}
+.time-info{
+    font-size: 10px;
+    color: #999;
+}
+.job-desc span{
+    border-left: 1px solid #ccc;
+    padding: 0 5px;
+}
+.company-info,.change-password{
+    cursor: pointer;
+}
+/**--登录 --**/
+.login-capacity{
+    z-index: 999;
+    background-color: #ffffff;
+    position: fixed;
+    top: 30%;
+    width: 400px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+/**  job detail **/
+.job-detail{
+    background-color: #fafafa;
+    position: relative;
+    width: 665px;
+    float: right;
+}
+.job-detail .title-info{
+    background-color: #67C8B1;
+    position: relative;
+    left: -15px;
+    top: 20px;
+    padding: 5px 20px 5px 20px;
+}
+.job-detail .title-info a,.job-detail .title-info a:hover,.job-detail .title-info a:active,.job-detail .title-info h1{
+    color: #ffffff;
+}
+.job-detail .title-triangle{
+    display: inline-block;
+    width: 15px;
+    position: absolute;
+    left: -1px;
+    bottom: -7px;
+    display: block;
+    border-bottom: 8px solid transparent;
+    border-right: 15px solid #67C8B1;
+}
+.job-detail .collect{
+    font-size: 22px;
+    color: white;
+    position: absolute;
+    right: 80px;
+    top: 30px;
+    cursor: pointer;
+}
+.job-detail .job-main{
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.job-main p span{
+    padding-right: 5px;
+    color: #777;
+    font-size: 15px;
+}
+.job-describe{
+    border-left: 3px solid #67C8B1;
+    padding-left:10px ;
+}
+.job-message .content{
+    padding: 0px 15px;
+}
+.company-describe{
+    background-color:#fafafa;
+    padding: 15px;
+}
+.company-name{
+    color: #67C8B1;
+    padding: 10px;
+}
+.company-describe p{
+    padding: 0px 10px;
+    color: #777;
+}
+
+/** 注册 **/
+.base-panel{
+    position: relative;
+}
+.base-panel h2{
+    background-color: #91cebe;
+    max-width: 240px;
+    padding:6px 20px ;
+    color: #ffffff;
+    position: relative;
+    top: -8px;
+    left: 20px;
+    text-align: center;
+}
+.base-panel .form-head{
+    margin-bottom:60px ;
+}
+.base-panel .submit{
+   width: 100%;
+}
+
+
+.box-panel{
+    margin: 30px auto;
+    width: 800px;
+    border-color: #DADADA;
+    border-width: 1px;
+    border-style: solid;
+    padding: 30px;
+    background-color: #fafafa;
+}
+
+.blod-left{
+    border-left: 8px solid #019875;
+    margin-top: 20px;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 15px;
+    font-weight: bold;
+}
+.about{
+    margin-left: 20px;
+}
+
+.avatar-info{
+    width: 100px;
+    height: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    border-radius:100px;
+}

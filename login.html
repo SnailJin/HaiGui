@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="rootApp" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/css/base.css">
+    <script style="text/javascript"  src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script style="text/javascript"  src="./static/js/base.js"></script>
+    <script style="text/javascript"  src="./static/js/common.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <script style="text/javascript"  src="./static/js/md5.js"></script>
+    <title>登录</title>
+</head>
+<body>
+<div id ="header">
+</div>
+<div class="wap">
+    <div class="container">
+        <div class="form-panel round">
+            <div class="base-panel">
+                <div class="form-head">
+                    <h2>
+                        登录
+
+                    </h2>
+                    <span class="triangle"></span>
+                </div>
+                <form id="login-from" class="form-horizontal" method="POST">
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">邮&#12288;&#12288;箱</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="userName_error"></span></span>
+                            <input type="text" class="form-control" name="userName" label="邮箱">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">密&#12288;&#12288;码</label>
+
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="password_error"></span></span>
+                            <input type="password" class="form-control" name="password" label="密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-danger submit">提交</button>
+                        </div>
+                        <div class="col-xs-4"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                           <h5 style="margin-bottom: 40px;">  还没有拉勾帐号？<a href="register.html" style="color: #00b38a">立即注册</a></h5>
+                        </div>
+                        <div class="col-xs-4"></div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+<script>
+$(function(){
+    //提交请求
+   $("#login-from").bind("submit",function(){
+       var form = $(this);
+       var userName = form.find("input[name='userName']");
+       var password = form.find("input[name='password']");
+       var flag =true;
+       if(userName.val().trim().length == 0){
+           show_errror(userName,true,"邮箱不能空!");
+           flag = false;
+       }else if(!verify_email(userName.val().trim())){
+           show_errror(userName,true,"邮箱格式不正确!");
+           flag = false;
+       }else{
+           show_errror(userName,false);
+       }
+       if(password.val().trim().length == 0){
+           show_errror(password,true,"密码不能为空!");
+           flag = false;
+       }else{
+           show_errror(password,false);
+       }
+       if(!flag){
+           return false;
+       }
+       var data = $(this).serializeObject();
+       formData.body=data;
+       formData.body.password=hex_md5(formData.body.password);
+       formData.key="Login";
+       $.ajax({
+           type: 'post',
+           url:url,
+           data:JSON.stringify(formData),
+           beforeSend: function(XMLHttpRequest){
+           },
+           success: function(data, textStatus){
+               data = JSON.parse(data);
+               if(data.code == 0){
+                   $.setCookie("token",data.body.token);
+                   user.email=data.body.user.userName;
+                   user.userId=data.body.user.userId;
+                   user.username=data.body.user.name;
+                   $.setCookie("user",JSON.stringify(user));
+                   if(data.body.type==2){
+                       window.location="company_index.html";
+                   }else if(data.body.type==1){
+                       window.location="index.html";
+                   }
+               }else{
+                   var body=$('<p>'+data.message+'</p>')
+                   $.poplayer({body:body});
+               }
+           },
+           complete: function(XMLHttpRequest, textStatus){
+           },
+           error: function(response){
+               alert('网络异常!')
+           }
+       });
+       return false;
+   });
+});
+
+</script>
+</html>
