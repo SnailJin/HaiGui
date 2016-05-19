@@ -9,13 +9,17 @@
     <script style="text/javascript"  src="./static/js/base.js"></script>
     <script style="text/javascript"  src="./static/js/common.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <style>
+        .title{
+            cursor: pointer;
+        }
+    </style>
     <script style="text/javascript"  >
         var type=1;
         var delId='';
         $(function(){
             set_user_info_html();
             loadOccupationList();
-            $(selected)
         });
         function loadOccupationList(){
             formData.key="LoadOccupationList";
@@ -49,6 +53,10 @@
                var job =$("#job_clone").clone();
                var occupation = occupationList[i];
                job.find(".title").text(occupation.title);
+               job.find(".title").click(function(){
+                   var id =$(this).closest(".job").find("[name='occupationId']").val();
+                   window.location ="job_detail.html?id="+id;
+               });
                job.find(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
                //job.find(".city").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
                job.find(".workingAge").text(occupation.workingAge+"以上工作经验");
