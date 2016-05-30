@@ -86,17 +86,17 @@
             var maximusSalaryS='';
             for(var i =5 ;i<100;i++){
                 if(i==10){
-                    minimusSalaryS=minimusSalaryS+'<option value="'+i+'万" selected = "selected" >'+i+'万</option>';
+                    minimusSalaryS=minimusSalaryS+'<option value="'+i+'" selected = "selected" >'+i+'万</option>';
                 }else{
-                    minimusSalaryS=minimusSalaryS+'<option value="'+i+'万">'+i+'万</option>';
+                    minimusSalaryS=minimusSalaryS+'<option value="'+i+'">'+i+'万</option>';
                 }
 
             }
             for(var i =5 ;i<100;i++){
                 if(i == 20){
-                    maximusSalaryS=maximusSalaryS+'<option value="'+i+'万"   selected = "selected"">'+i+'万</option>';
+                    maximusSalaryS=maximusSalaryS+'<option value="'+i+'"   selected = "selected"">'+i+'万</option>';
                 }else{
-                    maximusSalaryS=maximusSalaryS+'<option value="'+i+'万">'+i+'万</option>';
+                    maximusSalaryS=maximusSalaryS+'<option value="'+i+'">'+i+'万</option>';
                 }
 
             }
@@ -121,7 +121,7 @@
             $(".submit").html("保存");
             $('input[name="occupationId"]').val(id);
             formData.key="LoadOccupationDetail";
-            formData.body.occupationId=id;
+            formData.body.occupationId=parseInt(id);
             $.ajax({
                 type: 'post',
                 url:url,
@@ -136,7 +136,7 @@
                             if(inputTemp.length>0){
                                 inputTemp.val(data.body[name]);
                             }else{
-                                $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]');
+                                $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]').attr("selected",true);;
                             }
                         }
                     }else{
@@ -156,22 +156,7 @@
     <title>发布信息</title>
 </head>
 <body>
-<header class="navbar navbar-static-top bs-docs-nav" id="top">
-    <div class="nav-inline">
-        <div class="logo">
-            <a href="/">
-                <img src="./static/images/log.png">
-            </a>
-        </div>
-
-        <ul class="nav-title">
-            <li><a href="company_index.html">首页</a></li>
-            <li><a href="company_acount.html">企业中心</a></li>
-            <li><a href="pulish_job.html">发布信息</a></li>
-            <li><a href="company_about.html">关于我们</a></li>
-        </ul>
-    </div>
-</header>
+<div id="header"></div>
 <div class="wap">
     <div class="container">
         <div class="form-panel round">
@@ -315,9 +300,6 @@
         </div>
     </div>
 </div>
-<footer>
-    <p><a href="about.html#ours">关于我们</a> - <a href="about.html#contact">联系我们</a> CopyRight©2016-2020 king</p>
-</footer>
+<div id="footer"></div>
 </body>
-<script src="./static/js/bootstrap.min.js"></script>
 </html>

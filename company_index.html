@@ -9,6 +9,8 @@
     <script style="text/javascript"  src="./static/js/base.js"></script>
     <script style="text/javascript"  src="./static/js/common.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.loading.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.scroll.js"></script>
     <style>
         .title{
             cursor: pointer;
@@ -17,35 +19,72 @@
     <script style="text/javascript"  >
         var type=1;
         var delId='';
+        var title =null;
+        //分页处理
+        loading=function(flag){
+            if(flag){
+                $('#list').popLoading();
+            }else{
+                $('#list').removeLoading();
+            }
+        };
+        success=function(data){
+            data = JSON.parse(data);
+            if(data.code == 0){
+                if(nextPage == 1){
+                    $('#list').children().remove();
+                }
+                loadOccupationListToHtml(data.body.list)
+                if(data.body.list.length < pageSize){
+                    nextPage = -1;
+                    $('#list').append('<div style="text-align: center;"><div style="display: inline-block; line-height: 16px; padding-left: 20px;"><medium> ( ⊙ o ⊙ ) 没有更多了</medium></div></div>');
+                }else{
+                    nextPage=nextPage+1;
+                }
+            }else{
+                return_error(data);
+            }
+        };
         $(function(){
             set_user_info_html();
             loadOccupationList();
-        });
-        function loadOccupationList(){
-            formData.key="LoadOccupationList";
-            formData.body={title:null,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,city:null,order:"start_time",pageNo:1,pageSize:20};
-            formData.body.enterpriseId=user.userId;
-            $.ajax({
-                type: 'post',
-                url:url,
-                data:JSON.stringify(formData),
-                beforeSend: function(XMLHttpRequest){
-                },
-                success: function(data, textStatus){
-                    data = JSON.parse(data);
-                    if(data.code == 0){
-                        loadOccupationListToHtml(data.body.list)
-                    }else{
-                        return_error(data);
-                    }
-                },
-                complete: function(XMLHttpRequest, textStatus){
-                },
-                error: function(response){
-                    alert('网络异常!')
+            //搜索
+            $('.search-button').click(search);
+            $('.search-input').keypress(function(e){
+                if(event.keyCode == "13")
+                {
+                    search();
                 }
             });
-
+        });
+        //滑动加载
+        $(window).scroll( function() {
+            if(get_load_next_page()){
+                /* 	console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());
+                 console.log("页面的文档高度 ："+$(document).height());
+                 console.log('浏览器的高度：'+$(window).height()); */
+                formData.key="LoadOccupationList";
+                formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
+                formData.body.enterpriseId=user.userId;
+                loadData(success,loading,JSON.stringify(formData),false);
+            }
+        });
+        //搜索
+        function search(){
+            var search = $('.search-input').val().trim();
+            if(search == ""){
+                title=null;
+            }else{
+                title=search;
+            }
+            nextPage =1;
+            loadOccupationList();
+        }
+        function loadOccupationList(){
+            formData.key="LoadOccupationList";
+            formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
+            formData.body.enterpriseId=user.userId;
+            loadData(success,loading,JSON.stringify(formData),true);
         }
         //加载列表到html
         function loadOccupationListToHtml(occupationList){
@@ -65,8 +104,9 @@
                job.find("[name='occupationId']").val(occupation.occupationId);
                job.find(".update").attr("href","pulish_job.html?id="+occupation.occupationId);
                job.find(".delete").css("cursor","pointer").bind("click",function(){
-                   var body=$('<p>确认删除!</p>');
-                   delId=occupation.occupationId
+                  var jobClass =$(this).closest('.job');
+                   var body=$('<p>确认下线'+jobClass.find('.title').text()+' 职位!</p>');
+                   delId =jobClass.find("[name='occupationId']").val();
                    btnFunc=delOoccupation;
                    $.poplayer({body:body,btnFunc:btnFunc});
                })
@@ -76,8 +116,8 @@
         //删除岗位
         function delOoccupation(){
             formData.body={};
-            formData.key="ModifyOccupation";
-            formData.body.occupationId=delId;
+            formData.key="OfflineOccupation";
+            formData.body.occupationId=parseInt(delId);
             formData.body.availableDays=0;
             $.ajax({
                 type: 'post',
@@ -88,7 +128,7 @@
                 success: function(data, textStatus){
                     data = JSON.parse(data);
                     if(data.code == 0){
-                        var body=$('<p>删除成功!</p>')
+                        var body=$('<p>下线成功!</p>')
                         $.poplayer({body:body});
                         $('[name="'+delId+'"]').remove();
                     }else{

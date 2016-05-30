@@ -1,7 +1,9 @@
 load_next_page=true;
-var next_page=0;
+var nextPage=1
+var pageSize=2;;
 var totalheight = 0; 
 var has_load=false;
+var isClear=false;
 (function($){
 			$.fn.extend({
 			insertAtCaret: function(myValue){
@@ -40,34 +42,20 @@ function get_load_next_page(){
 }
 //滚动加载
 //no_load不加载   ,success成功
-function loadData(no_load,success,loading,has_load)
+function loadData(success,loading,data,has_load)
 { 
     totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop()); 
 
     if (has_load||$(document).height() <= totalheight) 
 	{ 
 		//加载数据
-		if(next_page==-1){
-			return no_load()
+		if(nextPage==-1){
+			return false;
 		}
 		if(load_next_page==true){
-			var urlParamStr=window.location.search;
-			if(urlParamStr.length==0){
-				data={page:next_page};
-			}else{
-				urlParamStr=urlParamStr.substring(1);
-				urlParamStrList=urlParamStr.split('&');
-				data={};
-				for(var i in  urlParamStrList ){
-					temp=urlParamStrList[i].split('=');
-					data[temp[0]]=temp[1];
-				}
-				data['page']=next_page;
-			}
-			
 		 $.ajax({
-	         type: 'GET',
-	         url:window.location.pathname,
+	         type: 'POST',
+	         url:'http://47.89.38.171/HGZGZ/interface',
 	         data:data,
 	         beforeSend: function(XMLHttpRequest){
 	        	 loading(true);

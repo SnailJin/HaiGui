@@ -64,6 +64,12 @@
                     collect();
                 }
             })
+            if(occupation.isFavouriteOccupation){
+                $(".collect").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+            }else{
+                $(".collect").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+            }
+
             $(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
             $(".workingAge").text(occupation.workingAge+"以上工作经验");
             $(".time-info").text(occupation.startTime);

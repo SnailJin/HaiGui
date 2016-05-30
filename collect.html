@@ -10,6 +10,8 @@
     <script style="text/javascript"  src="./static/js/base.js"></script>
     <script style="text/javascript"  src="./static/js/common.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.loading.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.scroll.js"></script>
     <style>
         .del_collect{
             color:#019875;
@@ -17,15 +19,84 @@
         }
     </style>
     <script>
-        var pageNo =1;
-        var isCollect=1；
+        var delCollectId = null;
+        var isCollect = 1;
+        //分页处理
+        loading=function(flag){
+            if(flag){
+                $('#list').popLoading();
+            }else{
+                $('#list').removeLoading();
+            }
+        };
+        success=function(data){
+            data = JSON.parse(data);
+            if(data.code == 0){
+                if(nextPage == 1){
+                    $('#list').children().remove();
+                }
+                loadOccupationListToHtml(data.body.list)
+                if(data.body.list.length < pageSize){
+                    nextPage = -1;
+                    $('#list').append('<div style="text-align: center;"><div style="display: inline-block; line-height: 16px; padding-left: 20px;"><medium> ( ⊙ o ⊙ ) 没有更多了</medium></div></div>');
+                }else{
+                    nextPage=nextPage+1;
+                }
+            }else{
+                nextPage = -1;
+                return_error(data);
+            }
+        };
+
         $(function(){
-            loadFavouriteOccupationList();
+            loadFavouriteOccupationList(true);
         });
-        function loadFavouriteOccupationList(){
-            formData.body.pageSize=20;
-            formData.body.pageNo=pageNo;
+        $(window).scroll( function() {
+            if(get_load_next_page()){
+                /* 	console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());
+                 console.log("页面的文档高度 ："+$(document).height());
+                 console.log('浏览器的高度：'+$(window).height()); */
+                formData.key="LoadOccupationList";
+                loadFavouriteOccupationList(false);
+            }
+        });
+        //加载收藏列表
+        function loadFavouriteOccupationList(flag){
+            formData.body.pageSize=pageSize;
+            formData.body.pageNo=nextPage;
             formData.key = "LoadFavouriteOccupationList";
+            loadData(success,loading,JSON.stringify(formData),flag);
+        }
+        //加载列表到html
+        function loadOccupationListToHtml(occupationList){
+            for(var i in occupationList){
+                var job =$("#job_clone").clone();
+                var occupation = occupationList[i];
+                var occupationInfo =  occupation.occupation;
+                job.find(".title").text(occupation.title);
+                job.find(".salary").text(occupationInfo.minimusSalary+"万-"+occupationInfo.maximusSalary+"万");
+                //job.find(".city").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
+                job.find(".workingAge").text(occupationInfo.minimusAge+"以上工作经验");
+                job.find(".time-info").text(occupationInfo.startTime);
+                job.find(".category").text(occupationInfo.category);
+                job.find(".title").text(occupationInfo.title);
+                job.find(".enerpriseName").text(occupationInfo.enerpriseName);
+                job.find("[name='occupationId']").val(occupation.occupationOccupationId).attr("id",occupation.occupationId);
+                job.find('.del_collect').click(function(){
+                    collect();
+                    $(this).closest(".job").remove();
+                });
+                job.find(".title").click(function(){
+                    var occupationId = $(this).closest(".job").find('[name="occupationId"]').val();
+                    window.location = "job_detail.html?id="+occupationId;
+                });
+                $("#list").append(job.children());
+            }
+        }
+        //删除收藏
+        function delCollect(){
+            formData.key = "RemoveFavouriteOccupation";
+            formData.body.occupationId =parseInt(delCollectId);
             $.ajax({
                 type: 'post',
                 url:url,
@@ -35,7 +106,7 @@
                 success: function(data, textStatus){
                     data = JSON.parse(data);
                     if(data.code == 0){
-                        loadOccupationListToHtml(data.body.list)
+                        $("#".occupation.occupationId).closest('.job').remove();
                     }else{
                         return_error(data);
                     }
@@ -46,24 +117,6 @@
                     alert('网络异常!')
                 }
             });
-        }
-        //加载列表到html
-        function loadOccupationListToHtml(occupationList){
-            for(var i in occupationList){
-                var job =$("#job_clone").clone();
-                var occupation = occupationList[i];
-                job.find(".title").text(occupation.title);
-                job.find(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
-                //job.find(".city").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
-                job.find(".workingAge").text(occupation.workingAge+"以上工作经验");
-                job.find(".time-info").text(occupation.startTime);
-                job.find(".category").text(occupation.category);
-                job.find("[name='occupationId']").val(occupation.occupationId);
-                job.find('.del_collect').click(function(){
-                    collect();
-                })
-                $("#list").append(job.children());
-            }
         }
 
     </script>
@@ -82,14 +135,15 @@
                     </h2>
                     <span class="triangle"></span>
                 </div>
-                <div class="form-horizontal">
+                <div id="list" class="form-horizontal">
                     <!--职位 -->
 
 
                     <div class="row job" style="background-color: #FFFFFF">
+                        <input type="hidden" name="occupationId"/>
                         <div class="col-xs-6 job-info">
                             <div class="row">
-                                <h4>java 开发工程师</h4>
+                                <h4 class="title">java 开发工程师</h4>
                             </div>
                             <div class="row">
                                 <p class="job-desc">
@@ -104,7 +158,7 @@
                         </div>
                         <div class="col-xs-6 company">
                             <div class="row">
-                                <h5>拼爱网络有限公司</h5>
+                                <h5  class="enerpriseName">拼爱网络有限公司</h5>
                             </div>
                             <div class="row">
                                 <p> 移动互联网 · 企业服务 / 上市公司</p>

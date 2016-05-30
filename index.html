@@ -11,14 +11,39 @@
     <script style="text/javascript"  src="./static/js/common.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.datetimepicker.full.min.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.loading.js"></script>
+    <script style="text/javascript"  src="./static/js/jquery.scroll.js"></script>
     <style>
-        .job .title{
-            cursor: pointer;
-        }
+
     </style>
     <script>
         var orderType ="start_time";
         var title =null;
+        //分页处理
+        loading=function(flag){
+            if(flag){
+                $('#list').popLoading();
+            }else{
+                $('#list').removeLoading();
+            }
+        };
+        success=function(data){
+            data = JSON.parse(data);
+            if(data.code == 0){
+                if(nextPage == 1){
+                    $('#list').children().remove();
+                }
+                loadOccupationListToHtml(data.body.list)
+                if(data.body.list.length < pageSize){
+                    nextPage = -1;
+                    $('#list').append('<div style="text-align: center;"><div style="display: inline-block; line-height: 16px; padding-left: 20px;"><medium> ( ⊙ o ⊙ ) 没有更多了</medium></div></div>');
+                }else{
+                    nextPage=nextPage+1;
+                }
+            }else{
+                return_error(data);
+            }
+        };
        $(function(){
            set_user_info_html();
            loadOccupationList("start_time");
@@ -27,49 +52,49 @@
                $('.sort a').removeClass("selected");
                $(this).addClass("selected");
                orderType=this.id;
+               nextPage =1;
                loadOccupationList();
            })
             //搜索
-            $('.search-button').click(function(){
-                var search = $(this).parent().find('.search-input').val().trim();
-                if(search == ""){
-                    title=null;
-                }else{
-                    title=search;
-                }
-                loadOccupationList();
-            });
-       });
-       function loadOccupationList(){
-           formData.key="LoadOccupationList"
-           formData.body={title:null,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,city:null,order:"start_time",pageNo:1,pageSize:20};
-           formData.body.order=orderType;
-           formData.body.title=title;
-           $.ajax({
-               type: 'post',
-               url:url,
-               data:JSON.stringify(formData),
-               beforeSend: function(XMLHttpRequest){
-               },
-               success: function(data, textStatus){
-                   data = JSON.parse(data);
-                   if(data.code == 0){
-                       loadOccupationListToHtml(data.body.list)
-                   }else{
-                       return_error(data);
-                   }
-               },
-               complete: function(XMLHttpRequest, textStatus){
-               },
-               error: function(response){
-                   alert('网络异常!')
+            $('.search-button').click(search);
+           $('.search-input').keypress(function(e){
+               if(event.keyCode == "13")
+               {
+                   search();
                }
            });
-
+       });
+        //滑动加载
+        $(window).scroll( function() {
+            if(get_load_next_page()){
+                /* 	console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());
+                 console.log("页面的文档高度 ："+$(document).height());
+                 console.log('浏览器的高度：'+$(window).height()); */
+                formData.key="LoadOccupationList";
+                formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
+                loadData(success,loading,JSON.stringify(formData),false);
+            }
+        });
+        //搜索
+        function search(){
+            var search = $('.search-input').val().trim();
+            if(search == ""){
+                title=null;
+            }else{
+                title=search;
+            }
+            nextPage =1;
+            loadOccupationList();
+        }
+       function loadOccupationList(){
+           formData.key="LoadOccupationList"
+           formData.body={title:null,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
+           formData.body.order=orderType;
+           formData.body.title=title;
+           loadData(success,loading,JSON.stringify(formData),true);
        }
        //加载列表到html
        function loadOccupationListToHtml(occupationList){
-           $("#list").html("");
            for(var i in occupationList){
                var job =$("#job_clone").clone();
                var occupation = occupationList[i];
@@ -80,13 +105,74 @@
                })
                job.find(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
                //job.find(".city").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
-               job.find(".workingAge").text(occupation.workingAge+"以上工作经验");
+               job.find(".minimusAge").text(occupation.workingAge+"以上工作经验");
                job.find(".time-info").text(occupation.startTime);
                job.find(".category").text(occupation.category);
+               job.find(".enterpriseName").text(occupation.enterpriseName);
                job.find("[name='occupationId']").val(occupation.occupationId);
+               if(occupation.isFavouriteOccupation){
+                   job.find(".collect").text("取消收藏").click(function(e){
+                       delCollect(this)
+                   });
+               }else{
+                   job.find(".collect").text("收藏").click(function(e){
+                       addCollect(this)
+                   })
+               }
                $("#list").append(job.children());
            }
        }
+        function addCollect(context){
+            createCollect(0,context);
+        }
+        function delCollect(context){
+            createCollect(1,context);
+        }
+
+        //添加删除收藏  0添加，1删除
+        function createCollect(collectStatus,context){
+            current=context;
+            if(collectStatus == 1){
+                formData.key="RemoveFavouriteOccupation";
+            }else{
+                formData.key="AddFavouriteOccupation";
+            }
+
+            var occupationId = $(context).closest('.job').find('[name="occupationId"]').val().trim();
+            formData.body={};
+            formData.body.occupationId=parseInt(occupationId);
+            $.ajax({
+                type: 'post',
+                url:url,
+                data:JSON.stringify(formData),
+                beforeSend: function(XMLHttpRequest){
+                },
+                success: function(data, textStatus){
+                    data = JSON.parse(data);
+                    if(data.code == 0){
+                        if(data.key == "AddFavouriteOccupation" ){
+                            $(current).text("取消收藏");
+                            $(current).unbind().bind("click",function(e){
+                                delCollect(this)
+                            });
+                        }else{
+                            $(current).text("收藏");
+                            $(current).unbind().bind("click",function(e){
+                                addCollect(this)
+                            })
+                        }
+                    }else{
+                        return_error(data);
+                    }
+                },
+                complete: function(XMLHttpRequest, textStatus){
+                },
+                error: function(response){
+                    alert('网络异常!')
+                }
+            });
+        }
+
     </script>
     <title>主页</title>
 </head>
@@ -190,10 +276,15 @@
         </div>
         <div class="col-xs-6 company">
             <div class="row">
-                <h5 class="enerpriseName">拼爱网络有限公司</h5>
+                <h5 class="enterpriseName"></h5>
             </div>
             <div class="row">
                 <p class="category"> 移动互联网 · 企业服务 / 上市公司</p>
+            </div>
+            <div class="row">
+                <p class="job-desc">
+                    <a class="collect" href="javascript:void"><span style="border: 0px;padding-left: 0px;color: #019875;">收藏</span></a>
+                </p>
             </div>
         </div>
     </div>

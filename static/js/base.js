@@ -5,6 +5,7 @@ var url="http://47.89.38.171/HGZGZ/interface";
 var origin  = "http://localhost:63342";
 var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html'];
 var type =0;
+var page
 var user={
     "username":null,
     "userId":null,
@@ -181,4 +182,14 @@ function collect(){
             alert('网络异常!')
         }
     });
+}
+
+//导航栏选中
+function nav_select(){
+    var titleList = $(".nav-title a");
+    titleList.each(function(n,v){
+        if(window.location.pathname.indexOf($(v).attr("href")) != -1 ){
+            $(v).parent().addClass("select");
+        }
+    })
 }

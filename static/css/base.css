@@ -38,7 +38,7 @@ header{
 .nav-title,.nav-title>li{
     float: left;
     list-style: none;
-
+   margin-right: 20px;
 }
 .nav-message,.nav-message>li{
     float: right;
@@ -70,7 +70,7 @@ header{
     font-size: 14px;
     font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
 }
-.nav-title li:hover,.nav-title li:hover a,.nav-title li:active a{
+.nav-title li:hover,.nav-title li:hover a,.nav-title li:active a,.nav-title .select a,.nav-title .select{
     color: #fff;
     background-color: #56CC99;
 }
@@ -208,6 +208,9 @@ footer>p,footer a,footer a:hover,footer a:active{
     border: 1px solid #e8e8e8;
     padding: 15px 20px;
     margin: 0 0 15px 0;
+}
+.job .title{
+    cursor: pointer;
 }
 .job-info{
     border-right: 1px dotted #8197a2;

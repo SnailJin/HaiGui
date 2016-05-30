@@ -7,8 +7,8 @@
         </div>
 
         <ul class="nav-title">
-            <li><a href="company_index.html">首页</a></li>
-            <li><a href="company_acount.html">企业中心</a></li>
+            <li><a href="company_index.html" >首页</a></li>
+            <li><a href="company_acount.html" >企业中心</a></li>
             <li><a href="pulish_job.html">发布信息</a></li>
             <li><a href="company_about.html">关于我们</a></li>
         </ul>
@@ -28,5 +28,9 @@
     $("#logout").click(logout);
     $("#acoount").click(function(){
         window.location="acoount.html";
+    })
+    $(function () {
+        //导航栏选中
+        nav_select();
     })
 </script>
