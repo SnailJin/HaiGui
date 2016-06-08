@@ -14,6 +14,10 @@
         $(function () {
             //初始化页面信息
             loadEnterpriseInformation();
+            //地区列表
+            $("[name='nation']").change(function(){
+
+            });
             //表单提交
             $('form[name="enterpriseInfo"]').bind("submit", function () {
                     var data = $(this).serializeObject();
@@ -131,6 +135,47 @@
                 }
             });
         }
+        //获取地址信息
+        function get_area(context){
+            formData.key = "LoadSubGroupList";
+            formData.body={"type":"location","pageNo":1, "pageSize":1000};
+            var name = context.name;
+            var parentId;
+            if(name == "nation"){
+                parentId = null;
+            }else if(name == "city"){
+                var value = $(context).closest("div").find("[name='nation']").val();
+                parentId = value;
+            }else if(name == "province"){
+                var value = $(context).closest("div").find("[name='city']").val();
+                parentId = value;
+            }else{
+                return false;
+            }
+            formData.body.parentId =parentId;
+            $.ajax({
+                type: 'post',
+                url:url,
+                data:JSON.stringify(formData),
+                beforeSend: function(XMLHttpRequest){
+                },
+                success: function(data, textStatus){
+                    data = JSON.parse(data);
+                    if(data.code == 0){
+                        optionHtml ="";
+                        for(var i = 0;i<data)
+                        $(context).html();
+                    }else{
+                        return_error(data);
+                    }
+                },
+                complete: function(XMLHttpRequest, textStatus){
+                },
+                error: function(response){
+                    alert('网络异常!')
+                }
+            });
+        }
     </script>
     <title>个人中心</title>
 </head>
@@ -169,6 +214,45 @@
                             <input type="text" class="form-control certificationNo" name="certificationNo">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">所在地区</label>
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span
+                                    class="certificationNo_error"></span></span>
+                            <div class="col-xs-4" style="padding: 0px;">
+                                <select name="nation" class="form-control">
+                                    <option>国家</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4" style="padding: 0px;">
+                                <select name="province" class="form-control">
+                                    <option>省会</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4" style="padding: 0px;">
+                                <select name="city" class="form-control">
+                                    <option>城市</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">简介</label>
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span
+                                    class="enterpriseDescription_error"></span></span>
+                            <textarea type="text" class="form-control enterpriseDescription" name="enterpriseDescription"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">地址</label>
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span
+                                    class="address_error"></span></span>
+                            <input type="text" class="form-control address" name="address">
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="col-xs-4"></div>
                         <div class="col-xs-4">
