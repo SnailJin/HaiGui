@@ -12,12 +12,14 @@
     <script style="text/javascript">
         var type = 1;
         $(function () {
+            //地区列表
+            $("[name='province'],[name='nation']").change(function(){
+                get_area(this);
+            });
+            get_area($("[name='nation']")[0],true);
+
             //初始化页面信息
             loadEnterpriseInformation();
-            //地区列表
-            $("[name='nation']").change(function(){
-
-            });
             //表单提交
             $('form[name="enterpriseInfo"]').bind("submit", function () {
                     var data = $(this).serializeObject();
@@ -58,6 +60,11 @@
         function validate_fileds(data) {
             var flag = true;
             for (var name in data) {
+                var context = $("[name='"+name+"']");
+                if(context.attr("readonly") == "readonly" && context.attr("placeholder").length != 0){
+                    delete data[name];
+                    continue;
+                }
                 if (data[name] == undefined || data[name].length == 0) {
                     error = $('.' + name + '_error');
                     nameS = error.closest(".form-group").eq(0).children().eq(0).html();
@@ -106,9 +113,26 @@
                     $('.'+value ).attr("placeholder", user[value]).attr("readonly", true);
                 }
             })
-            if (!flag) {
-                $(".submit").attr("disabled", true);
-            }
+            $.each(['nation','province','city','address','enterpriseDescription'], function (n, value) {
+                if (user[value] == undefined) {
+
+                } else {
+                    var name = $('.'+value );
+                    if(name.prop('tagName')=="SELECT") {
+                        var select = name.find("option[value='"+user[value]+"']");
+                        if(select.length == 0){
+                            name.html("option[value='"+user[value]+"']");
+                        }else{
+                            select.attr("selected",true);
+                        }
+
+                    }
+                    $('.'+value ).val(user[value]);
+                }
+            })
+//            if (!flag) {
+//                $(".submit").attr("disabled", true);
+//            }
         }
 
         function modifyEnterprise(){
@@ -135,25 +159,35 @@
                 }
             });
         }
-        //获取地址信息
-        function get_area(context){
+        /**
+         * 获取地址信息
+         * context:this
+         *flag 是否初始化true为初始化
+         */
+        function get_area(context,flag){
             formData.key = "LoadSubGroupList";
             formData.body={"type":"location","pageNo":1, "pageSize":1000};
             var name = context.name;
+            value = $(context).find("option:selected").attr("id");
             var parentId;
+            var selectDiv;
             if(name == "nation"){
-                parentId = null;
-            }else if(name == "city"){
-                var value = $(context).closest("div").find("[name='nation']").val();
-                parentId = value;
+                if(value == undefined){
+                    selectDiv=$(context);
+                    parentId = null;
+                }else{
+                    selectDiv = $(context).closest(".form-group").find("[name='province']");
+                    parentId = value;
+                }
             }else if(name == "province"){
-                var value = $(context).closest("div").find("[name='city']").val();
+                selectDiv = $(context).closest(".form-group").find("[name='city']")
                 parentId = value;
             }else{
                 return false;
             }
             formData.body.parentId =parentId;
-            $.ajax({
+
+            var ajaxData ={
                 type: 'post',
                 url:url,
                 data:JSON.stringify(formData),
@@ -162,9 +196,10 @@
                 success: function(data, textStatus){
                     data = JSON.parse(data);
                     if(data.code == 0){
-                        optionHtml ="";
-                        for(var i = 0;i<data)
-                        $(context).html();
+                        loadArea(data.body.list,selectDiv);
+                        if(value == undefined){
+                            get_area(context,true);
+                        }
                     }else{
                         return_error(data);
                     }
@@ -174,7 +209,23 @@
                 error: function(response){
                     alert('网络异常!')
                 }
-            });
+            };
+            if(flag){
+                ajaxData.async=false;
+            }
+            $.ajax(ajaxData);
+        }
+        /**
+         * 加载地区
+         * @param context
+         */
+        function loadArea(data,context){
+            optionHtml ="";
+            for(var i = 0;i<data.length;i++){
+                var area = data[i]
+                optionHtml = optionHtml + '<option value ="'+area.name+'" id="'+area.groupId+'">'+area.name+'</option>'
+            }
+            context.html(optionHtml);
         }
     </script>
     <title>个人中心</title>
@@ -217,31 +268,21 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">所在地区</label>
                         <div class="col-xs-6">
-                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span
-                                    class="certificationNo_error"></span></span>
                             <div class="col-xs-4" style="padding: 0px;">
-                                <select name="nation" class="form-control">
+                                <select name="nation" class="form-control nation">
                                     <option>国家</option>
                                 </select>
                             </div>
                             <div class="col-xs-4" style="padding: 0px;">
-                                <select name="province" class="form-control">
+                                <select name="province" class="form-control province">
                                     <option>省会</option>
                                 </select>
                             </div>
                             <div class="col-xs-4" style="padding: 0px;">
-                                <select name="city" class="form-control">
+                                <select name="city" class="form-control city">
                                     <option>城市</option>
                                 </select>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label">简介</label>
-                        <div class="col-xs-6">
-                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span
-                                    class="enterpriseDescription_error"></span></span>
-                            <textarea type="text" class="form-control enterpriseDescription" name="enterpriseDescription"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -252,7 +293,14 @@
                             <input type="text" class="form-control address" name="address">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">简介</label>
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span
+                                    class="enterpriseDescription_error"></span></span>
+                            <textarea type="text" class="form-control enterpriseDescription" name="enterpriseDescription"></textarea>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-xs-4"></div>
                         <div class="col-xs-4">
