@@ -16,10 +16,9 @@
             $("[name='province'],[name='nation']").change(function(){
                 get_area(this);
             });
-            get_area($("[name='nation']")[0],true);
-
-            //初始化页面信息
-            loadEnterpriseInformation();
+         //初始化页面信息
+            loadEnterpriseInformation(false);
+            init_area_if_none();
             //表单提交
             $('form[name="enterpriseInfo"]').bind("submit", function () {
                     var data = $(this).serializeObject();
@@ -79,12 +78,16 @@
         }
 
         //获取个人信息
-        function loadEnterpriseInformation(){
+        function loadEnterpriseInformation(async){
             formData.key="LoadEnterpriseInformation";
             formData.body={};
+            if(async == undefined){
+                async = true;
+            }
             $.ajax({
                 type: 'post',
                 url:url,
+                async:async,
                 data:JSON.stringify(formData),
                 beforeSend: function(XMLHttpRequest){
                 },
@@ -121,7 +124,13 @@
                     if(name.prop('tagName')=="SELECT") {
                         var select = name.find("option[value='"+user[value]+"']");
                         if(select.length == 0){
-                            name.html("option[value='"+user[value]+"']");
+                            context=name.parent().prev().children();
+                            if(context.length != 0){
+                                get_area(context[0],true);
+                                name.find("option[value='"+user[value]+"']").attr("selected",true);
+                            }else{
+                                return true;
+                            }
                         }else{
                             select.attr("selected",true);
                         }
@@ -158,74 +167,6 @@
                     alert('网络异常!')
                 }
             });
-        }
-        /**
-         * 获取地址信息
-         * context:this
-         *flag 是否初始化true为初始化
-         */
-        function get_area(context,flag){
-            formData.key = "LoadSubGroupList";
-            formData.body={"type":"location","pageNo":1, "pageSize":1000};
-            var name = context.name;
-            value = $(context).find("option:selected").attr("id");
-            var parentId;
-            var selectDiv;
-            if(name == "nation"){
-                if(value == undefined){
-                    selectDiv=$(context);
-                    parentId = null;
-                }else{
-                    selectDiv = $(context).closest(".form-group").find("[name='province']");
-                    parentId = value;
-                }
-            }else if(name == "province"){
-                selectDiv = $(context).closest(".form-group").find("[name='city']")
-                parentId = value;
-            }else{
-                return false;
-            }
-            formData.body.parentId =parentId;
-
-            var ajaxData ={
-                type: 'post',
-                url:url,
-                data:JSON.stringify(formData),
-                beforeSend: function(XMLHttpRequest){
-                },
-                success: function(data, textStatus){
-                    data = JSON.parse(data);
-                    if(data.code == 0){
-                        loadArea(data.body.list,selectDiv);
-                        if(value == undefined){
-                            get_area(context,true);
-                        }
-                    }else{
-                        return_error(data);
-                    }
-                },
-                complete: function(XMLHttpRequest, textStatus){
-                },
-                error: function(response){
-                    alert('网络异常!')
-                }
-            };
-            if(flag){
-                ajaxData.async=false;
-            }
-            $.ajax(ajaxData);
-        }
-        /**
-         * 加载地区
-         * @param context
-         */
-        function loadArea(data,context){
-            optionHtml ="";
-            for(var i = 0;i<data.length;i++){
-                var area = data[i]
-                optionHtml = optionHtml + '<option value ="'+area.name+'" id="'+area.groupId+'">'+area.name+'</option>'
-            }
-            context.html(optionHtml);
         }
     </script>
     <title>个人中心</title>

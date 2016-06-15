@@ -22,9 +22,12 @@
                 minDate:0,
             });
 
-            set_company_info();
-            get_occupation_info();
-
+            $("[name='category_1']").change(function(){
+                get_occupation_category(this);
+            });
+            get_occupation_info(false);
+            init_area_if_none();
+            init_occupation_category_if_none();
             $("form").bind("submit",function(){
                 var data =$(this).serializeObject();
                 //验证是否为空
@@ -80,6 +83,8 @@
                 return false;
             });
         });
+
+
         function init(){
             //薪水范围
             var minimusSalaryS='';
@@ -105,16 +110,16 @@
             $('[name="maximusSalary"]').html(maximusSalaryS);
 
         }
-        //填充默认公司信息
-        function set_company_info(){
-            var user = get_user_info();
-            $("input[name='enerpriseName']").val(user.username);
-        }
+
         //获取职位详情
-        function get_occupation_info(){
+        function get_occupation_info(async){
             var id = get_url_param("id");
+            if(async == undefined){
+                async = true;
+            }
             if(id == ''){
                 $('input[name="occupationId"]').remove();
+                loadEnterpriseInformation(async);
                 return false;
             }
             $('.form-head h2,title').html("编辑职位");
@@ -125,6 +130,7 @@
             $.ajax({
                 type: 'post',
                 url:url,
+                async:async,
                 data:JSON.stringify(formData),
                 beforeSend: function(XMLHttpRequest){
                 },
@@ -136,7 +142,19 @@
                             if(inputTemp.length>0){
                                 inputTemp.val(data.body[name]);
                             }else{
-                                $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]').attr("selected",true);;
+                                //地区
+                                if(name == "nation" || name == "province" || name == "city"){
+                                    var selectDiv = $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]');
+                                    if(selectDiv.length ==0){
+                                        context=name.parent().prev().children();
+                                        if(context.length != 0){
+                                            get_area(context[0],true);
+                                        }else{
+                                            continue;
+                                        }
+                                    }
+                                }
+                                $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]').attr("selected",true);
                             }
                         }
                     }else{
@@ -150,6 +168,66 @@
                     alert('网络异常!')
                 }
             });
+        }
+
+        //获取个人信息
+        function loadEnterpriseInformation(async){
+            formData.key="LoadEnterpriseInformation";
+            formData.body={};
+            if(async == undefined){
+                async = true;
+            }
+            $.ajax({
+                type: 'post',
+                url:url,
+                async:async,
+                data:JSON.stringify(formData),
+                beforeSend: function(XMLHttpRequest){
+                },
+                success: function(data, textStatus){
+                    data = JSON.parse(data);
+                    if(data.code == 0){
+                        loadEnterpriseInfoToHtml(data.body)
+                    }else{
+                        return_error(data);
+                    }
+                },
+                complete: function(XMLHttpRequest, textStatus){
+                },
+                error: function(response){
+                    alert('网络异常!')
+                }
+            });
+        }
+        /**
+         * 将公司信息装入html
+         * @param user
+         */
+        function loadEnterpriseInfoToHtml(user){
+            $.each(['name','nation','province','city','address','enterpriseDescription'], function (n, value) {
+                if (user[value] == undefined) {
+
+                } else {
+                    var name = $('.'+value );
+                    if(name.prop('tagName')=="SELECT") {
+                        var select = name.find("option[value='"+user[value]+"']");
+                        if(select.length == 0){
+                            context=name.parent().prev().children();
+                            if(context.length != 0){
+                                get_area(context[0],true);
+                                name.find("option[value='"+user[value]+"']").attr("selected",true);
+                            }else{
+                                return true;
+                            }
+                        }else{
+                            select.attr("selected",true);
+                        }
+
+                    }else{
+                        $('.'+value ).val(user[value]);
+                    }
+                }
+            })
         }
 
     </script>
@@ -182,7 +260,12 @@
 
                         <div class="col-xs-6">
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="category_error"></span></span>
-                            <input type="text" class="form-control" name="category">
+                            <div class="col-xs-6" style="padding: 0px;">
+                                <select  class="form-control category_1" name="category_1"></select>
+                            </div>
+                            <div class="col-xs-6" style="padding: 0px;">
+                                <select  class="form-control category_2" name="category_2"></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -196,14 +279,36 @@
                             <select class="form-control" name="maximusSalary" style="width: 40%;float: left;"></select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label">地点</label>
 
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">所在地区</label>
                         <div class="col-xs-6">
-                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="address_error"></span></span>
-                            <input type="text" class="form-control" name="address">
+                            <div class="col-xs-4" style="padding: 0px;">
+                                <select name="nation" class="form-control nation">
+                                    <option>国家</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4" style="padding: 0px;">
+                                <select name="province" class="form-control province">
+                                    <option>省会</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4" style="padding: 0px;">
+                                <select name="city" class="form-control city">
+                                    <option>城市</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">地址</label>
+                        <div class="col-xs-6">
+                            <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span
+                                    class="address_error"></span></span>
+                            <input type="text" class="form-control address" name="address">
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="col-xs-3 control-label">岗位有效天数</label>
 
@@ -224,7 +329,16 @@
 
                         <div class="col-xs-6">
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="workingAge_error"></span></span>
-                            <input type="text" class="form-control" name="workingAge">
+                            <select class="form-control" name="workingAge">
+                                <option value="0">应届毕业生</option>
+                                <option value="1">一年以上</option>
+                                <option value="2">两年以上</option>
+                                <option value="3">三年以上</option>
+                                <option value="4">四年以上</option>
+                                <option value="5">五年以上</option>
+                                <option value="6">六年以上</option>
+                                <option value="7">七年以上</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -240,7 +354,7 @@
 
                         <div class="col-xs-6">
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="enerpriseName_error"></span></span>
-                            <input type="text" class="form-control" name="enerpriseName">
+                            <input type="text" class="form-control name" name="enerpriseName">
                         </div>
                     </div>
                     <div class="form-group">
@@ -248,7 +362,7 @@
 
                         <div class="col-xs-6">
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="enterpriseDescription_error"></span></span>
-                            <textarea type="text" class="form-control" name="enterpriseDescription" style="height: 100px"></textarea>
+                            <textarea type="text" class="form-control enterpriseDescription" name="enterpriseDescription" style="height: 100px"></textarea>
                         </div>
                     </div>
                     <div class="form-group">

@@ -5,6 +5,7 @@ var url="http://47.89.38.171/HGZGZ/interface";
 var origin  = "http://localhost:63342";
 var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html'];
 var type =0;
+var loginFlage =true; //登录失效标识
 var page
 var user={
     "username":null,
@@ -112,8 +113,11 @@ function bing_event(){
 //返回错误处理
 function return_error(data){
     if(data.code==8 || data.code == 10){
-        var body=$('<p>'+data.message+'</p>')
-        $.poplayer({body:body,btnFunc:login});
+        if(loginFlage){
+            var body=$('<p>'+data.message+'</p>')
+            $.poplayer({body:body,btnFunc:login});
+            loginFlage = false;
+        }
     }else{
         var body=$('<p>'+data.message+'</p>')
         $.poplayer({body:body});
@@ -193,3 +197,141 @@ function nav_select(){
         }
     })
 }
+
+/**
+ * 获取地址信息
+ * context:this
+ *sync 是否同步
+ */
+function get_area(context,sync){
+    formData.key = "LoadSubGroupList";
+    formData.body={"type":"location","pageNo":1, "pageSize":1000};
+    var name = context.name;
+    value = $(context).find("option:selected").attr("id");
+    var parentId;
+    var selectDiv;
+    if(name == "nation"){
+        if(value == undefined){
+            selectDiv=$(context);
+            parentId = null;
+        }else{
+            selectDiv = $(context).closest(".form-group").find("[name='province']");
+            parentId = value;
+        }
+    }else if(name == "province"){
+        selectDiv = $(context).closest(".form-group").find("[name='city']")
+        parentId = value;
+    }else{
+        return false;
+    }
+    formData.body.parentId =parentId;
+
+    var ajaxData ={
+        type: 'post',
+        url:url,
+        data:JSON.stringify(formData),
+        beforeSend: function(XMLHttpRequest){
+        },
+        success: function(data, textStatus){
+            data = JSON.parse(data);
+            if(data.code == 0){
+                load_area_and_category(data.body.list,selectDiv);
+                if(value == undefined){
+                    get_area(context,true);
+                }
+            }else{
+                return_error(data);
+            }
+        },
+        complete: function(XMLHttpRequest, textStatus){
+        },
+        error: function(response){
+            alert('网络异常!')
+        }
+    };
+    if(sync){
+        ajaxData.async=false;
+    }
+    $.ajax(ajaxData);
+}
+/**
+ * 加载地区和岗位类型
+ * @param context
+ */
+function load_area_and_category(data,context){
+    optionHtml ="";
+    for(var i = 0;i<data.length;i++){
+        var area = data[i]
+        optionHtml = optionHtml + '<option value ="'+area.name+'" id="'+area.groupId+'">'+area.name+'</option>'
+    }
+    context.html(optionHtml);
+}
+
+/*
+获取岗位类型
+ */
+function get_occupation_category(context,sync){
+    formData.key = "LoadSubGroupList";
+    formData.body={"type":"occupation","pageNo":1, "pageSize":1000};
+    var name = context.name;
+    value = $(context).find("option:selected").attr("id");
+    var parentId;
+    var selectDiv;
+    if(name == "category_1"){
+        if(value == undefined){
+            selectDiv=$(context);
+            parentId = null;
+        }else{
+            selectDiv = $(context).closest(".form-group").find("[name='category_2']");
+            parentId = value;
+        }
+    }else{
+        return false;
+    }
+    formData.body.parentId =parentId;
+
+    var ajaxData ={
+        type: 'post',
+        url:url,
+        data:JSON.stringify(formData),
+        beforeSend: function(XMLHttpRequest){
+        },
+        success: function(data, textStatus){
+            data = JSON.parse(data);
+            if(data.code == 0){
+                load_area_and_category(data.body.list,selectDiv);
+                if(value == undefined){
+                    get_occupation_category(context,true);
+                }
+            }else{
+                return_error(data);
+            }
+        },
+        complete: function(XMLHttpRequest, textStatus){
+        },
+        error: function(response){
+            alert('网络异常!')
+        }
+    };
+    if(sync){
+        ajaxData.async=false;
+    }
+    $.ajax(ajaxData);
+}
+//初始化地区如果地区没有被初始化
+function init_area_if_none(){
+    var nation = $("[name='nation']");
+    var province = $("[name='province']");
+    if(nation.find("option:selected").attr("value") ==undefined){
+        get_area(nation[0],true);
+    }
+}
+
+//初始化职位如果职位没有被初始化
+function init_occupation_category_if_none(){
+    var category = $("[name='category_1']");
+    if(category.find("option:selected").attr("value") ==undefined){
+        get_occupation_category(category[0],true);
+    }
+}
+
