@@ -196,7 +196,8 @@ footer>p,footer a,footer a:hover,footer a:active{
     background-color: transparent;
     text-decoration: none;
 }
-.sort li a:hover,.sort li a:active, .filter-condition li a:hover,.filter-condition li a:active,.sort .selected{
+.sort li a:hover,.sort li a:active, .filter-condition li a:hover,.filter-condition li a:active,
+.sort .selected,.filter-condition .income a:active,.filter-condition .area a:active,.filter-condition .selected{
     background-color: #00b38a;
     color: #fff;
 }

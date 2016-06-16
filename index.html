@@ -18,6 +18,9 @@
     </style>
     <script>
         var orderType ="start_time";
+        var cityFilter=null;
+        var minimusSalaryFilter =null;
+        var maximusSalaryFilter =null;
         var title =null;
         //分页处理
         loading=function(flag){
@@ -48,12 +51,43 @@
            set_user_info_html();
            loadOccupationList("start_time");
            $("#start_time").addClass("selected");
+           //筛选
            $('.sort a').click(function(){
                $('.sort a').removeClass("selected");
                $(this).addClass("selected");
                orderType=this.id;
                nextPage =1;
-               loadOccupationList();
+               loadOccupationList(true);
+           })
+           $('.area a,.income a').click(function(){
+               var filterType = $(this).closest("li");
+               var type= filterType.attr("type")
+               var flag =$(this).hasClass("selected");
+               filterType.find("a").removeClass("selected");
+               if(!flag){
+                   $(this).addClass("selected");
+                   if(type == 'income'){
+                       incomeList = $(this).attr("value").split("-");
+                       minimusSalaryFilter=incomeList[0];
+                       maximusSalaryFilter=incomeList[1];
+                   }else if(type == 'area'){
+                       cityFilter = $(this).attr("value");
+                   }else{
+                       return false;
+                   }
+               }else{
+                   if(type == 'income'){
+                       incomeList = this.value.split("-");
+                       minimusSalaryFilter=null;
+                       maximusSalaryFilter=null;
+                   }else if(type == 'area'){
+                       cityFilter = null;
+                   }else{
+                       return false;
+                   }
+               }
+               nextPage =1;
+               loadOccupationList(true);
            })
             //搜索
             $('.search-button').click(search);
@@ -70,9 +104,7 @@
                 /* 	console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());
                  console.log("页面的文档高度 ："+$(document).height());
                  console.log('浏览器的高度：'+$(window).height()); */
-                formData.key="LoadOccupationList";
-                formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
-                loadData(success,loading,JSON.stringify(formData),false);
+                loadOccupationList(false);
             }
         });
         //搜索
@@ -84,14 +116,20 @@
                 title=search;
             }
             nextPage =1;
-            loadOccupationList();
+            loadOccupationList(true);
         }
-       function loadOccupationList(){
+        /**
+         * 加载岗位列表
+         * @param flag
+         */
+       function loadOccupationList(flag){
            formData.key="LoadOccupationList"
-           formData.body={title:null,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
+           formData.body={title:null,category:null,salary:null,city:cityFilter,minimusSalary:maximusSalaryFilter,maximusSalary:maximusSalaryFilter,enterpriseName:null,city:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
            formData.body.order=orderType;
-           formData.body.title=title;
-           loadData(success,loading,JSON.stringify(formData),true);
+           formData.body.city=cityFilter;
+           formData.body.minimusSalary=minimusSalaryFilter;
+           formData.body.maximusSalary=maximusSalaryFilter;
+           loadData(success,loading,JSON.stringify(formData),flag);
        }
        //加载列表到html
        function loadOccupationListToHtml(occupationList){
@@ -211,20 +249,20 @@
                         </div>
                     </div>
                     <ul class="filter-condition">
-                        <li>
+                        <li class="area"  type="area">
                             <span class="title">工作地点:</span>
-                            <a>北京</a>
-                            <a>上海</a>
-                            <a>杭州</a>
-                            <a>广州</a>
+                            <a value="北京">北京</a>
+                            <a value="上海">上海</a>
+                            <a value="杭州">杭州</a>
+                            <a value="广州">广州</a>
                             <a class="btn-more" href="javascript:;">
                                 更多 
                             </a>
                         </li>
-                        <li>
+                        <li class="income" type="income">
                             <span class="title">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪:</span>
-                            <a>10-15万</a>
-                            <a>15-20万</a>
+                            <a value="10-15">10-15万</a>
+                            <a  value="15-20">15-20万</a>
 
                             <a class="btn-more" href="javascript:;">
                                 更多 
