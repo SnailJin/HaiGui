@@ -19,11 +19,15 @@
                 format:'Y-m-d',
                 timepicker:false,
                 startDate:new Date(),
-                minDate:0,
+                minDate:0
             });
 
-            $("[name='category_1']").change(function(){
+            $("[name='category1']").change(function(){
                 get_occupation_category(this);
+            });
+            //地区列表
+            $("[name='province'],[name='nation']").change(function(){
+                get_area(this);
             });
             get_occupation_info(false);
             init_area_if_none();
@@ -53,7 +57,14 @@
                 if(!flag){
                     return false;
                 }
-                formData.key="AddOccupation";
+                if($("[name='occupationId']").val() != undefined){
+                    formData.key="ModifyOccupation"
+                    message ="修改成功!"
+                }else{
+                    formData.key="AddOccupation";
+                    message ="添加成功!"
+                }
+
                 formData.body={}
                 formData.body=data;
                 $.ajax({
@@ -65,7 +76,7 @@
                     success: function(data, textStatus){
                         data = JSON.parse(data);
                         if(data.code == 0){
-                            var body=$('<p>添加成功</p>');
+                            var body=$('<p>'+message+'</p>');
                             btnFunc=function(){
                                 window.location="company_index.html?type=1&id="+data.body.occupationId
                             }
@@ -141,22 +152,20 @@
                             var inputTemp =  $("input[name='"+name+"'],textarea[name='"+name+"']");
                             if(inputTemp.length>0){
                                 inputTemp.val(data.body[name]);
-                            }else{
-                                //地区
-                                if(name == "nation" || name == "province" || name == "city"){
-                                    var selectDiv = $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]');
-                                    if(selectDiv.length ==0){
-                                        context=name.parent().prev().children();
-                                        if(context.length != 0){
-                                            get_area(context[0],true);
-                                        }else{
-                                            continue;
-                                        }
-                                    }
-                                }
-                                $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]').attr("selected",true);
                             }
                         }
+                        $.each(["nation","province","city"],function(n,name){
+                            var selectDiv = $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]');
+                            if(selectDiv.length ==0){
+                                context=$("select[name='"+name+"']").parent().prev().children();
+                                if(context.length != 0){
+                                    get_area(context[0],true);
+                                }else{
+                                    return true;
+                                }
+                            }
+                            $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]').attr("selected",true);
+                        });
                     }else{
                         return_error(data);
                         $(".submit").attr("disabled", true);
@@ -261,10 +270,10 @@
                         <div class="col-xs-6">
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="category_error"></span></span>
                             <div class="col-xs-6" style="padding: 0px;">
-                                <select  class="form-control category_1" name="category_1"></select>
+                                <select  class="form-control category1" name="category1"></select>
                             </div>
                             <div class="col-xs-6" style="padding: 0px;">
-                                <select  class="form-control category_2" name="category_2"></select>
+                                <select  class="form-control category2" name="category2"></select>
                             </div>
                         </div>
                     </div>
@@ -329,7 +338,7 @@
 
                         <div class="col-xs-6">
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="workingAge_error"></span></span>
-                            <select class="form-control" name="workingAge">
+                            <select class="form-control" name="minimusAge">
                                 <option value="0">应届毕业生</option>
                                 <option value="1">一年以上</option>
                                 <option value="2">两年以上</option>
@@ -346,7 +355,7 @@
 
                         <div class="col-xs-6">
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="decription_error"></span></span>
-                            <textarea class="form-control" name="decription" style="height: 100px"></textarea>
+                            <textarea class="form-control" name="description" style="height: 100px"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -354,7 +363,7 @@
 
                         <div class="col-xs-6">
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="enerpriseName_error"></span></span>
-                            <input type="text" class="form-control name" name="enerpriseName">
+                            <input type="text" class="form-control name" name="enterpriseName">
                         </div>
                     </div>
                     <div class="form-group">

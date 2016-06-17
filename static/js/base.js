@@ -226,9 +226,13 @@ function get_area(context,sync){
     }
     formData.body.parentId =parentId;
 
-    var ajaxData ={
+    if(sync == undefined){
+        sync=true;
+    }
+    $.ajax({
         type: 'post',
         url:url,
+        async:!sync,
         data:JSON.stringify(formData),
         beforeSend: function(XMLHttpRequest){
         },
@@ -239,6 +243,7 @@ function get_area(context,sync){
                 if(value == undefined){
                     get_area(context,true);
                 }
+                return true;
             }else{
                 return_error(data);
             }
@@ -248,11 +253,7 @@ function get_area(context,sync){
         error: function(response){
             alert('网络异常!')
         }
-    };
-    if(sync){
-        ajaxData.async=false;
-    }
-    $.ajax(ajaxData);
+    });
 }
 /**
  * 加载地区和岗位类型
@@ -277,12 +278,12 @@ function get_occupation_category(context,sync){
     value = $(context).find("option:selected").attr("id");
     var parentId;
     var selectDiv;
-    if(name == "category_1"){
+    if(name == "category1"){
         if(value == undefined){
             selectDiv=$(context);
             parentId = null;
         }else{
-            selectDiv = $(context).closest(".form-group").find("[name='category_2']");
+            selectDiv = $(context).closest(".form-group").find("[name='category2']");
             parentId = value;
         }
     }else{
@@ -321,15 +322,18 @@ function get_occupation_category(context,sync){
 //初始化地区如果地区没有被初始化
 function init_area_if_none(){
     var nation = $("[name='nation']");
-    var province = $("[name='province']");
+    var city = $("[name='city']");
     if(nation.find("option:selected").attr("value") ==undefined){
         get_area(nation[0],true);
+    }
+    if(city.find("option:selected").attr("value") ==undefined){
+        get_area($("[name='province']")[0],true);
     }
 }
 
 //初始化职位如果职位没有被初始化
 function init_occupation_category_if_none(){
-    var category = $("[name='category_1']");
+    var category = $("[name='category1']");
     if(category.find("option:selected").attr("value") ==undefined){
         get_occupation_category(category[0],true);
     }

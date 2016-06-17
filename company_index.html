@@ -92,24 +92,31 @@
                var job =$("#job_clone").clone();
                var occupation = occupationList[i];
                job.find(".title").text(occupation.title);
-               job.find(".title").click(function(){
-                   var id =$(this).closest(".job").find("[name='occupationId']").val();
-                   window.location ="job_detail.html?id="+id;
-               });
+//               job.find(".title").click(function(){
+//                   var id =$(this).closest(".job").find("[name='occupationId']").val();
+//                   window.location ="job_detail.html?id="+id;
+//               });
                job.find(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
                //job.find(".city").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
-               job.find(".workingAge").text(occupation.workingAge+"以上工作经验");
+               job.find(".minimusAge").text(occupation.minimusAge+"以上工作经验");
                job.find(".time-info").text(occupation.startTime);
                job.find(".category").text(occupation.category);
-               job.find("[name='occupationId']").val(occupation.occupationId);
+               job.find("[name='occupationId']").val(occupation.occupationId).attr("id",occupation.occupationId);
                job.find(".update").attr("href","pulish_job.html?id="+occupation.occupationId);
-               job.find(".delete").css("cursor","pointer").bind("click",function(){
-                  var jobClass =$(this).closest('.job');
-                   var body=$('<p>确认下线'+jobClass.find('.title').text()+' 职位!</p>');
-                   delId =jobClass.find("[name='occupationId']").val();
-                   btnFunc=delOoccupation;
-                   $.poplayer({body:body,btnFunc:btnFunc});
-               })
+               if(occupation.availableDays >0){
+                   job.find(".delete").css("cursor","pointer").bind("click",function(){
+                       var jobClass =$(this).closest('.job');
+                       var body=$('<p>确认下线'+jobClass.find('.title').text()+' 职位!</p>');
+                       delId =jobClass.find("[name='occupationId']").val();
+                       btnFunc=delOoccupation;
+                       $.poplayer({body:body,btnFunc:btnFunc});
+                   })
+               }else{
+                   job.find(".delete").remove();
+                   job.find(".offline").text("（已经下线）");
+
+               }
+
                $("#list").append(job.children());
            }
         }
@@ -130,7 +137,10 @@
                     if(data.code == 0){
                         var body=$('<p>下线成功!</p>')
                         $.poplayer({body:body});
-                        $('[name="'+delId+'"]').remove();
+                        var row = $('#'+delId).closest(".row")
+                        row.find(".offline").text("（已经下线）");
+                        row.find(".delete").remove();
+
                     }else{
                         return_error(data);
                     }
@@ -201,13 +211,13 @@
         <input type="hidden" name="occupationId">
         <div class="col-xs-6 job-info">
             <div class="row">
-                <h4 class="title"></h4>
+                <h4 ><span class="title"></span><span class="offline"></span></h4>
             </div>
             <div class="row">
                 <p class="job-desc">
                     <span class="salary" style="border: 0px;padding-left: 0px;color: red;">15-20万</span>
                     <span class="city">杭州</span>
-                    <span class="workingAge">1年以上工作经验</span>
+                    <span class="minimusAge">1年以上工作经验</span>
                 </p>
             </div>
             <div class="row">
