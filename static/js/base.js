@@ -1,9 +1,13 @@
 /**
  * Created by liguang.jin on 2016/3/31.
  */
+ //测试
 var url="http://47.89.38.171/HGZGZ/interface";
-var origin  = "http://localhost:63342";
 var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html'];
+//正式
+//var url = window.location.origin + "/interface/";
+//var noLoginList = ['/login.html','/register.html'];
+
 var type =0;
 var loginFlage =true; //登录失效标识
 var page
@@ -226,13 +230,9 @@ function get_area(context,sync){
     }
     formData.body.parentId =parentId;
 
-    if(sync == undefined){
-        sync=true;
-    }
-    $.ajax({
+    var ajaxData ={
         type: 'post',
         url:url,
-        async:!sync,
         data:JSON.stringify(formData),
         beforeSend: function(XMLHttpRequest){
         },
@@ -243,7 +243,6 @@ function get_area(context,sync){
                 if(value == undefined){
                     get_area(context,true);
                 }
-                return true;
             }else{
                 return_error(data);
             }
@@ -253,7 +252,11 @@ function get_area(context,sync){
         error: function(response){
             alert('网络异常!')
         }
-    });
+    };
+    if(sync){
+        ajaxData.async=false;
+    }
+    $.ajax(ajaxData);
 }
 /**
  * 加载地区和岗位类型
@@ -278,12 +281,12 @@ function get_occupation_category(context,sync){
     value = $(context).find("option:selected").attr("id");
     var parentId;
     var selectDiv;
-    if(name == "category1"){
+    if(name == "category_1"){
         if(value == undefined){
             selectDiv=$(context);
             parentId = null;
         }else{
-            selectDiv = $(context).closest(".form-group").find("[name='category2']");
+            selectDiv = $(context).closest(".form-group").find("[name='category_2']");
             parentId = value;
         }
     }else{
@@ -322,18 +325,15 @@ function get_occupation_category(context,sync){
 //初始化地区如果地区没有被初始化
 function init_area_if_none(){
     var nation = $("[name='nation']");
-    var city = $("[name='city']");
+    var province = $("[name='province']");
     if(nation.find("option:selected").attr("value") ==undefined){
         get_area(nation[0],true);
-    }
-    if(city.find("option:selected").attr("value") ==undefined){
-        get_area($("[name='province']")[0],true);
     }
 }
 
 //初始化职位如果职位没有被初始化
 function init_occupation_category_if_none(){
-    var category = $("[name='category1']");
+    var category = $("[name='category_1']");
     if(category.find("option:selected").attr("value") ==undefined){
         get_occupation_category(category[0],true);
     }
