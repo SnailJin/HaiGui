@@ -2,11 +2,11 @@
  * Created by liguang.jin on 2016/3/31.
  */
  //测试
-var url="http://47.89.38.171/HGZGZ/interface";
-var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html'];
+//var url="http://47.89.38.171/HGZGZ/interface";
+//var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html'];
 //正式
-//var url = window.location.origin + "/interface/";
-//var noLoginList = ['/login.html','/register.html'];
+var url = window.location.origin + "/interface/";
+var noLoginList = ['/login.html','/register.html','/index.html'];
 
 var type =0;
 var loginFlage =true; //登录失效标识
@@ -30,8 +30,6 @@ $(function(){
     init_html();
     bing_event();
     isLogin();
-    //注销
-    ;
 });
 //登录
 function isLogin(){
@@ -100,8 +98,15 @@ function get_user_info(){
 function set_user_info_html(){
     user = get_user_info();
     var userContent =$('.user-content');
-    userContent.find("#username").html(user.username);
-    userContent.find("#email").html(user.email);
+    if(user == null ){
+        return;
+    }
+    if(user.username != undefined){
+        userContent.find("#username").html(user.username);
+    }
+    if(user.email != undefined){
+        userContent.find("#email").html(user.email);
+    }
 }
 
 //绑定事件

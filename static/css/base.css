@@ -26,11 +26,11 @@ header{
 }
 .logo{
     float: left;
-    padding: 3px 15px;
+    padding: 0px 15px 3px 15px;
 }
 .logo img{
-    width: 210px;
-    height:70px;
+    width: 200px;
+    height:60px;
 }
 .nav-title,.nav-message{
     margin: 0px;
