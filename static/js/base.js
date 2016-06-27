@@ -5,7 +5,7 @@
 //var url="http://47.89.38.171/HGZGZ/interface";
 //var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html'];
 //正式
-var url = window.location.origin + "/interface/";
+var url = window.location.origin + "/HGZGZ/interface";
 var noLoginList = ['/login.html','/register.html','/index.html'];
 
 var type =0;
