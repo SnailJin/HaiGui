@@ -39,6 +39,7 @@
                 formData.body.password=hex_md5(formData.body.password);
                 formData.body.password1='';
                 formData.body.userNameType=1;
+                eamil = formData.body.userName;
                 $.ajax({
                     type: 'post',
                     url:url,
@@ -48,8 +49,7 @@
                     success: function(data, textStatus){
                         data = JSON.parse(data);
                         if(data.code == 0){
-                            var body=$('<p>'+'激活邮件已经发送的你，请注意查收!'+'</p>')
-                            $.poplayer({body:body});
+                            SendActiveUserEmail(eamil);
                         }else{
                             return_error(data);
                         }
@@ -64,6 +64,32 @@
 
             });
         });
+        //发送激活验证邮件
+        function SendActiveUserEmail(email){
+            formData.key="SendActiveUserVerifyCode";
+            formData.body={"userName":email};
+            $.ajax({
+                type: 'post',
+                url:url,
+                data:JSON.stringify(formData),
+                beforeSend: function(XMLHttpRequest){
+                },
+                success: function(data, textStatus){
+                    data = JSON.parse(data);
+                    if(data.code == 0){
+                        var body=$('<p>'+'激活邮件已经发送的你，请注意查收!'+'</p>')
+                        $.poplayer({body:body});
+                    }else{
+                        return_error(data);
+                    }
+                },
+                complete: function(XMLHttpRequest, textStatus){
+                },
+                error: function(response){
+                    alert('网络异常!')
+                }
+            });
+        }
         //校验制字段
         function validate_fileds(data){
             var flag = true;

@@ -286,12 +286,12 @@ function get_occupation_category(context,sync){
     value = $(context).find("option:selected").attr("id");
     var parentId;
     var selectDiv;
-    if(name == "category_1"){
+    if(name == "category1"){
         if(value == undefined){
             selectDiv=$(context);
             parentId = null;
         }else{
-            selectDiv = $(context).closest(".form-group").find("[name='category_2']");
+            selectDiv = $(context).closest(".form-group").find("[name='category2']");
             parentId = value;
         }
     }else{
@@ -338,7 +338,7 @@ function init_area_if_none(){
 
 //初始化职位如果职位没有被初始化
 function init_occupation_category_if_none(){
-    var category = $("[name='category_1']");
+    var category = $("[name='category1']");
     if(category.find("option:selected").attr("value") ==undefined){
         get_occupation_category(category[0],true);
     }
