@@ -6,7 +6,7 @@
 //var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html'];
 //正式
 var url = window.location.origin + "/HGZGZ/interface";
-var noLoginList = ['/login.html','/register.html','/index.html'];
+var noLoginList = ['/login.html','/register.html','/index.html',"/"];
 
 var type =0;
 var loginFlage =true; //登录失效标识
