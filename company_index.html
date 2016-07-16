@@ -20,6 +20,7 @@
         var type=1;
         var delId='';
         var title =null;
+        var expire = 1; //是否有效
         //分页处理
         loading=function(flag){
             if(flag){
@@ -48,6 +49,16 @@
         $(function(){
             set_user_info_html();
             loadOccupationList();
+            //排序
+            $(".sort a").eq(0).addClass("selected");
+            //筛选
+            $('.sort a').click(function(){
+                $('.sort a').removeClass("selected");
+                $(this).addClass("selected");
+                expire= $(this).attr("value");
+                nextPage =1;
+                loadOccupationList();
+            })
             //搜索
             $('.search-button').click(search);
             $('.search-input').keypress(function(e){
@@ -64,7 +75,7 @@
                  console.log("页面的文档高度 ："+$(document).height());
                  console.log('浏览器的高度：'+$(window).height()); */
                 formData.key="LoadOccupationList";
-                formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize,"expire":1};
+                formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize,"expire":expire};
                 formData.body.enterpriseId=user.userId;
                 loadData(success,loading,JSON.stringify(formData),false);
             }
@@ -82,7 +93,7 @@
         }
         function loadOccupationList(){
             formData.key="LoadOccupationList";
-            formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize,"expire":1};
+            formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize,"expire":expire};
             formData.body.enterpriseId=user.userId;
             loadData(success,loading,JSON.stringify(formData),true);
         }
@@ -190,6 +201,17 @@
                         </div>
                     </div>
                 </div>
+                <!-- 排序 -->
+
+                <ul class="sort">
+                    <li>
+                        <span class="title">岗位筛选:</span>
+                        <a value="1">全部</a>
+                        <a value="0">有效</a>
+                        <a value="2">无效</a>
+                    </li>
+                </ul>
+
                 <div id="list" style="padding: 20px 0 0 0;"></div>
 
 

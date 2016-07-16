@@ -1,6 +1,6 @@
 load_next_page=true;
 var nextPage=1
-var pageSize=2;;
+var pageSize=10;
 var totalheight = 0;
 var has_load=false;
 var isClear=false;

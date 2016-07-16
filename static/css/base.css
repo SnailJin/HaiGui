@@ -54,7 +54,7 @@ header{
 }
 .nav-message li i{
     line-height: 64px;
-    color: #6EC19E;
+    color: #4A91D2;
     font-size: 19px;
     cursor: pointer;
 }
@@ -73,7 +73,7 @@ header{
 }
 .nav-title li:hover,.nav-title li:hover a,.nav-title li:active a,.nav-title .select a,.nav-title .select{
     color: #fff;
-    background-color: #56CC99;
+    background-color: #4E8FCA;
 }
 .nav-title a{
     font-size: 16px;
@@ -115,7 +115,7 @@ footer>p,footer a,footer a:hover,footer a:active{
     position: absolute;
     display: block;
     border-top: 8px solid transparent;
-    border-right: 15px solid #91cebe;
+    border-right: 15px solid #4E8FCA;
 }
 .control-label{
     text-align: right;
@@ -146,6 +146,11 @@ footer>p,footer a,footer a:hover,footer a:active{
 .user_info .user-content{
     margin: 10px 0px;
 }
+.icon-font{
+    position: relative;
+    top: -2px;
+    line-height: 20px;
+}
 
 .search{
     padding: 0px 15px;
@@ -155,7 +160,7 @@ footer>p,footer a,footer a:hover,footer a:active{
     height: 37px;
     width: 80%;
     font-size: 14px;
-    border: 2px solid #00b38a;
+    border: 2px solid #4A91D2;
     cursor: pointer;
     margin: 0px;
 }
@@ -164,8 +169,8 @@ footer>p,footer a,footer a:hover,footer a:active{
     width: 19.4%;
     color: #FFF;
     font-size: 18px;
-    border: 2px solid #00b38a;
-    background: #00b38a;
+    border: 2px solid #4A91D2;
+    background: #4A91D2;
     cursor: pointer;
     position: relative;
     left: -5px;
@@ -199,13 +204,16 @@ footer>p,footer a,footer a:hover,footer a:active{
 }
 .sort li a:hover,.sort li a:active, .filter-condition li a:hover,.filter-condition li a:active,
 .sort .selected,.filter-condition .income a:active,.filter-condition .area a:active,.filter-condition .selected{
-    background-color: #00b38a;
+    background-color: #4A91D2;
     color: #fff;
 }
 .filter-condition .btn-more{
     float: right;
+    height: 25px;
 }
-
+.filter-condition .area_input,.filter-condition .income_input,.filter-condition .area_more,.filter-condition .income_more{
+    display: none;
+}
 .job{
     border: 1px solid #e8e8e8;
     padding: 15px 20px;
@@ -213,6 +221,7 @@ footer>p,footer a,footer a:hover,footer a:active{
 }
 .job .title{
     cursor: pointer;
+    color: #4E8FCA;
 }
 .job-info{
     border-right: 1px dotted #8197a2;
@@ -311,7 +320,7 @@ footer>p,footer a,footer a:hover,footer a:active{
     position: relative;
 }
 .base-panel h2{
-    background-color: #91cebe;
+    background-color: #4E8FCA;
     max-width: 240px;
     padding:6px 20px ;
     color: #ffffff;
@@ -339,7 +348,7 @@ footer>p,footer a,footer a:hover,footer a:active{
 }
 
 .blod-left{
-    border-left: 8px solid #019875;
+    border-left: 8px solid #3E77AB;
     margin-top: 20px;
     height: 28px;
     line-height: 28px;

@@ -49,8 +49,17 @@
         };
        $(function(){
            set_user_info_html();
+           init_sSalaryS();
            loadOccupationList("start_time");
            $("#start_time").addClass("selected");
+
+           //地区列表
+           $("[name='province'],[name='nation']").change(function(){
+               get_area(this);
+           });
+           init_area_if_none();
+           get_area($('[name="province"]')[0],true);
+
            //筛选
            $('.sort a').click(function(){
                $('.sort a').removeClass("selected");
@@ -64,6 +73,9 @@
                var type= filterType.attr("type")
                var flag =$(this).hasClass("selected");
                filterType.find("a").removeClass("selected");
+               if($(this).hasClass("btn-more")){
+                   return true;
+               }
                if(!flag){
                    $(this).addClass("selected");
                    if(type == 'income'){
@@ -86,9 +98,47 @@
                        return false;
                    }
                }
+
                nextPage =1;
                loadOccupationList(true);
            })
+           $('[name="minimusSalary"], [name="maximusSalary"], [name="city"]').change(function(){
+               name = $(this).attr("name") ;
+               value = $(this).val();
+               if(name == "minimusSalary"){
+                   var maximusSalary =  $(' [name="maximusSalary"]').val();
+                   if(parseInt(value)>= parseInt(maximusSalary)){
+                       maximusSalary = parseInt(value)+5;
+                       $(' [name="maximusSalary"]').val(maximusSalary);
+                   }
+                   $("#income_input").text(value+"-"+maximusSalary+"万").attr("value",value+"-"+maximusSalary).show();
+               }else if(name == "maximusSalary"){
+                   var minimusSalary =  $(' [name="minimusSalary"]').val();
+                   if(parseInt(minimusSalary)>= parseInt(value)){
+                       minimusSalary = parseInt(value)-5;
+                       $(' [name="minimusSalary"]').val(minimusSalary);
+                   }
+                   $("#income_input").text(minimusSalary+"-"+value+"万").attr("value",minimusSalary+"-"+value).show();
+               }else if(name == "city"){
+                   $("#area_input").text(value).attr("value",value).show();
+               }else{
+                   return false;
+               }
+           })
+
+           $(".btn-more").click(function() {
+                       content = $(this).closest("li").next();
+                       if (content.is(":hidden")) {
+                           content.show();
+                           $(this).text("收起");
+                       } else {
+                           content.hide();
+                           $(this).text("更多");
+                       }
+                   }
+           )
+
+
             //搜索
             $('.search-button').click(search);
            $('.search-input').keypress(function(e){
@@ -225,6 +275,32 @@
             });
         }
 
+        function init_sSalaryS(){
+            //薪水范围
+            var minimusSalaryS='';
+            var maximusSalaryS='';
+            for(var i =5 ;i<100;i++){
+                if(i==10){
+                    minimusSalaryS=minimusSalaryS+'<option value="'+i+'" selected = "selected" >'+i+'万</option>';
+                }else{
+                    minimusSalaryS=minimusSalaryS+'<option value="'+i+'">'+i+'万</option>';
+                }
+
+            }
+            for(var i =5 ;i<100;i++){
+                if(i == 20){
+                    maximusSalaryS=maximusSalaryS+'<option value="'+i+'"   selected = "selected"">'+i+'万</option>';
+                }else{
+                    maximusSalaryS=maximusSalaryS+'<option value="'+i+'">'+i+'万</option>';
+                }
+
+            }
+            maximusSalaryS=maximusSalaryS+'<option value="101">100万以上</option>';
+            $('[name="minimusSalary"]').html(minimusSalaryS);
+            $('[name="maximusSalary"]').html(maximusSalaryS);
+
+        }
+
     </script>
     <title>主页</title>
 </head>
@@ -240,11 +316,11 @@
                             <img class="avatar-self" src="./static/images/avatar.gif">
                         </div>
                         <div class="col-xs-6 link">
-                            <div>
-                                <a href="acoount.html"><i class="glyphicon glyphicon-edit">个人信息</i></a>
-                            </div>
-                            <div style="border: 0px">
-                                <a href="change_password.html"><i class="glyphicon glyphicon-star">修改密码</i></a>
+                            <div class="glyphicon">
+                                <a href="acoount.html"><i class="glyphicon glyphicon-edit"></i><span class="icon-font">个人信息</span></a>
+                            </div >
+                            <div style="border: 0px"  class="glyphicon">
+                                <a href="change_password.html"><i class="glyphicon glyphicon-star"></i><span class="icon-font">修改密码</span></a>
                             </div>
                         </div>
                     </div>
@@ -264,23 +340,65 @@
                     </div>
                     <ul class="filter-condition">
                         <li class="area"  type="area">
-                            <span class="title">工作地点:</span>
-                            <a value="北京">北京</a>
-                            <a value="上海">上海</a>
-                            <a value="杭州">杭州</a>
-                            <a value="广州">广州</a>
-                            <a class="btn-more" href="javascript:;">
-                                更多 
-                            </a>
+                        <span class="title">工作地点:</span>
+                        <a value="北京">北京</a>
+                        <a value="上海">上海</a>
+                        <a value="杭州">杭州</a>
+                        <a value="广州">广州</a>
+                         <a id="area_input" value=""></a>
+                        <a class="btn-more" href="javascript:;">
+                            更多
+                        </a>
                         </li>
+
+                        <li class="area_more">
+                            <div class="form-group row">
+                                <span class="title" style="float: left">&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;</span>
+                                <div class="form-group">
+                                    <div style="float: left">
+                                        <select name="nation" class="form-control nation">
+                                            <option>国家</option>
+                                        </select>
+                                    </div>
+                                    <div style="float: left">
+                                        <select name="province" class="form-control province">
+                                            <option>省会</option>
+                                        </select>
+                                    </div>
+                                    <div style="float: left">
+                                        <select name="city" class="form-control city">
+                                            <option>城市</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
                         <li class="income" type="income">
                             <span class="title">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪:</span>
                             <a value="10-15">10-15万</a>
                             <a  value="15-20">15-20万</a>
-
+                            <a id="income_input" value=""></a>
                             <a class="btn-more" href="javascript:;">
-                                更多 
+                                更多
                             </a>
+                        </li>
+                        <li class="income_more">
+                            <div class="form-group row">
+                                <span class="title" style="float: left">&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;</span>
+                                <div>
+                                    <div style="float: left">
+                                        <select name="minimusSalary" class="form-control nation">
+
+                                        </select>
+                                    </div>
+                                    <hr style="width: 30px;float: left;border-top: 1px solid #333;margin-left: 5px;margin-right: 5px;position: relative;top: -3px;" />
+                                    <div style="float: left">
+                                        <select name="maximusSalary" class="form-control province">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>

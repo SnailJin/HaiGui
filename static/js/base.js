@@ -2,11 +2,11 @@
  * Created by liguang.jin on 2016/3/31.
  */
  //测试
-//var url="http://47.89.38.171/HGZGZ/interface";
-//var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html'];
+var url="http://47.89.38.171/HGZGZ/interface";
+    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html"];
 //正式
-var url = window.location.origin + "/HGZGZ/interface";
-var noLoginList = ['/login.html','/register.html','/index.html',"/"];
+//var url = window.location.origin + "/HGZGZ/interface";
+//var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html"];
 
 var type =0;
 var loginFlage =true; //登录失效标识
@@ -121,7 +121,7 @@ function bing_event(){
 
 //返回错误处理
 function return_error(data){
-    if(data.code==8 || data.code == 10){
+    if(data.code==8 || data.code == 10  ){
         if(loginFlage){
             var body=$('<p>'+data.message+'</p>')
             $.poplayer({body:body,btnFunc:login});
