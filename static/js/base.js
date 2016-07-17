@@ -2,11 +2,11 @@
  * Created by liguang.jin on 2016/3/31.
  */
  //测试
-//var url="http://47.89.38.171/HGZGZ/interface";
-//    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html"];
+var url="http://47.89.38.171/HGZGZ/interface";
+    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html"];
 //正式
-var url = window.location.origin + "/HGZGZ/interface";
-var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html"];
+//var url = window.location.origin + "/HGZGZ/interface";
+//var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html];
 
 var type =0;
 var loginFlage =true; //登录失效标识
@@ -87,6 +87,7 @@ function get_user_info(){
     if(user != undefined){
         var user = JSON.parse(user);
         if(user == null){
+
         }else{
             return user;
         }
@@ -121,16 +122,22 @@ function bing_event(){
 
 //返回错误处理
 function return_error(data){
-    if(data.code==8 || data.code == 10  ){
+    if(data.code==8 || data.code == 10 ){
         if(loginFlage){
             var body=$('<p>'+data.message+'</p>')
             $.poplayer({body:body,btnFunc:login});
             loginFlage = false;
         }
+        return true;
+    }else if(data.code == 65556 || data.code == 65552){
+        var body=$('<p>'+data.message+'! <br>如未收到激活邮件或者激活邮件已经过期，请点击<a id = "resetEmail" href="javascript:void(0)">重新发送</a></p>')
     }else{
         var body=$('<p>'+data.message+'</p>')
-        $.poplayer({body:body});
     }
+    body.find("#resetEmail").click(function(){
+        SendActiveUserEmail(user.email);
+    });
+    $.poplayer({body:body});
 
 }
 
@@ -344,3 +351,59 @@ function init_occupation_category_if_none(){
     }
 }
 
+//发送激活验证邮件
+function SendActiveUserEmail(email){
+    formData.key="SendActiveUserVerifyCode";
+    formData.body={"userName":email};
+    $.ajax({
+        type: 'post',
+        url:url,
+        data:JSON.stringify(formData),
+        beforeSend: function(XMLHttpRequest){
+        },
+        success: function(data, textStatus){
+            data = JSON.parse(data);
+            if(data.code == 0){
+                var body=$('<p>'+'激活邮件已经发送至你的邮箱，请注意查收!'+'</p>')
+                $.poplayer({body:body});
+            }else{
+                return_error(data);
+            }
+        },
+        complete: function(XMLHttpRequest, textStatus){
+        },
+        error: function(response){
+            alert('网络异常!')
+        }
+    });
+}
+
+//发送验证邮件
+function sendVerifyCode(email,context){
+    formData.key="SendVerifyCode";
+    formData.body={"userName":email};
+    $.ajax({
+        type: 'post',
+        url:url,
+        data:JSON.stringify(formData),
+        beforeSend: function(XMLHttpRequest){
+        },
+        success: function(data, textStatus){
+            data = JSON.parse(data);
+            if(data.code == 0){
+                var body=$('<p>'+'邮件已经发送至你的邮箱，请注意查收!'+'</p>')
+                $.poplayer({body:body});
+                if(context != undefined){
+                    settime(context);
+                }
+            }else{
+                return_error(data);
+            }
+        },
+        complete: function(XMLHttpRequest, textStatus){
+        },
+        error: function(response){
+            alert('网络异常!')
+        }
+    });
+}

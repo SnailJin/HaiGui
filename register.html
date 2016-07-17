@@ -17,7 +17,7 @@
                 format:'Y-m-d',
                 timepicker:false,
                 maxDate:new Date(new Date().setFullYear(new Date().getFullYear()-16)),
-                defaultDate:new Date(new Date().setFullYear(new Date().getFullYear()-18)),
+                defaultDate:new Date(new Date().setFullYear(new Date().getFullYear()-18))
             })
             //提交表单
             $('[name="registerForm"]').bind('submit',function(){
@@ -64,32 +64,7 @@
 
             });
         });
-        //发送激活验证邮件
-        function SendActiveUserEmail(email){
-            formData.key="SendActiveUserVerifyCode";
-            formData.body={"userName":email};
-            $.ajax({
-                type: 'post',
-                url:url,
-                data:JSON.stringify(formData),
-                beforeSend: function(XMLHttpRequest){
-                },
-                success: function(data, textStatus){
-                    data = JSON.parse(data);
-                    if(data.code == 0){
-                        var body=$('<p>'+'激活邮件已经发送的你，请注意查收!'+'</p>')
-                        $.poplayer({body:body});
-                    }else{
-                        return_error(data);
-                    }
-                },
-                complete: function(XMLHttpRequest, textStatus){
-                },
-                error: function(response){
-                    alert('网络异常!')
-                }
-            });
-        }
+
         //校验制字段
         function validate_fileds(data){
             var flag = true;
