@@ -2,11 +2,11 @@
  * Created by liguang.jin on 2016/3/31.
  */
  //测试
-//var url="http://47.89.38.171/HGZGZ/interface";
-//    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html"];
+var url="http://47.89.38.171/HGZGZ/interface";
+    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html"];
 //正式
-var url = window.location.origin + "/HGZGZ/interface";
-var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html];
+//var url = window.location.origin + "/HGZGZ/interface";
+//var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html"];
 
 var type =0;
 var loginFlage =true; //登录失效标识
@@ -83,17 +83,56 @@ function show_errror(context,flag,content){
 
 //获取用户信息
 function get_user_info(){
+    var flag =true;
     var user =$.getCookie('user');
     if(user != undefined){
         var user = JSON.parse(user);
-        if(user == null){
-
+        if(user.username == null){
+            flag = false;
         }else{
             return user;
         }
 
+    }else{
+       flag = false
     }
-    return null;
+    if(!flag){
+        if(window.location.pathname.indexOf("company_")!= -1){
+            formData.key="LoadEnterpriseInformation";
+        }else{
+            formData.key="LoadEmployeeInformation";
+        }
+
+        formData.body={};
+        $.ajax({
+            type: 'post',
+            url:url,
+            async:false,
+            data:JSON.stringify(formData),
+            beforeSend: function(XMLHttpRequest){
+            },
+            success: function(data, textStatus){
+                data = JSON.parse(data);
+                if(data.code == 0){
+                    user ={}
+                    user.email=data.body.userName;
+                    user.userId=data.body.userId;
+                    user.username=data.body.name;
+                    $.setCookie("user",JSON.stringify(user));
+                    return user;
+                }else{
+                    return_error(data);
+                }
+            },
+            complete: function(XMLHttpRequest, textStatus){
+            },
+            error: function(response){
+                alert('网络异常!')
+            }
+    })
+
+    }
+
 }
 //插入个人信息
 function set_user_info_html(){
@@ -135,6 +174,7 @@ function return_error(data){
         var body=$('<p>'+data.message+'</p>')
     }
     body.find("#resetEmail").click(function(){
+        user = get_user_info();
         SendActiveUserEmail(user.email);
     });
     $.poplayer({body:body});
@@ -407,3 +447,4 @@ function sendVerifyCode(email,context){
         }
     });
 }
+
