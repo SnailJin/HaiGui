@@ -103,7 +103,7 @@ $(function(){
        }
        var data = $(this).serializeObject();
        formData.body=data;
-       formData.body.password=hex_md5(formData.body.password);
+       formData.body.password=hex_md5(formData.body.userName+formData.body.password);
        formData.key="Login";
        $.ajax({
            type: 'post',
@@ -118,6 +118,9 @@ $(function(){
                    user.email=data.body.user.userName;
                    user.userId=data.body.user.userId;
                    user.username=data.body.user.name;
+                   if(data.body.user.enterpriseId != undefined){
+                       user.enterpriseId = data.body.user.enterpriseId
+                   }
                    $.setCookie("user",JSON.stringify(user));
                    if(data.body.type==2){
                        window.location="company_index.html";

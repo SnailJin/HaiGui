@@ -36,7 +36,7 @@
                 }
 
                 formData.body=data;
-                formData.body.password=hex_md5(formData.body.password);
+                formData.body.password=hex_md5(formData.body.userName + formData.body.password);
                 formData.body.password1='';
                 formData.body.userNameType=1;
                 eamil = formData.body.userName;
@@ -181,9 +181,23 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-xs-3 control-label">
+                        </label>
+
+                        <div class="col-xs-6">
+                            <label>
+                                <input type="checkbox" data-text="我已阅读并同意"  checked="checked" style="position: relative;top: -1px;;">&nbsp;&nbsp;
+                                <span>我已阅读并同意
+                                    <a style="color:#00b38a" target="_blank" href="/user_protocol.html">《用户协议》</a>
+                                </span>
+                            </label>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-xs-4"></div>
                         <div class="col-xs-4">
-                            <button class="btn btn-danger submit" >提交</button>
+                            <button class="btn btn-danger submit" >注册</button>
                         </div>
                         <div class="col-xs-4"></div>
                     </div>

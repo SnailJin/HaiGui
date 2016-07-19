@@ -76,7 +76,7 @@
                  console.log('浏览器的高度：'+$(window).height()); */
                 formData.key="LoadOccupationList";
                 formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize,"expire":expire};
-                formData.body.enterpriseId=user.userId;
+                formData.body.enterpriseId=user.enterpriseId;
                 loadData(success,loading,JSON.stringify(formData),false);
             }
         });
@@ -94,7 +94,7 @@
         function loadOccupationList(){
             formData.key="LoadOccupationList";
             formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize,"expire":expire};
-            formData.body.enterpriseId=user.userId;
+            formData.body.enterpriseId=user.enterpriseId;
             loadData(success,loading,JSON.stringify(formData),true);
         }
         //加载列表到html
