@@ -2,11 +2,11 @@
  * Created by liguang.jin on 2016/3/31.
  */
  //测试
-//var url="http://47.89.38.171/HGZGZ/interface";
-//    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html","/HaiGui/user_protocol.html"];
+var url="http://47.89.38.171/HGZGZ/interface";
+    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html","/HaiGui/user_protocol.html"];
 //正式
-var url = window.location.origin + "/HGZGZ/interface";
-var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html,"/user_protocol.html"];
+//var url = window.location.origin + "/HGZGZ/interface";
+//var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html,"/user_protocol.html"];
 
 var type =0;
 var loginFlage =true; //登录失效标识
@@ -50,10 +50,16 @@ function login(){
 }
 //初始化页面
 function init_html(){
+    user = get_user_info();
     if(type==1){
         $("#header").load("company_nav.html");
     }else{
-        $("#header").load("nav.html");
+        if(user != undefined && user != null & user.enterpriseId != undefined){
+            $("#header").load("company_nav.html");
+        }else{
+            $("#header").load("nav.html");
+        }
+
     }
     $("#footer").load("footer.html");
 }
@@ -92,9 +98,6 @@ function get_user_info(){
         }else{
             return user;
         }
-
-    }else{
-       flag = false
     }
     if(!flag){
         if(window.location.pathname.indexOf("company_")!= -1){

@@ -108,11 +108,28 @@
 //                   window.location ="job_detail.html?id="+id;
 //               });
                job.find(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
+               job.find(".city").text(occupation.city == null?"":occupation.city);
+               if(occupation.minimusAge == null){
+                   job.find(".minimusAge").text("");
+               }else if(occupation.minimusAge == 0){
+                   job.find(".minimusAge").text("应届毕业生");
+               }else{
+                   job.find(".minimusAge").text(occupation.minimusAge+"年以上工作经验");
+               }
                //job.find(".city").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
-               job.find(".minimusAge").text(occupation.minimusAge+"以上工作经验");
                job.find(".time-info").text(occupation.startTime);
                job.find(".category").text(occupation.category);
-               job.find("[name='occupationId']").val(occupation.occupationId).attr("id",occupation.occupationId);
+               job.find(".enterpriseName").text(occupation.enterpriseName);
+               job.find(".category1").text(occupation.category1);
+               job.find(".category2").text(occupation.category2);
+               job.find("[name='occupationId']").val(occupation.occupationId);
+               if(job.find(".city").text().length ==0){
+                   job.find(".city").remove();
+               }
+               if(job.find(".minimusAge").text().length ==0){
+                   job.find(".minimusAge").remove();
+               }
+
                job.find(".update").attr("href","pulish_job.html?id="+occupation.occupationId);
                if(occupation.availableDays >0){
                    job.find(".delete").css("cursor","pointer").bind("click",function(){
@@ -248,10 +265,10 @@
         </div>
         <div class="col-xs-6 company">
             <div class="row">
-                <h5 class="enerpriseName">拼爱网络有限公司</h5>
+                <h5 class="enterpriseName"></h5>
             </div>
             <div class="row">
-                <p class="category"> 移动互联网 · 企业服务 / 上市公司</p>
+                <p> <span class="category1"></span>.<span class="category2"></span></p>
             </div>
             <div class="row">
                 <p class="job-desc">
