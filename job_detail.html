@@ -54,7 +54,10 @@
             });
         };
         function loadOccupationDetailToHtml(occupation){
-            $(".title").html(occupation.title);
+            $(".enterpriseName").text(occupation.enterpriseName);
+            $(".category1").text(occupation.category1);
+            $(".category2").text(occupation.category2);
+            $(".city").text(occupation.city);
             $(".collect").click(function(){
                 if($(".glyphicon-star").size()==0){
                     isCollect=0;
@@ -77,6 +80,14 @@
             $("[name='occupationId']").val(occupation.occupationId);
             $(".decription").html(occupation.decription);
             $(".enterpriseDescription").html(occupation.enterpriseDescription);
+            if(occupation.minimusAge == null){
+                job.find(".minimusAge").text("");
+            }else if(occupation.minimusAge == 0){
+                $(".minimusAge").text("无工作年限要求");
+            }else{
+                $(".minimusAge").text(occupation.minimusAge+"年以上工作经验");
+            }
+            $(".city").text(occupation.city == null?"":" "+occupation.city);
 
         }
 
@@ -102,11 +113,11 @@
                     </div>
                     <!--基本信息-->
                     <div class="job-main" style="margin-top:20px;">
-                            <p>
+                            <span>
                                 <span style="color: red;font-size: 24px" class="salary">12-23万</span>
-                                <span><i class="glyphicon glyphicon-map-marker"></i>&nbsp;杭州</span>
-                                <span><i class="glyphicon glyphicon-lock"></i>&nbsp;<span class="workingAge">2年以上经验</span>
-                            </p>
+                                <span><i class="glyphicon glyphicon-map-marker"></i><span class="city"></span></span>&nbsp;&nbsp;
+                                <span><i class="glyphicon glyphicon-lock"></i>&nbsp;<span class="minimusAge"></span></span>
+                            </span>
                             <p></p>
                             <p>
                                 <span><i class="glyphicon glyphicon-time"></i>&nbsp;<span class="time-info">2014-2-3</span> 发布</span>
@@ -141,9 +152,9 @@
             <div class="col-xs-3">
                 <div class="company-describe">
                     <h4 class="job-describe">发布企业</h4>
-                    <h4 class="company-name title">拼爱网络</h4>
-                    <p><span>行&#12288;&#12288;业:</span>&#12288;<span class="category">互联网</span></p>
-                    <p><span>工作地址:</span>&#12288;<span>杭州</span></p>
+                    <h4 class="company-name enterpriseName"></h4>
+                    <span><span>行&#12288;&#12288;业:</span>&#12288;<span><span class="category1"></span>&nbsp;|&nbsp;<span class="category2"></span></span></p>
+                    <p><span>工作地址:</span>&#12288;<span class="city">杭州</span></p>
 
                 </div>
             </div>

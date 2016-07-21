@@ -29,7 +29,7 @@
             $("[name='province'],[name='nation']").change(function(){
                 get_area(this);
             });
-            get_occupation_info(false);
+            get_occupation_info(true);
             init_area_if_none();
             init_occupation_category_if_none();
             $("form").bind("submit",function(){
@@ -151,13 +151,17 @@
                 success: function(data, textStatus){
                     data = JSON.parse(data);
                     if(data.code == 0){
-                        for(var name in data.body){
-                            var inputTemp =  $("input[name='"+name+"'],textarea[name='"+name+"']");
+                        var keys = Object.keys(data.body).sort()
+                        for(var i in keys){
+                            var inputTemp =  $("input[name='"+keys[i]+"'],textarea[name='"+keys[i]+"'],select[name='"+keys[i]+"']");
                             if(inputTemp.length>0){
-                                inputTemp.val(data.body[name]);
+                                inputTemp.val(data.body[keys[i]]);
+                                if(keys[i] == "category1"){
+                                    get_occupation_category(inputTemp[0]);
+                                }
                             }
                         }
-                        $.each(["nation","province","city"],function(n,name){
+                        $.each(["nation","province","city","minimusSalary","maximusSalary","category1","category2"],function(n,name){
                             var selectDiv = $("select[name='"+name+"']").find('option[value="'+data.body[name]+'"]');
                             if(selectDiv.length ==0){
                                 context=$("select[name='"+name+"']").parent().prev().children();
