@@ -29,9 +29,9 @@
             $("[name='province'],[name='nation']").change(function(){
                 get_area(this);
             });
-            get_occupation_info(true);
             init_area_if_none();
             init_occupation_category_if_none();
+            get_occupation_info(false);
             $("form").bind("submit",function(){
                 var data =$(this).serializeObject();
                 //验证是否为空
@@ -157,7 +157,7 @@
                             if(inputTemp.length>0){
                                 inputTemp.val(data.body[keys[i]]);
                                 if(keys[i] == "category1"){
-                                    get_occupation_category(inputTemp[0]);
+                                    get_occupation_category(inputTemp[0],true);
                                 }
                             }
                         }
@@ -332,11 +332,10 @@
                             <span class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="availableDaysS_error"></span></span>
                             <select class="form-control" name="availableDays">
                                  <option  value="30">30天</option>
-                                 <option  value="60">1个月</option>
-                                 <option  value="3*60">3个月</option>
-                                 <option  value="6*60">6个月</option>
-                                 <option  value="9*60">9个月</option>
-                                 <option  value="12*60">一年</option>
+                                 <option  value="60">3个月</option>
+                                 <option  value="180">6个月</option>
+                                 <option  value="270">9个月</option>
+                                 <option  value="365">一年</option>
                             </select>
                         </div>
                     </div>

@@ -259,7 +259,7 @@ footer>p,footer a,footer a:hover,footer a:active{
     float: right;
 }
 .job-detail .title-info{
-    background-color: #67C8B1;
+    background-color: #4E8FCA;
     position: relative;
     left: -15px;
     top: 20px;
@@ -276,7 +276,7 @@ footer>p,footer a,footer a:hover,footer a:active{
     bottom: -7px;
     display: block;
     border-bottom: 8px solid transparent;
-    border-right: 15px solid #67C8B1;
+    border-right: 15px solid #4E8FCA;
 }
 .job-detail .collect{
     font-size: 22px;
@@ -296,7 +296,7 @@ footer>p,footer a,footer a:hover,footer a:active{
     font-size: 15px;
 }
 .job-describe{
-    border-left: 3px solid #67C8B1;
+    border-left: 3px solid #4E8FCA;
     padding-left:10px ;
 }
 .job-message .content{
@@ -307,7 +307,7 @@ footer>p,footer a,footer a:hover,footer a:active{
     padding: 15px;
 }
 .company-name{
-    color: #67C8B1;
+    color: #4E8FCA;
     padding: 10px;
 }
 .company-describe p{

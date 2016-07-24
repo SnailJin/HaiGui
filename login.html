@@ -115,6 +115,7 @@ $(function(){
                data = JSON.parse(data);
                if(data.code == 0){
                    $.setCookie("token",data.body.token);
+                   user ={};
                    user.email=data.body.user.userName;
                    user.userId=data.body.user.userId;
                    user.username=data.body.user.name;
