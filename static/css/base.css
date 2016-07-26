@@ -366,3 +366,8 @@ footer>p,footer a,footer a:hover,footer a:active{
     -webkit-border-radius: 100px;
     border-radius:100px;
 }
+
+pre{
+    white-space: pre;
+    word-wrap: break-word;
+}

@@ -78,8 +78,13 @@
             $(".workingAge").text(occupation.workingAge+"以上工作经验");
             $(".time-info").text(occupation.startTime);
             $("[name='occupationId']").val(occupation.occupationId);
-            $(".decription").html(occupation.decription);
-            $(".enterpriseDescription").html(occupation.enterpriseDescription);
+            $(".decription").text(occupation.description);
+            $(".enterpriseDescription").html("&#12288;&#12288;"+occupation.enterpriseDescription);
+            $(".contactEmail").html("联&ensp;系&ensp;人："+occupation.contactName);
+            $(".contactName").html("投递邮箱："+occupation.contactEmail);
+            if(occupation.contactPhone != null && occupation.contactPhone.length>0){
+                $(".contactPhone").html("联系电话："+occupation.contactPhone);
+            }
             if(occupation.minimusAge == null){
                 job.find(".minimusAge").text("");
             }else if(occupation.minimusAge == 0){
@@ -129,8 +134,9 @@
                             <h4 class="job-describe">
                                 职位描述
                             </h4>
-                            <div class="content decription">
-                                【软件开发工程师】<br> 职位描述：<br> 大型分布式web应用系统的设计和研发，主要包括Web应用的服务端架构设计和编码开发。<br> 职位要求：<br>1．本科或以上学历，计算机，软件工程，通信工程及相关专业；<br>2．熟悉软件工程，面向对象的程序设计方法；<br>3．熟练掌握java技术，对于面向对象模型和设计模式有比较清晰的认识，熟悉j2ee、mvc等应用模型中至少一种；<br>4．精通Internet基本协议（如TCP/IP、HTTP、SMTP、FTP等）内容及相关应用；<br>5．具有较强的编程能力，能够完成较复杂的交互流程设计和实现，具备良好的编程习惯，能够编写高质量技术文档；<br>6．具有较强的逻辑分析、数据分析能力、问题排查能力；<br>7．愿意与其他同事共同交流、探讨问题或完成任务，愿意帮助其他同事解决问题；<br>8．愿意并善于向其他同事学习，能够学习新知识或掌握新技能；<br>9．面对挫折时保持情绪的稳定，在比较艰苦的情况下或巨大的压力下坚持工作；<br>10．主动提出自己的观点和意见，主动去发现可能存在的问题并设法解决；<br>11．有AJAX、Flash、Spring、Struts等开发经验者优先；有在电子商务、金融行业、航空业开发经验者优先；有在大型IT公司开发团队实习经验者优先。<br><br>
+                            <div class="content">
+                                <pre class="decription">
+                                </pre>
                             </div>
                         </div>
                     </div>
@@ -140,11 +146,33 @@
                             <h4 class="job-describe">
                                 企业简介
                             </h4>
-                            <div class="content enterpriseDescription">
-                                &nbsp; &nbsp; &nbsp;网易 (NASDAQ: NTES)是中国领先的互联网技术公司，在开发互联网应用、服务及其它技术方面，始终保持国内业界的领先地位。网易对中国互联网的发展具有强烈的使命感，网易利用最先进的互联网技术，加强人与人之间信息的交流和共享，实现“网聚人的力量”。 &nbsp; &nbsp; &nbsp;1997年6月创立以来，凭借先进的技术和优质的服务，网易深受广大网民欢迎，曾两次被中国
+                            <div class="content">
+                                <pre class="enterpriseDescription">
+                                </pre>
                             </div>
                         </div>
                     </div>
+
+                    <div class="job-main job-message">
+                        <div>
+                            <h4 class="job-describe">
+                                联系方式
+                            </h4>
+                            <div class="content">
+                                <div class=" contactName">
+                                </div>
+                                <div class="contactEmail">
+                                </div>
+                                <div class="contactPhone">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 contactPhone">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div style="height:60px;"></div>
                 </div>
             </div>
