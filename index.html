@@ -158,12 +158,6 @@
         });
         //搜索
         function search(){
-            var search = $('.search-input').val().trim();
-            if(search == ""){
-                title=null;
-            }else{
-                title=search;
-            }
             nextPage =1;
             loadOccupationList(true);
         }
@@ -172,8 +166,14 @@
          * @param flag
          */
        function loadOccupationList(flag){
+            var search = $('.search-input').val().trim();
+            if(search == ""){
+                title=null;
+            }else{
+                title=search;
+            }
            formData.key="LoadOccupationList"
-           formData.body={title:null,category:null,salary:null,city:cityFilter,minimusSalary:maximusSalaryFilter,maximusSalary:maximusSalaryFilter,enterpriseName:null,city:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
+           formData.body={title:title,category:null,salary:null,city:cityFilter,minimusSalary:maximusSalaryFilter,maximusSalary:maximusSalaryFilter,enterpriseName:null,city:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize};
            formData.body.order=orderType;
            formData.body.city=cityFilter;
            formData.body.minimusSalary=minimusSalaryFilter;

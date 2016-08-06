@@ -59,6 +59,10 @@
             $(".category1").html(occupation.category1+"&nbsp;&nbsp;|");
             $(".category2").text(occupation.category2);
             $(".city").text(occupation.city);
+            //企业用户没有收藏
+            if(type == 1){
+                $(".collect").remove();
+            }
             $(".collect").click(function(){
                 if($(".glyphicon-star").size()==0){
                     isCollect=0;

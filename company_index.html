@@ -82,16 +82,16 @@
         });
         //搜索
         function search(){
+            nextPage =1;
+            loadOccupationList();
+        }
+        function loadOccupationList(){
             var search = $('.search-input').val().trim();
             if(search == ""){
                 title=null;
             }else{
                 title=search;
             }
-            nextPage =1;
-            loadOccupationList();
-        }
-        function loadOccupationList(){
             formData.key="LoadOccupationList";
             formData.body={title:title,category:null,salary:null,maximusSalary:null,enterpriseName:null,city:null,order:"start_time",pageNo:nextPage,pageSize:pageSize,"expire":expire};
             formData.body.enterpriseId=user.enterpriseId;

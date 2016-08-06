@@ -55,6 +55,7 @@ function init_html(){
         $("#header").load("company_nav.html");
     }else{
         if(user != undefined && user != null & user.enterpriseId != undefined){
+            type = 1;
             $("#header").load("company_nav.html");
         }else{
             $("#header").load("nav.html");

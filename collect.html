@@ -71,10 +71,12 @@
         function loadOccupationListToHtml(occupationList){
             for(var i in occupationList){
                 var job =$("#job_clone").clone();
-                var occupation = occupationList[i];
-                var occupationInfo =  occupation.occupation;
+                var occupation = occupationList[i].occupation;
                 job.find(".title").text(occupation.title);
-                job.find(".salary").text(occupationInfo.minimusSalary+"万-"+occupationInfo.maximusSalary+"万");
+                job.find(".title").click(function(){
+                    var id = $(this).closest(".job").find("[name='occupationId']").val();
+                    window.location="job_detail.html?id="+id;
+                })
                 job.find(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
                 job.find(".city").text(occupation.city == null?"":occupation.city);
                 if(occupation.minimusAge == null){
@@ -100,10 +102,7 @@
                     collect();
                     $(this).closest(".job").remove();
                 });
-                job.find(".title").click(function(){
-                    var occupationId = $(this).closest(".job").find('[name="occupationId"]').val();
-                    window.location = "job_detail.html?id="+occupationId;
-                });
+
                 $("#list").append(job.children());
             }
         }
@@ -164,13 +163,13 @@
         <input type="hidden" name="occupationId">
         <div class="col-xs-6 job-info">
             <div class="row">
-                <h4 class="title">java 开发工程师</h4>
+                <h4 class="title"></h4>
             </div>
             <div class="row">
                 <p class="job-desc">
                     <span class="salary" style="border: 0px;padding-left: 0px;color: red;">15-20万</span>
-                    <span  class="city">杭州</span>
-                    <span  class="workingAge">1年以上工作经验</span>
+                    <span class="city">杭州</span>
+                    <span class="minimusAge">1年以上工作经验</span>
                 </p>
             </div>
             <div class="row">
@@ -179,13 +178,15 @@
         </div>
         <div class="col-xs-6 company">
             <div class="row">
-                <h5 class="enerpriseName"></h5>
+                <h5 class="enterpriseName"></h5>
             </div>
             <div class="row">
-                <p  class="category"> 移动互联网 · 企业服务 / 上市公司</p>
+                <p> <span class="category1"></span>.<span class="category2"></span></p>
             </div>
             <div class="row">
-                <p class="del_collect"> 取消收藏</p>
+                <p class="job-desc">
+                    <a class="del_collect" href="javascript:void(0);">取消收藏</a>
+                </p>
             </div>
         </div>
     </div>
