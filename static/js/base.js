@@ -34,13 +34,13 @@ $(function(){
 //登录
 function isLogin(){
     var pathname = window.location.pathname;
+    //获取cookie
+    formData.token= $.getCookie("token");
     for(var i in noLoginList){
         if(pathname == noLoginList[i]){
             return;
         }
     }
-    //获取cookie
-    formData.token= $.getCookie("token");
     if(formData.token==undefined || formData.token.length==0){
         login();
     }
