@@ -62,6 +62,18 @@
             //企业用户没有收藏
             if(type == 1){
                 $(".collect").remove();
+                verifiedMessage="";
+                if(occupation.verified == 0){
+                    verifiedMessage = "审核中";
+                }else if(occupation.verified == 1){
+                    verifiedMessage = "审核通过";
+                }else if(occupation.verified == 2){
+                    verifiedMessage = "审核失败";
+                    if(occupation.verifyFailEeason.length >0){
+                        verifiedMessage = verifiedMessage+"("+occupation.verifyFailEeason+")";
+                    }
+                }
+                $(".verified").text(verifiedMessage);
             }
             $(".collect").click(function(){
                 if($(".glyphicon-star").size()==0){
@@ -129,7 +141,10 @@
                             </span>
                             <p></p>
                             <p>
-                                <span><i class="glyphicon glyphicon-time"></i>&nbsp;<span class="time-info">2014-2-3</span> 发布</span>
+                                <span><i class="glyphicon glyphicon-time"></i>&nbsp;<span class="time-info"></span></span>
+                            </p>
+                            <p>
+                                <span><i class="glyphicon glyphicon-pencil" style="color: red;"></i>&nbsp;<span class="verified" style="color: red;"></span></span>
                             </p>
                     </div>
                     <!-- 职位描述 -->

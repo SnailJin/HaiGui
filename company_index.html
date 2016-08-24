@@ -145,6 +145,19 @@
 
                }
 
+               verifiedMessage="";
+               if(occupation.verified == 0){
+                   verifiedMessage = "审核中";
+               }else if(occupation.verified == 1){
+                   verifiedMessage = "审核通过";
+               }else if(occupation.verified == 2){
+                   verifiedMessage = "审核失败";
+                   if(occupation.verifyFailEeason.length >0){
+                       verifiedMessage = verifiedMessage+"("+occupation.verifyFailEeason+")";
+                   }
+               }
+               job.find(".verified").text(verifiedMessage);
+
                $("#list").append(job.children());
            }
         }
@@ -254,13 +267,16 @@
             </div>
             <div class="row">
                 <p class="job-desc">
-                    <span class="salary" style="border: 0px;padding-left: 0px;color: red;">15-20万</span>
-                    <span class="city">杭州</span>
-                    <span class="minimusAge">1年以上工作经验</span>
+                    <span class="salary" style="border: 0px;padding-left: 0px;color: red;"></span>
+                    <span class="city"></span>
+                    <span class="minimusAge"></span>
                 </p>
             </div>
             <div class="row">
-                <p class="time-info">发布于1小时前</p>
+                <p style="color: red">审核状态:&nbsp;<span class="verified"></span></p>
+            </div>
+            <div class="row">
+                <p class="time-info"></p>
             </div>
         </div>
         <div class="col-xs-6 company">
