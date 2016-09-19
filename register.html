@@ -39,7 +39,7 @@
                 formData.body.password=hex_md5(formData.body.userName + formData.body.password);
                 formData.body.password1='';
                 formData.body.userNameType=1;
-                eamil = formData.body.userName;
+                email = formData.body.userName;
                 $.ajax({
                     type: 'post',
                     url:url,
@@ -49,7 +49,7 @@
                     success: function(data, textStatus){
                         data = JSON.parse(data);
                         if(data.code == 0){
-                            SendActiveUserEmail(eamil);
+                            SendActiveUserEmail(email);
                         }else{
                             return_error(data);
                         }

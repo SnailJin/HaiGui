@@ -178,8 +178,11 @@ function return_error(data){
         var body=$('<p>'+data.message+'</p>')
     }
     body.find("#resetEmail").click(function(){
-        user = get_user_info();
-        SendActiveUserEmail(user.email);
+        if(typeof(email) == "undefined" || email == undefined){
+            user = get_user_info();
+            email = user.email;
+        }
+        SendActiveUserEmail(email);
     });
     $.poplayer({body:body});
 
