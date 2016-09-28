@@ -13,7 +13,7 @@
     <script style="text/javascript"  src="./static/js/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(function(){
-            loadEmployeeInformation();
+            ();
             $('#datetimepicker').datetimepicker({
                 format:'Y-m-d',
                 timepicker:false,
@@ -25,10 +25,11 @@
         });
 
         //获取个人信息
-        function loadEmployeeInformation(){
-            formData.key="LoadEmployeeInformation";
+        function (){
+            formData.key="";
             $.ajax({
                 type: 'post',
+                async:false,
                 url:url,
                 data:JSON.stringify(formData),
                 beforeSend: function(XMLHttpRequest){

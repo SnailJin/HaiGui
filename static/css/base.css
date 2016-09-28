@@ -26,7 +26,7 @@ header{
 }
 .logo{
     float: left;
-    padding: 0px 15px 3px 15px;
+    padding: 5px 15px 3px 15px;
 }
 .logo img{
     width: 200px;
@@ -83,6 +83,15 @@ header{
     text-decoration: none;
     vertical-align: top;
     color: #0f0f0f;
+}
+.login-nav{
+    float: right;
+    height: 70px;
+    line-height: 70px;
+    font-size: 15px;
+}
+.login-nav  a{
+    color: black;
 }
 /*** 底部 **/
 footer{

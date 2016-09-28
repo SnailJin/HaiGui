@@ -411,7 +411,7 @@ function SendActiveUserEmail(email){
         success: function(data, textStatus){
             data = JSON.parse(data);
             if(data.code == 0){
-                var body=$('<p>'+'激活邮件已经发送至你的邮箱，请注意查收!'+'</p>')
+                var body=$('<p>'+'激活邮件已经发送至你的邮箱，请注意查收!</br><span style="font-size: 10px">(注：如长时间未到邮件请查看垃圾邮箱)</span>'+'</p>')
                 $.poplayer({body:body});
             }else{
                 return_error(data);
