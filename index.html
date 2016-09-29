@@ -61,7 +61,9 @@
                get_area(this);
            });
            init_area_if_none();
-           get_area($('[name="province"]')[0],true);
+           if($('[name="nation"]').find("option:selected").attr("id") != undefined){
+               get_area($('[name="province"]')[0],true);
+           }
 
            //筛选
            $('.sort a').click(function(){
