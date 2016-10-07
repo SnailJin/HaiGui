@@ -50,12 +50,14 @@
                 return_error(data);
             }
         };
+
+        //初始化
        $(function(){
            set_user_info_html();
            init_sSalaryS();
            loadOccupationList("start_time");
            $("#start_time").addClass("selected");
-
+           category_select();
            //地区列表
            $("[name='province'],[name='nation']").change(function(){
                get_area(this);
@@ -106,6 +108,9 @@
                nextPage =1;
                loadOccupationList(true);
            })
+
+
+
            $('[name="minimusSalary"], [name="maximusSalary"], [name="city"]').change(function(){
                name = $(this).attr("name") ;
                value = $(this).val();
@@ -305,6 +310,21 @@
 
         }
 
+        //分类选择的触发事件
+        function category_select(){
+            $('.category_list a').click(function(){
+                var flag = $(this).hasClass("selected");
+                $('.category_list a').removeClass("selected");
+                if(!flag){
+                    $(this).addClass("selected");
+                    title = $(this).text();
+                }else{
+                    title = "";
+                }
+                $('.search-input').val(title);
+                search();
+            })
+        }
     </script>
     <title>海归找工作 - 主页</title>
 </head>
@@ -331,6 +351,27 @@
                     <div class="row user-content">
                         <p class="username-self"><h4 id="username">未登录</h4></p>
                         <p id="email"></p>
+                    </div>
+                </div>
+                <div class="category_list">
+                    <div class="category_box">
+                        <h2>IT</h2>
+                        <a href="javascript:void(0);">Java</a>
+                        <a href="javascript:void(0);">python</a>
+                        <a href="javascript:void(0);">C++</a>
+                        <a href="javascript:void(0);">PHP</a>
+                        <a href="javascript:void(0);">算法</a>
+                        <a href="javascript:void(0);">数据</a>
+                        <a href="javascript:void(0);">安卓</a>
+                        <a href="javascript:void(0);">咨询顾问</a>
+                        <a href="javascript:void(0);">总监</a>
+                    </div>
+                    <div class="category_box">
+                        <h2>金融</h2>
+                        <a href="javascript:void(0);">研究员</a>
+                        <a href="javascript:void(0);">分析师</a>
+                        <a href="javascript:void(0);">销售</a>
+                        <a href="javascript:void(0);">助理</a>
                     </div>
                 </div>
             </div>
@@ -406,6 +447,39 @@
                         </li>
                     </ul>
                 </div>
+                <ul id="icon_list" class="icon_list">
+                    <li>
+                        <a href="job_detail.html?id=92">
+                            <img class="logo-size" src="./static/images/logo/ZhongGuoDianXin.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img class="logo-size" src="./static/images/logo/JiSuanSuo.jpeg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img class="logo-size" src="./static/images/logo/YiXin.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img class="logo-size" src="./static/images/logo/Akunacapital.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img class="logo-size" src="./static/images/logo/Fesco.png">
+                        </a>
+                    </li>
+                    <li style="margin-right:0px;">
+                        <a href="">
+                            <img class="logo-size" src="./static/images/logo/TaoBao.jpeg" style="width: 135px;">
+                        </a>
+                    </li>
+                </ul>
+
                 <!-- 排序 -->
 
                 <ul class="sort">

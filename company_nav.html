@@ -13,36 +13,38 @@
             <li><a href="company_about.html">关于我们</a></li>
         </ul>
 
-        <ul class="nav-message">
-            <li><i class="glyphicon glyphicon-user">
-                <ul id="head-info" class="header-info-list">
-                    <li id="acoount">个人信息</li>
-                    <li id="register">注册</li>
-                    <li id="login">登录</li>
-                    <li id="logout">退出</li>
-                </ul>
-            </i>
-            </li>
-        </ul>
+        <!--<ul class="nav-message">-->
+            <!--<li><i class="glyphicon glyphicon-user">-->
+                <!--<ul id="head-info" class="header-info-list">-->
+                    <!--<li id="acoount">个人信息</li>-->
+                    <!--<li id="register">注册</li>-->
+                    <!--<li id="login">登录</li>-->
+                    <!--<li id="logout">退出</li>-->
+                <!--</ul>-->
+            <!--</i>-->
+            <!--</li>-->
+        <!--</ul>-->
         <div class="login-nav">
-            <a href="login.html">登录 </a>|
-            <a href="reqister.html">注册</a>
+            <a href="register.html">注册 </a>|
+            <a href="javascript:void(0);" class="login" id="login">登录</a>
         </div>
     </div>
 </header>
 <script>
-    $("#logout").click(logout);
-    $("#acoount").click(function(){
-        window.location="company_acount.html";
-    })
-    $("#register").click(function(){
-    window.location="register.html";
-    })
-    $("#login").click(function(){
-        window.location="login.html";
-    })
+
     $(function () {
         //导航栏选中
         nav_select();
+        loginStatusToHtml();
+        $("#logout").click(logout);
+        $("#acoount").click(function(){
+            window.location="company_acount.html";
+        })
+        $("#register").click(function(){
+            window.location="register.html";
+        })
+        $("#login").click(function(){
+            window.location="login.html";
+        })
     })
 </script>

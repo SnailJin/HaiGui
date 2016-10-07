@@ -28,6 +28,7 @@
                 loadOccupationDetail(id);
             }
         });
+
         //下载应用
         function loadOccupationDetail(id){
             formData.key="LoadOccupationDetail";
@@ -35,6 +36,7 @@
             $.ajax({
                 type: 'post',
                 url:url,
+                async:false,
                 data:JSON.stringify(formData),
                 beforeSend: function(XMLHttpRequest){
                 },
@@ -74,6 +76,8 @@
                     }
                 }
                 $(".verified").text(verifiedMessage);
+            }else{
+                $(".verified").parent().remove();
             }
             
             $(".collect").click(function(){
@@ -94,6 +98,9 @@
             $(".salary").text(occupation.minimusSalary+"万-"+occupation.maximusSalary+"万");
             $(".workingAge").text(occupation.workingAge+"以上工作经验");
             $(".time-info").text(occupation.startTime);
+            if(occupation.times != undefined && occupation.times >0 ){
+                $(".times").text(occupation.times+"人浏览");
+            }
             $("[name='occupationId']").val(occupation.occupationId);
             $(".decription").text(occupation.description);
             $(".enterpriseDescription").html("&#12288;&#12288;"+occupation.enterpriseDescription);
@@ -142,7 +149,7 @@
                             </span>
                             <p></p>
                             <p>
-                                <span><i class="glyphicon glyphicon-time"></i>&nbsp;<span class="time-info"></span></span>
+                                <span><i class="glyphicon glyphicon-time"></i>&nbsp;<span class="time-info"></span>&nbsp;&nbsp;<span class="times"></span> </span>
                             </p>
                             <p>
                                 <span><i class="glyphicon glyphicon-pencil" style="color: red;"></i>&nbsp;<span class="verified" style="color: red;"></span></span>

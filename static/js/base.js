@@ -3,19 +3,24 @@
  */
  //测试
 //var url="http://47.89.38.171/HGZGZ/interface";
-//    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html","/HaiGui/user_protocol.html"];
+    //var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html","/HaiGui/user_protocol.html"];
 //正式
 var url = window.location.origin + "/HGZGZ/interface";
 var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html","/user_protocol.html"];
-
+var token = 'haiguihiring_token';
+var userCookie ="haiguihiring_user";
 var type =0;
 var loginFlage =true; //登录失效标识
-var page
-var user={
+var page;
+//初始化信息
+var initInoFlag = true;
+var userToken={
     "username":null,
     "userId":null,
     "email":null,
-    "enterpriseNo":null
+    "enterpriseNo":null,
+    loginTimestamp : null,
+    loginStatus:false
 }
 var formData = {
     "body":{},
@@ -31,22 +36,64 @@ $(function(){
     bing_event();
     isLogin();
 });
+//半小时判断一下登录状态
+function loginStatus(){
+    var user =getUserCookie();
+    if(!user || user.loginTimestamp == undefined){
+        return false;
+    }
+    if((user.loginTimestamp - (new Date().getTime()))<=1000*60*30 && user.loginStatus){
+        return true;
+    }
+    var flag = get_user_info();
+    if(flag){
+        var user = getUserCookie();
+        if(user && user.loginTimestamp){
+            return true;
+        }
+    }
+    return false;
+}
+//更改页面登录登出状态
+function loginStatusToHtml(){
+    var flag = loginStatus();
+    if(flag){
+        $('#login').attr("id","logout").text('退出');
+    }
+}
 //登录
 function isLogin(){
     var pathname = window.location.pathname;
     //获取cookie
-    formData.token= $.getCookie("token");
+    formData.token= $.getCookie(token);
     for(var i in noLoginList){
         if(pathname == noLoginList[i]){
             return;
         }
     }
     if(formData.token==undefined || formData.token.length==0){
-        login();
+        var body=$('<p>请先登录再操作!</p>');
+        $.poplayer({body:body,btnFunc:login});
+        loginFlage = false;
+        initInoFlag = false;
     }
 }
 function login(){
     window.location="login.html";
+}
+// 获取user cookie
+function getUserCookie(){
+    var user = $.getCookie(userCookie);
+    if(user != undefined){
+        var user = JSON.parse(user);
+        if(user.email == null){
+            return false;
+        }else{
+            return user;
+        }
+    }else{
+        return false;
+    }
 }
 //初始化页面
 function init_html(){
@@ -91,7 +138,7 @@ function show_errror(context,flag,content){
 //获取用户信息
 function get_user_info(){
     var flag =true;
-    var user =$.getCookie('user');
+    var user =$.getCookie(userCookie);
     if(user != undefined){
         var user = JSON.parse(user);
         if(user.username == null){
@@ -122,7 +169,7 @@ function get_user_info(){
                     user.email=data.body.userName;
                     user.userId=data.body.userId;
                     user.username=data.body.name;
-                    $.setCookie("user",JSON.stringify(user));
+                    $.setCookie(userCookie,JSON.stringify(user));
                     return user;
                 }else{
                     return_error(data);
@@ -201,6 +248,7 @@ function logout(){
         success: function(data, textStatus){
             data = JSON.parse(data);
             if(data.code == 0){
+                clearCookie();
                 var body=$('<p>'+'已退出登录!'+'</p>')
                 btnFunc=login;
                 $.poplayer({body:body,btnFunc:btnFunc});
@@ -215,7 +263,11 @@ function logout(){
         }
     });
 }
-
+//清除token
+function clearCookie(){
+    $.deleteCookie(token);
+    $.deleteCookie(userCookie);
+}
 //添加删除收藏  0添加，1删除
 function collect(){
     if(isCollect == 1){

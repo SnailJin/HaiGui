@@ -114,15 +114,16 @@ $(function(){
            success: function(data, textStatus){
                data = JSON.parse(data);
                if(data.code == 0){
-                   $.setCookie("token",data.body.token);
-                   user ={};
-                   user.email=data.body.user.userName;
-                   user.userId=data.body.user.userId;
-                   user.username=data.body.user.name;
+                   $.setCookie(token,data.body.token);
+                   userToken.email=data.body.user.userName;
+                   userToken.userId=data.body.user.userId;
+                   userToken.username=data.body.user.name;
+                   userToken.loginTimestamp = new Date().getTime();
+                   userToken.loginStatus = true;
                    if(data.body.user.enterpriseId != undefined){
-                       user.enterpriseId = data.body.user.enterpriseId
+                       userToken.enterpriseId = data.body.user.enterpriseId
                    }
-                   $.setCookie("user",JSON.stringify(user));
+                   $.setCookie(userCookie,JSON.stringify(userToken));
                    if(data.body.type==2){
                        window.location="company_index.html";
                    }else if(data.body.type==1){

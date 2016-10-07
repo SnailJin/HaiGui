@@ -161,6 +161,34 @@ footer>p,footer a,footer a:hover,footer a:active{
     line-height: 20px;
 }
 
+.category_list{
+    margin-top:20px;
+    height: 300px;
+    padding: 15px;
+    background: #fafafa;
+    border: 1px solid #e8e8e8;
+}
+.category_box{
+    overflow: hidden;
+}
+.category_box h2{
+    font-size: 23px;
+    padding-left: 8px;
+    font-weight: 500;
+}
+.category_box a{
+    color: #555;
+    background-color: transparent;
+    text-decoration: none;
+    float: left;
+    white-space: nowrap;
+    margin: 0 5px 5px 0;
+    padding: 0 8px;
+    font-size: 15px;
+}
+.category_box a:hover{
+    color: #4A91D2;
+}
 .search{
     padding: 0px 15px;
 
@@ -186,6 +214,21 @@ footer>p,footer a,footer a:hover,footer a:active{
     float: right;
 }
 
+.icon_list{
+    padding: 0px;
+    list-style:none;
+    height: 90px;
+}
+.icon_list li{
+    float: left;
+    margin-right: 8px;
+    background: #fff;
+    position: relative;
+    border: 2px solid #fafafa;
+}
+.icon_list .logo-size{
+    height: 80px;
+}
 .sort,.filter-condition{
     background-color: #f6f6f6;
     margin-top: 15px;
@@ -212,7 +255,7 @@ footer>p,footer a,footer a:hover,footer a:active{
     text-decoration: none;
 }
 .sort li a:hover,.sort li a:active, .filter-condition li a:hover,.filter-condition li a:active,
-.sort .selected,.filter-condition .income a:active,.filter-condition .area a:active,.filter-condition .selected{
+.sort .selected,.filter-condition .income a:active,.filter-condition .area a:active,.filter-condition .selected,.category_list .selected{
     background-color: #4A91D2;
     color: #fff;
 }
@@ -240,6 +283,9 @@ footer>p,footer a,footer a:hover,footer a:active{
 }
 .time-info{
     font-size: 10px;
+    color: #999;
+}
+.times{
     color: #999;
 }
 .job-desc span{
