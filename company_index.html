@@ -50,6 +50,10 @@
         $(function(){
             set_user_info_html();
             loadOccupationList();
+            //到页面顶端
+            $("#backtop").click(function(){
+                        $('html,body').animate({scrollTop: '0px'}, 1000);return false;}
+            );
             //排序
             $(".sort a").eq(0).addClass("selected");
             //筛选
@@ -253,6 +257,7 @@
         </div>
     </div>
     <div style="height: 60px"></div>
+    <a id="backtop" title="回到顶部" ></a>
 </div>
 <!-- 登录
 <div class="login-capacity">

@@ -136,8 +136,20 @@ footer>p,footer a,footer a:hover,footer a:active{
     -webkit-border-radius: 10px;   /* Webkit browsers */
     border-radius:10px;            /* W3C syntax */
 }
+#backtop{
+    background: url(../images/backtop.png) left top no-repeat;
+    width: 28px;
+    height: 64px;
+    position: fixed;
+    left: 50%;
+    bottom: 80px;
+    margin-left: 548px;
+    cursor: pointer;
+}
 
-
+#backtop:hover{
+    background-position: right top !important;
+}
 .user_info{
     min-height: 250px;
     padding: 15px;
@@ -213,11 +225,27 @@ footer>p,footer a,footer a:hover,footer a:active{
     left: -5px;
     float: right;
 }
-
+.icon_div{
+    margin-top:20px;
+    height: 380px;
+    padding: 15px;
+    background: #fafafa;
+    border: 1px solid #e8e8e8;
+}
 .icon_list{
     padding: 0px;
     list-style:none;
     height: 90px;
+    text-align: center;
+    margin: 0 auto;
+}
+.icon_list img{
+    -moz-border-radius: 15px;      /* Gecko browsers */
+    -webkit-border-radius: 15px;   /* Webkit browsers */
+    border-radius:15px;            /* W3C syntax */
+}
+.icon_list li{
+    margin:2px;
 }
 .icon_list li{
     float: left;

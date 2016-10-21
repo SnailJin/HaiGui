@@ -58,6 +58,10 @@
            loadOccupationList("start_time");
            $("#start_time").addClass("selected");
            category_select();
+           //到页面顶端
+           $("#backtop").click(function(){
+               $('html,body').animate({scrollTop: '0px'}, 1000);return false;}
+           );
            //地区列表
            $("[name='province'],[name='nation']").change(function(){
                get_area(this);
@@ -404,6 +408,41 @@
 
                     </div>
                 </div>
+                <div class="icon_div">
+                    <ul id="icon_list" class="icon_list">
+                        <h3>合作公司</h3>
+                        <li>
+                            <a href="job_detail.html?id=64" >
+                                <img class="logo-size" src="./static/images/logo/didi.png">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="job_detail.html?id=9">
+                                <img class="logo-size" src="./static/images/logo/mafengwo.png">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="job_detail.html?id=124">
+                                <img class="logo-size" src="./static/images/logo/taobao.png">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="job_detail.html?id=129">
+                                <img class="logo-size" src="./static/images/logo/lesi.png">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="job_detail.html?id=140">
+                                <img class="logo-size" src="./static/images/logo/langchao.png">
+                            </a>
+                        </li>
+                        <li style="margin-right:0px;">
+                            <a href="job_detail.html?id=151">
+                                <img class="logo-size" src="./static/images/logo/dianxin.png">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="col-xs-9 ">
                 <div class="row search">
@@ -477,38 +516,6 @@
                         </li>
                     </ul>
                 </div>
-                <ul id="icon_list" class="icon_list">
-                    <li>
-                        <a href="job_detail.html?id=92">
-                            <img class="logo-size" src="./static/images/logo/ZhongGuoDianXin.png">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img class="logo-size" src="./static/images/logo/JiSuanSuo.jpeg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img class="logo-size" src="./static/images/logo/YiXin.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img class="logo-size" src="./static/images/logo/Akunacapital.png">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img class="logo-size" src="./static/images/logo/Fesco.png">
-                        </a>
-                    </li>
-                    <li style="margin-right:0px;">
-                        <a href="">
-                            <img class="logo-size" src="./static/images/logo/TaoBao.jpeg" style="width: 135px;">
-                        </a>
-                    </li>
-                </ul>
 
                 <!-- 排序 -->
 
@@ -522,6 +529,7 @@
 
                 <!--职位 -->
                 <div id="list"></div>
+                <a id="backtop" title="回到顶部" ></a>
             </div>
         </div>
     </div>
