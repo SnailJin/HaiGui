@@ -146,6 +146,16 @@ footer>p,footer a,footer a:hover,footer a:active{
     margin-left: 548px;
     cursor: pointer;
 }
+#backtop-font{
+    position: relative;
+    bottom: 40px;
+    font-size: 5px;
+    font-weight: bolder;
+    color: #8c8888;
+    top: 70px;
+    left: -20px;
+    white-space: nowrap;
+}
 
 #backtop:hover{
     background-position: right top !important;
