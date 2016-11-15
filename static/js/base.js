@@ -1,12 +1,12 @@
 /**
  * Created by liguang.jin on 2016/3/31.
  */
-//测试
-//var url="http://47.89.38.171/HGZGZ/interface";
-//var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html","/HaiGui/user_protocol.html"];
+ //测试
+var url="http://47.89.38.171/HGZGZ/interface";
+    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html","/HaiGui/user_protocol.html"];
 //正式
-var url = window.location.origin + "/HGZGZ/interface";
-var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html","/user_protocol.html"];
+//var url = window.location.origin + "/HGZGZ/interface";
+//var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html","/user_protocol.html"];
 var token = 'haiguihiring_token';
 var userCookie ="haiguihiring_user";
 var type =0;
@@ -113,7 +113,7 @@ function init_html(){
 }
 //验证邮件
 function verify_email(email){
-    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.|-]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if(!myreg.test(email)){
         return false;
     }else{
@@ -180,7 +180,7 @@ function get_user_info(){
             error: function(response){
                 alert('网络异常!')
             }
-        })
+    })
 
     }
 
@@ -383,7 +383,7 @@ function load_area_and_category(data,context){
 }
 
 /*
- 获取岗位类型
+获取岗位类型
  */
 function get_occupation_category(context,sync){
     formData.key = "LoadSubGroupList";
@@ -463,7 +463,7 @@ function SendActiveUserEmail(email){
         success: function(data, textStatus){
             data = JSON.parse(data);
             if(data.code == 0){
-                var body=$('<p>'+'激活邮件已经发送至你的邮箱，请注意查收!</br><span style="font-size: 10px">(注：如长时间未到邮件请查看垃圾邮箱)</span>'+'</p>')
+                var body=$('<p>'+'激活邮件已经发送至你的邮箱，请注意查收!</br><span style="font-size: 10px">(注：如长时间未收到邮件请查看垃圾邮箱)</span>'+'</p>')
                 $.poplayer({body:body});
             }else{
                 return_error(data);
@@ -506,3 +506,4 @@ function sendVerifyCode(email,context){
         }
     });
 }
+
