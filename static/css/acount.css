@@ -1,0 +1,118 @@
+.account-context{
+    position: relative;
+    top:-50px;
+}
+.account-frame{
+    width: 1060px;
+    margin: 30px auto;
+}
+
+.account-panel{
+    background-color: #fafafa;
+}
+.account-nav{
+    /*padding: 20px 10px;*/
+    text-align: center;
+}
+.account-nav *{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+.account-nav ul{
+    position: relative;
+}
+.account-nav li{
+    height: 45px;
+    line-height: 45px;
+    border-left: 2px solid #e5e5e5;
+
+}
+.account-nav .active{
+    border-color: #337ab7;
+    border-width: 2px;
+}
+.account-nav .active a *{
+    color:#337ab7;
+}
+.account-nav li a{
+    display: block;
+    height: 100%;
+    cursor: pointer;
+}
+.account-nav .glyphicon{
+    left: -40px;
+}
+.account-nav a:hover{
+    background-color:#fafafa ;
+}
+.user-info-view{
+    padding: 20px 15%;
+
+}
+.user-info-r{
+    padding: 0 0 30px 0;
+}
+.user-edit{
+    position: relative;
+    left: 105%;
+    top: 20px;
+    font-size: 2rem;
+    color: #5c9bd2;
+    cursor: pointer;
+}
+.sa-head{
+    margin: 0px 30px 30px 30px;
+}
+.sa-head-l,.sa-head-r{
+    width: 250px;
+    height: 0;
+    border-top: 1px solid #ededed;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.sa-head-title{
+    margin: 0px 30px;
+    font-size: 18px;
+    padding: 6px 24px;
+    text-align: center;
+    background-color: #eee;
+    -moz-border-radius: 26px;
+    -webkit-border-radius: 26px;
+    border-radius: 26px;
+    margin: 0 13px;
+}
+.sa-head-a{
+    color: #5c9bd2;
+    font-size: 1.6rem;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.work-info{
+    display: block;
+    height: 70px;
+}
+.work-info-l{
+    float: left;
+}
+.work-info span{
+    color: #999;
+}
+.work-info-r{
+    float: right;
+}
+.edit-div{
+    position: relative;
+    left: 50%;
+}
+.edit-div span{
+    font-size: 1.6rem;
+    color: #5c9bd2;
+}
+.edit-2{
+    font-size: 1.6rem;
+    color: #5c9bd2;
+    cursor: pointer;
+}
