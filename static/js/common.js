@@ -119,3 +119,54 @@ function settime(context) {
         settime(context)
     }, 1000)
 }
+
+
+
+
+//ajax请求
+//必填uccess:succsess,data:data,url:url
+//args={success:succsess,data:data,url:url,type:type,beforeSend:beforeSend,complete:complete，error:error}
+function loadData(args)
+{
+    type = 'POST';
+    if(args.type != undefined){
+        type = args.type;
+    }
+    $.ajax({
+        type: type,
+        url:args.url,
+        data:args.data,
+        beforeSend: function(XMLHttpRequest){
+            loading(true);
+            if(args.beforeSend != undefined){
+                args.beforeSend();
+            }
+        },
+        success: function(data, textStatus){
+            if(args.success != undefined){
+                args.success(data)
+            }
+        },
+        complete: function(XMLHttpRequest, textStatus){
+            loading(false);
+            if(args.complete != undefined){
+                args.complete();
+            }
+        },
+        error: function(response){
+            if(args.error != undefined){
+                args.error();
+            }
+
+            // alert('网络异常!')
+        }
+    });
+}
+//返回代码处理
+function handleCode(code){
+    if(code == 0){
+        return true;
+    }else{
+        return false;
+    }
+}

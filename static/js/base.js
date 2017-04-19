@@ -2,11 +2,11 @@
  * Created by liguang.jin on 2016/3/31.
  */
  //测试
-//var url="http://47.89.38.171/HGZGZ/interface";
-//    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html","/HaiGui/user_protocol.html"];
+var url="http://101.37.76.155/HGZGZ/interface";
+    var noLoginList = ['/HaiGui/login.html','/HaiGui/register.html','/HaiGui/index.html',"/HaiGui/activate.html","/HaiGui/about.html","/HaiGui/reset_password.html","/HaiGui/user_protocol.html"];
 //正式
-var url = window.location.origin + "/HGZGZ/interface";
-var noLoginList = ['/login.html','/register.html','/index.html',"/","/activate.html","/about.html","/reset_password.html","/user_protocol.html"];
+//var url = window.location.origin + "/HGZGZ/interface";
+//var noLoginList = ['/login.html','/registerster.html','/index.html',"/","/activate.html","/about.html","/reset_password.html","/user_protocol.html"];
 var token = 'haiguihiring_token';
 var userCookie ="haiguihiring_user";
 var type =0;
@@ -54,6 +54,7 @@ function loginStatus(){
     }
     return false;
 }
+
 //更改页面登录登出状态
 function loginStatusToHtml(){
     var flag = loginStatus();

@@ -41,8 +41,9 @@ function get_load_next_page(){
 	return load_next_page
 }
 //滚动加载
-//no_load不加轿   ,success成功
-function loadData(success,loading,data,has_load)
+//no_load不加载
+//args={success:succsess,data:data,beforeSend:beforeSend,complete:complete，error:error}
+function loadData(args)
 {
 	totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
 
@@ -53,27 +54,15 @@ function loadData(success,loading,data,has_load)
 			return false;
 		}
 		if(load_next_page==true){
-			$.ajax({
-				type: 'POST',
-				url:url,
-				data:data,
-				beforeSend: function(XMLHttpRequest){
-					loading(true);
-					load_next_page=false;
-				},
-				success: function(data, textStatus){
-					success(data);
-				},
-				complete: function(XMLHttpRequest, textStatus){
-					loading(false);
-					load_next_page=true;
-					has_load=false;
-				},
-				error: function(response){
-					// alert('网络异常!')
-				}
-			});
-
+			args.beforeSend = function(){
+				load_next_page=false;
+			}
+			args.complete = function(){
+				load_next_page=true;
+				has_load=false;
+			}
+			loadData(args);
 		};
 	}
-} 
+}
+

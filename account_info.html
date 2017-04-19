@@ -9,6 +9,7 @@
     <script style="text/javascript"  src="./static/js/jquery.min.js"></script>
     <script src="./static/js/bootstrap.min.js"></script>
 
+    
     <script style="text/javascript"  src="./static/js/common.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.datetimepicker.full.min.js"></script>
@@ -41,7 +42,7 @@
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>邮箱:</span>
-                                                <span class ="userName_span">jin21234@163.com</span>
+                                                <span class ="email_span">jin21234@163.com</span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
@@ -67,7 +68,7 @@
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>做在城市:</span>
-                                                <span class ="currentCity_span">杭州</span>
+                                                <span class ="city_span">杭州</span>
                                             </div>
 
                                         </div>
@@ -86,7 +87,7 @@
                                         <label class="col-xs-3 control-label">邮&#12288;&#12288;箱</label>
 
                                         <div class="col-xs-6">
-                                            <input type="text" class="form-control userName" name="userName">
+                                            <input type="text" class="form-control email" name="email">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -119,7 +120,6 @@
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">所在城市</label>
                                         <div class="col-xs-6">
-                                            <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
                                         </div>
                                     </div>
 
@@ -154,27 +154,27 @@
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>求职领域:</span>
-                                                <span class ="name_span">IT,金融</span>
+                                                <span class ="propose_business_type_span">IT,金融</span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>期望职能:</span>
-                                                <span class ="email_span">IT</span>
+                                                <span class ="propose_duty_span">IT</span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>期望地点:</span>
-                                                <span class ="gender_span">杭州，上海</span>
+                                                <span class ="propose_city_span">杭州，上海</span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>期望年薪:</span>
-                                                <span class ="birthday_span">10-23万</span>
+                                                <span class ="propose_salary_span">20万-30万</span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>目前年薪:</span>
-                                                <span class ="nationality_span">9-10万</span>
+                                                <span class ="current_alarys_span">30万-40万</span>
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +184,7 @@
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">求职领域</label>
                                         <div class="col-xs-6">
-                                            <select class="form-control job-"  name = "job-" id="">
+                                            <select class="form-control propose_business_type"  name = "propose_business_type" id="">
                                                 <option value = "IT">IT</option>
                                             </select>
                                         </div>
@@ -192,13 +192,13 @@
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">期望职能</label>
                                         <div class="col-xs-6">
-                                            <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
+                                            <input id="propose_duty" type="text" class="form-control propose_duty" name="propose_duty">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">期望地点</label>
                                         <div class="col-xs-6">
-                                            <select class="form-control jobAddress"  name = "jobAddress">
+                                            <select class="form-control propose_city"  name = "propose_city" id="propose_city">
                                                 <option value = "杭州">杭州</option>
                                             </select>
                                         </div>
@@ -206,16 +206,16 @@
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">期望年薪</label>
                                         <div class="col-xs-6">
-                                            <select class="form-control job-"  name = "job-" id="">
-                                                <option value = "10-23万">10-23万</option>
+                                            <select class="form-control propose_salary"  name = "propose_salary" id="propose_salary">
+
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">目前年薪</label>
                                         <div class="col-xs-6">
-                                            <select class="form-control job-"  name = "job-" id="">
-                                                <option value = "10-23万">10-23万</option>
+                                            <select class="form-control current_alarys"  name = "current_alarys" id="current_alarys">
+
                                             </select>
                                         </div>
                                     </div>
@@ -235,133 +235,7 @@
 
 
                             <!-- 工作经历 -->
-                            <div id="job-experience">
-                                <div class="sa-head">
-                                    <span class="sa-head-l"></span>
-                                <span class="sa-head-title">
-                                工作经历
-                                </span>
-                                    <span class="sa-head-l"></span>
-                                    <span class="sa-head-a add-btn" rel="job-experience"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
-                                </div>
 
-                                <div id="job-experience-span">
-                                    <div class="user-info-view">
-                                        <div class="work-info">
-                                            <div class="work-info-l">
-                                                <h4>
-                                                    海归发展有限公司
-                                                </h4>
-                                                <span>高级软件工程师</span>
-                                            </div>
-                                            <div class="work-info-r">
-                                                <div class="edit-div">
-                                                    <i class="glyphicon glyphicon-edit edit-2"></i>
-                                                    <span>编辑</span>
-                                                </div>
-                                                <span>2015-02.23</span>
-                                                <span>-</span>
-                                                <span>2016-02-23</span>
-                                            </div>
-                                        </div>
-                                        <div class="work-info-content">
-                                        <span>
-                                            负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。
-                                        </span>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="user-info-view">
-                                        <div class="work-info">
-                                            <div class="work-info-l">
-                                                <h4>
-                                                    海归发展有限公司
-                                                </h4>
-                                                <span>高级软件工程师</span>
-                                            </div>
-                                            <div class="work-info-r">
-                                                <div class="edit-div">
-                                                    <i class="glyphicon glyphicon-edit edit-2"></i>
-                                                    <span>编辑</span>
-                                                </div>
-                                                <span>2015-02.23</span>
-                                                <span>-</span>
-                                                <span>2016-02-23</span>
-                                            </div>
-                                        </div>
-                                        <div class="work-info-content">
-                                        <span>
-                                            负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <form id ="job-experience-form" class="form-horizontal" method="post" style="display: none">
-                                    <div class="form-group">
-                                        <label class="col-xs-3 control-label">职位名称</label>
-                                        <div class="col-xs-6">
-                                            <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-xs-3 control-label">公司名称</label>
-                                        <div class="col-xs-6">
-                                            <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-xs-3 control-label">公司行业</label>
-                                        <div class="col-xs-6">
-                                            <select class="form-control job-"  name = "job-" id="">
-                                                <option value = "杭州">IT</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-xs-3 control-label">地点</label>
-                                        <div class="col-xs-6">
-                                            <select class="form-control job-"  name = "job-" id="">
-                                                <option value = "杭州">杭州</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-xs-3 control-label">时间</label>
-                                        <div class="col-xs-3">
-                                            <select class="form-control job-"  name = "job-" id="">
-                                                <option value = "杭州">2016</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <select class="form-control job-"  name = "job-" id="">
-                                                <option value = "杭州">2017</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-xs-3 control-label">职责描述</label>
-                                        <div class="col-xs-6" >
-                                            <textarea class=" form-control"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-xs-3"></div>
-                                        <div class="col-xs-3">
-                                            <button class="btn btn-danger submit">提交</button>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <button class="btn cancel" rel="job-hope">取消</button>
-                                        </div>
-                                        <div class="col-xs-2"><span>删除该条目</span></div>
-                                    </div>
-                                </form>
-
-                            </div>
-                            </div>
 
 
                         <!-- 教育 经历 -->
@@ -569,6 +443,7 @@
                         </div>
 
 
+                    </div>
                     </div>
                 </div>
 
