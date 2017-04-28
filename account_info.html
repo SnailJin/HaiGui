@@ -9,7 +9,7 @@
     <script style="text/javascript"  src="./static/js/jquery.min.js"></script>
     <script src="./static/js/bootstrap.min.js"></script>
 
-    
+
     <script style="text/javascript"  src="./static/js/common.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
     <script style="text/javascript"  src="./static/js/jquery.datetimepicker.full.min.js"></script>
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
 
-                                <form id ="user-info-form" class="form-horizontal" method="post" style="display: none;;">
+                                <form id ="user-info-form" class="form-horizontal" method="post" style="display: none;">
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">姓&#12288;&#12288;名</label>
 
@@ -133,7 +133,6 @@
                                         </div>
                                         <div class="col-xs-2"></div>
                                     </div>
-
                                 </form>
                             </div>
 
@@ -184,7 +183,7 @@
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">求职领域</label>
                                         <div class="col-xs-6">
-                                            <select class="form-control propose_business_type"  name = "propose_business_type" id="">
+                                            <select class="form-control propose_business_type"  name = "propose_business_type" id="propose_business_type">
                                                 <option value = "IT">IT</option>
                                             </select>
                                         </div>
@@ -248,7 +247,7 @@
                                 <span class="sa-head-l"></span>
                                 <span class="sa-head-a add-btn" rel="education"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
                             </div>
-                            <div id="education-span">
+                            <div class="education-span">
                                 <div class="user-info-view">
                                     <div class="work-info">
                                         <div class="work-info-l">
@@ -277,63 +276,7 @@
                                 </div>
                             </div>
 
-                            <form id ="education-form" class="form-horizontal" method="post" style="display: none;">
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">学校名称</label>
-                                    <div class="col-xs-6">
-                                        <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">学位</label>
-                                    <div class="col-xs-6">
-                                        <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">专业</label>
-                                    <div class="col-xs-6">
-                                        <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">学分绩</label>
-                                    <div class="col-xs-6">
-                                        <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">时间</label>
-                                    <div class="col-xs-3">
-                                        <select class="form-control job-"  name = "job-" id="">
-                                            <option value = "杭州">2016</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <select class="form-control job-"  name = "job-" id="">
-                                            <option value = "杭州">2017</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">介绍</label>
-                                    <div class="col-xs-6" >
-                                        <textarea class=" form-control"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-xs-3"></div>
-                                    <div class="col-xs-3">
-                                        <button class="btn btn-danger submit">提交</button>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <button class="btn cancel" rel="job-hope">取消</button>
-                                    </div>
-                                    <div class="col-xs-2"><span>删除该条目</span></div>
-                                </div>
-                            </form>
                         </div>
 
 
@@ -519,5 +462,94 @@
     </div>
 </div>
 <div id="footer"></div>
+<div id="clone" style="display: none;">
+    <div class="education-clone">
+        <div class="education-span" school_name="" formDate="" toDate="" deploma="" profession="" gpa="" description="">
+            <div class="user-info-view">
+                <div class="work-info">
+                    <div class="work-info-l">
+                        <h4 class="school_name">
+                            浙江工业大学之江学院
+                        </h4>
+                        <span class="deploma">本科</span>
+                        <span>.</span>
+                        <span class="profession">软件工程</span>
+                        <span class="gpa">.80(学分绩)</span>
+                    </div>
+                    <div class="work-info-r">
+                        <div class="edit-div">
+                            <i class="glyphicon glyphicon-edit edit-2"></i>
+                            <span>编辑</span>
+                        </div>
+                        <span class="formDate">2015-02.23</span>
+                        <span>-</span>
+                        <span class="toDate">2016-02-23</span>
+                    </div>
+                </div>
+                <div class="description">
+                    浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id ="education-form" class="form-horizontal" method="post">
+        <div class="form-group">
+            <label class="col-xs-3 control-label">学校名称</label>
+            <div class="col-xs-6">
+                <input id="school_name" type="text" class="form-control school_name" name="school_name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 control-label">学位</label>
+            <div class="col-xs-6">
+                <input id="deploma" type="text" class="form-control deploma" name="deploma">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 control-label">专业</label>
+            <div class="col-xs-6">
+                <input id="profession" type="text" class="form-control profession" name="profession">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 control-label">学分绩</label>
+            <div class="col-xs-6">
+                <input id="gpa" type="text" class="form-control gpa" name="gpa">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 control-label">时间</label>
+            <div class="col-xs-3">
+                <select class="form-control fromDate"  name = "job-fromDate" id="fromDate">
+                    <option value = "杭州">2016</option>
+                </select>
+            </div>
+            <div class="col-xs-3">
+                <select class="form-control toDate"  name = "toDate" id="toDate">
+                    <option value = "杭州">2017</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">介绍</label>
+            <div class="col-xs-6" >
+                <textarea class="form-control description" id="description" name="description"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-3">
+                <button class="btn btn-danger submit education-submit">提交</button>
+            </div>
+            <div class="col-xs-3">
+                <button class="btn btn-cancel" rel="education">取消</button>
+            </div>
+            <div class="col-xs-2"><span>删除该条目</span></div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

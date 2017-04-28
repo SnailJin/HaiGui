@@ -19,6 +19,10 @@ $(function(){
         $('#'+rel+'-form').hide();
         return false;
     })
+    $('.btn-cancel').click(function(){
+        $(this).closest("form").hide();
+        return false;
+    })
     $('.submit').click(function(){
         form = $(this).closest('form');
         className = form.attr('id').split('-form')[0]
@@ -31,13 +35,15 @@ $(function(){
     //添加按钮
     $('.add-btn').click(function(){
         rel = $(this).attr('rel');
-        form = $('#'+rel+'-form');
-        if(!form.is(':hidden')){
+        form = $('#'+rel+' #'+rel+'-form');
+        formDiv = $('#'+rel+'-form').clone();
+        if(form.length > 0){
             return;
         }
         form.find('input').html('');
-        form.show();
+        $("#"+rel).append(formDiv);
     })
+    //
 });
 //转成form
 function parseForm(spanDiv,formDiv){
