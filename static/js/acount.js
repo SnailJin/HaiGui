@@ -19,10 +19,7 @@ $(function(){
         $('#'+rel+'-form').hide();
         return false;
     })
-    $('.btn-cancel').click(function(){
-        $(this).closest("form").hide();
-        return false;
-    })
+    $('.btn-cancel').click(cancel_info);
     $('.submit').click(function(){
         form = $(this).closest('form');
         className = form.attr('id').split('-form')[0]
@@ -36,12 +33,7 @@ $(function(){
     $('.add-btn').click(function(){
         rel = $(this).attr('rel');
         form = $('#'+rel+' #'+rel+'-form');
-        formDiv = $('#'+rel+'-form').clone();
-        if(form.length > 0){
-            return;
-        }
-        form.find('input').html('');
-        $("#"+rel).append(formDiv);
+        form.show();
     })
     //
 });
@@ -93,6 +85,26 @@ function getStatement(){
     }
 }
 
+//填充信息
+function parseInfo(data,field){
+    for(var i in data){
+        info = data[i];
+        var infoDiv = $('#clone').find('.'+field+'-context').clone();
+        var infoSpan = infoDiv.find("."+field+"-span");
+        for(var key in info){
+            infoSpan.attr(key,info[key]);
+            insertAccountVal(infoDiv.find("."+key),info[key],field);
+        }
+        $('#'+field).append(infoDiv);
+        addEvent(infoDiv,field);
+    }
+    var infoForm = $('#clone').find('.'+field+'-form').clone();
+    infoForm.attr("id",field+"-form");
+    infoForm.find('.delete_info').remove();
+    $('#'+field).append(infoForm)
+
+}
+
 
 //初始化字段
 function init(){
@@ -105,11 +117,68 @@ function init(){
         $('#'+priceList[i]).append('<option value="100万以上">100万以上</option>');
     }
 
+
+    //数据初始化
+    parseInfo([{ schoolName:"浙江工业大学之江学院",fromDate:"2015-02",toDate:"2016-02", deploma:"本科",profession:"软件工程",gpa:"8.0",description:"浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一"}],"education")
+    parseInfo([{title:"java开发1",companyName:"杭州拼爱网路有限公司1",companyBusinessType:"软件工程",companyCity:"杭州",companyFrom:"2015-04",companyEndTime:"2016-5",companyDuty:"负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。"}],'job-experience');
+    parseInfo([{projectName:'海归项目',projectTimeFrom:"2013-2",projectTimeTo:"2015-12",projectDescription:"主要负责架构设计分析"}],"project-experience");
+    parseInfo([{language:0,grade:3},{language:1,grade:2}],"language-ability");
+}
+
+
+//添加事件
+function addEvent(div,key){
     //时间初始化
-    $('#company_start_time,#company_end_time').datetimepicker({
+    div.find('.timeControl').datetimepicker({
         format:'Y-m',
         timepicker:false,
         maxDate:new Date(new Date().setFullYear(new Date().getFullYear()-16)),
-        defaultDate:new Date(new Date().setFullYear(new Date().getFullYear()-18)),
+        defaultDate:new Date(new Date().setFullYear(new Date().getFullYear()-18))
     });
+    div.find('.delete_info').click(delete_info);
+    div.find('.edit-div').click(function(){
+        $(this).closest('.'+key+'-context').find('.'+key+'-form').show();
+    })
+    div.find('.btn-cancel').click(cancel_info);
+}
+
+//删除条目
+function delete_info(){
+    $(this).closest("."+$(this).attr('rel')+"-context").remove();
+}
+//取消
+function cancel_info(){
+    $(this).closest("form").hide();
+    return false;
+}
+
+
+//插入数据 feildDiv 插入位置div 列表 val插入数据
+function insertAccountVal(feildDivList,val,key){
+    //对特殊的select处理
+    var selectFlag = false;
+    for(var i=0;i<feildDivList.length ; i++){
+        feildDiv = feildDivList.eq(i);
+        if(feildDiv.is('select')){
+            selectFlag = true;
+            feildDiv.val(val);
+        }
+    }
+
+    for(var i=0;i<feildDivList.length ; i++){
+        feildDiv = feildDivList.eq(i);
+        if(feildDiv.is('span') || feildDiv.is('p') || feildDiv.is('h4')){
+            if(selectFlag){
+                text =feildDiv.closest('.'+key+"-context").find('form').find("."+feildDiv.attr('class')).find("option:selected").text();
+                feildDiv.text(text);
+            }else{
+                feildDiv.text(val);
+            }
+
+        }else if(feildDiv.is('select')){
+            feildDiv.val(val);
+        }else if(feildDiv.is('input') || feildDiv.is('textarea') ){
+            feildDiv.val(val);
+        }
+    }
 }

@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="./static/css/base.css">
     <link rel="stylesheet" href="./static/css/acount.css">
     <link rel="stylesheet" href="./static/css/jquery.datetimepicker.css">
-    <script style="text/javascript"  src="./static/js/jquery.min.js"></script>
+    <script style="text/javascript" src="./static/js/jquery.min.js"></script>
     <script src="./static/js/bootstrap.min.js"></script>
 
 
-    <script style="text/javascript"  src="./static/js/common.js"></script>
-    <script style="text/javascript"  src="./static/js/jquery.poplayer.js"></script>
-    <script style="text/javascript"  src="./static/js/jquery.datetimepicker.full.min.js"></script>
+    <script style="text/javascript" src="./static/js/common.js"></script>
+    <script style="text/javascript" src="./static/js/jquery.poplayer.js"></script>
+    <script style="text/javascript" src="./static/js/jquery.datetimepicker.full.min.js"></script>
     <script style="text/javascript" src="./static/js/acount.js"></script>
     <title>个人中心</title>
 </head>
@@ -26,7 +26,8 @@
                     <div class="base-panel account-panel">
                         <div class="form-head" style="position: relative;top:-40px;" method="POST">
                             <div>
-                                <img class="avatar-info" src="./static/images/avatar.gif" style="position: relative;left:40%;">
+                                <img class="avatar-info" src="./static/images/avatar.gif"
+                                     style="position: relative;left:40%;">
                             </div>
                         </div>
                         <div class="account-context">
@@ -35,47 +36,48 @@
                                 <div id="user-info-span">
                                     <div class="user-info-view">
                                         <i class="glyphicon glyphicon-edit user-edit" rel="user-info"></i>
+
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>姓名:</span>
-                                                <span class ="name_span">金李广</span>
+                                                <span class="name_span">金李广</span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>邮箱:</span>
-                                                <span class ="email_span">jin21234@163.com</span>
+                                                <span class="email_span">jin21234@163.com</span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>性别:</span>
-                                                <span class ="gender_span">男</span>
+                                                <span class="gender_span">男</span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>出生年月:</span>
-                                                <span class ="birthday_span">1991-01-23</span>
+                                                <span class="birthday_span">1991-01-23</span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>国籍:</span>
-                                                <span class ="nationality_span">中国</span>
+                                                <span class="nationality_span">中国</span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>联系电话:</span>
-                                                <span class ="mobilePhone_span">15558177991</span>
+                                                <span class="mobilePhone_span">15558177991</span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>做在城市:</span>
-                                                <span class ="city_span">杭州</span>
+                                                <span class="city_span">杭州</span>
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
 
-                                <form id ="user-info-form" class="form-horizontal" method="post" style="display: none;">
+                                <form id="user-info-form" class="form-horizontal" method="post" style="display: none;">
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">姓&#12288;&#12288;名</label>
 
@@ -94,7 +96,9 @@
                                         <label class="col-xs-3 control-label">性&#12288;&#12288;别</label>
 
                                         <div class="col-xs-9 radio">
-                                            <p class="input_error"><i class="glyphicon glyphicon-exclamation-sign"></i><span class="gender_error"></span></p>
+                                            <p class="input_error"><i
+                                                    class="glyphicon glyphicon-exclamation-sign"></i><span
+                                                    class="gender_error"></span></p>
                                             <span class="gender" name="gender"></span>
                                         </div>
                                     </div>
@@ -102,23 +106,29 @@
                                         <label class="col-xs-3 control-label">出生日期</label>
 
                                         <div class="col-xs-6">
-                                            <input id="datetimepicker" type="text" class="form-control birthday" name="birthday">
+                                            <input id="datetimepicker" type="text" class="form-control birthday"
+                                                   name="birthday">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">国&#12288;&#12288;籍</label>
+
                                         <div class="col-xs-6">
-                                            <input id="nationality" type="text" class="form-control nationality" name="nationality">
+                                            <input id="nationality" type="text" class="form-control nationality"
+                                                   name="nationality">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">联系电话</label>
+
                                         <div class="col-xs-6">
-                                            <input id="mobilePhone" type="text" class="form-control mobilePhone" name="mobilePhone">
+                                            <input id="mobilePhone" type="text" class="form-control mobilePhone"
+                                                   name="mobilePhone">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">所在城市</label>
+
                                         <div class="col-xs-6">
                                         </div>
                                     </div>
@@ -150,70 +160,81 @@
                                 <div id="job-hope-span">
                                     <div class="user-info-view">
                                         <i class="glyphicon glyphicon-edit user-edit" rel="job-hope"></i>
+
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>求职领域:</span>
-                                                <span class ="propose_business_type_span">IT,金融</span>
+                                                <span class="proposeBusinessType_span">IT,金融</span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>期望职能:</span>
-                                                <span class ="propose_duty_span">IT</span>
+                                                <span class="proposeDuty_span">IT</span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>期望地点:</span>
-                                                <span class ="propose_city_span">杭州，上海</span>
+                                                <span class="proposeCity_span">杭州，上海</span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>期望年薪:</span>
-                                                <span class ="propose_salary_span">20万-30万</span>
+                                                <span class="proposeSalary_span">20万-30万</span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>目前年薪:</span>
-                                                <span class ="current_alarys_span">30万-40万</span>
+                                                <span class="currenSalarys_span">30万-40万</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <form id ="job-hope-form" class="form-horizontal" method="post" style="display: none;">
+                                <form id="job-hope-form" class="form-horizontal" method="post" style="display: none;">
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">求职领域</label>
+
                                         <div class="col-xs-6">
-                                            <select class="form-control propose_business_type"  name = "propose_business_type" id="propose_business_type">
-                                                <option value = "IT">IT</option>
+                                            <select class="form-control proposeBusinessType" name="proposeBusinessType"
+                                                    id="proposeBusinessType">
+                                                <option value="IT">IT</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">期望职能</label>
+
                                         <div class="col-xs-6">
-                                            <input id="propose_duty" type="text" class="form-control propose_duty" name="propose_duty">
+                                            <input id="proposeDuty" type="text" class="form-control proposeDuty"
+                                                   name="proposeDuty">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">期望地点</label>
+
                                         <div class="col-xs-6">
-                                            <select class="form-control propose_city"  name = "propose_city" id="propose_city">
-                                                <option value = "杭州">杭州</option>
+                                            <select class="form-control proposeCity" name="proposeCity"
+                                                    id="proposeCity">
+                                                <option value="杭州">杭州</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">期望年薪</label>
+
                                         <div class="col-xs-6">
-                                            <select class="form-control propose_salary"  name = "propose_salary" id="propose_salary">
+                                            <select class="form-control proposeSalary" name="proposeSalary"
+                                                    id="proposeSalary">
 
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">目前年薪</label>
+
                                         <div class="col-xs-6">
-                                            <select class="form-control current_alarys"  name = "current_alarys" id="current_alarys">
+                                            <select class="form-control currentSalarys" name="currentSalarys"
+                                                    id="currentSalarys">
 
                                             </select>
                                         </div>
@@ -234,159 +255,187 @@
 
 
                             <!-- 工作经历 -->
+                            <div id="job-experience">
+                                <div class="sa-head">
+                                    <span class="sa-head-l"></span>
+                                <span class="sa-head-title">
+                                工作经历
+                                </span>
+                                    <span class="sa-head-l"></span>
+                                    <span class="sa-head-a add-btn" rel="job-experience"><i
+                                            class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
+
+                                </div>
+                            </div>
 
 
-
-                        <!-- 教育 经历 -->
-                        <div id="education">
-                            <div class="sa-head">
-                                <span class="sa-head-l"></span>
+                            <!-- 教育 经历 -->
+                            <div id="education">
+                                <div class="sa-head">
+                                    <span class="sa-head-l"></span>
                                 <span class="sa-head-title">
                                 教育经历
                                 </span>
-                                <span class="sa-head-l"></span>
-                                <span class="sa-head-a add-btn" rel="education"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
-                            </div>
-                            <div class="education-span">
-                                <div class="user-info-view">
-                                    <div class="work-info">
-                                        <div class="work-info-l">
-                                            <h4>
-                                                浙江工业大学之江学院
-                                            </h4>
-                                            <span>本科</span>
-                                            <span>.</span>
-                                            <span>软件工程</span>
-                                            <span>.</span>
-                                            <span>80(学分绩)</span>
-                                        </div>
-                                        <div class="work-info-r">
-                                            <div class="edit-div">
-                                                <i class="glyphicon glyphicon-edit edit-2"></i>
-                                                <span>编辑</span>
+                                    <span class="sa-head-l"></span>
+                                        <span class="sa-head-a add-btn" rel="education"><i
+                                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
+                                </div>
+                                <div class="education-span">
+                                    <div class="user-info-view">
+                                        <div class="work-info">
+                                            <div class="work-info-l">
+                                                <h4>
+                                                    浙江工业大学之江学院
+                                                </h4>
+                                                <span>本科</span>
+                                                <span>.</span>
+                                                <span>软件工程</span>
+                                                <span>.</span>
+                                                <span>80(学分绩)</span>
                                             </div>
-                                            <span>2015-02.23</span>
-                                            <span>-</span>
-                                            <span>2016-02-23</span>
+                                            <div class="work-info-r">
+                                                <div class="edit-div">
+                                                    <i class="glyphicon glyphicon-edit edit-2"></i>
+                                                    <span>编辑</span>
+                                                </div>
+                                                <span>2015-02.23</span>
+                                                <span>-</span>
+                                                <span>2016-02-23</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一。
+                                        <div>
+                                            浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一。
+                                        </div>
                                     </div>
                                 </div>
+
+
                             </div>
 
 
-                        </div>
-
-
-
-                        <!-- 语言能力 -->
-                        <div id="language">
-                            <div class="sa-head">
-                                <span class="sa-head-l"></span>
+                            <!-- 语言能力 -->
+                            <div id="language-ability" style="margin-bottom: 20px">
+                                <div class="sa-head">
+                                    <span class="sa-head-l"></span>
                                 <span class="sa-head-title">
                                 语言能力
                                 </span>
-                                <span class="sa-head-l"></span>
+                                    <span class="sa-head-l"></span>
+                                    <span class="sa-head-a add-btn" rel="language-ability"><i
+                                            class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
+                                </div>
+
+
+
                             </div>
-                        </div>
 
 
-                        <!--项目经验 -->
-                        <div id="project-experience">
-                            <div class="sa-head">
-                                <span class="sa-head-l"></span>
+
+                            <!--项目经验 -->
+                            <div id="project-experience">
+                                <div class="sa-head">
+                                    <span class="sa-head-l"></span>
                                 <span class="sa-head-title">
                                 项目经验
                                 </span>
-                                <span class="sa-head-l"></span>
-                                <span class="sa-head-a add-btn" rel="project-experience"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
-                            </div>
-                            <div id="project-experience-span">
-                                <div class="user-info-view">
-                                    <div class="work-info">
-                                        <div class="work-info-l">
-                                            <h4>
-                                                海归找工作web开发
-                                            </h4>
-                                            <span>java后台开发负责</span>
-
-                                        </div>
-                                        <div class="work-info-r">
-                                            <div class="edit-div">
-                                                <i class="glyphicon glyphicon-edit edit-2"></i>
-                                                <span>编辑</span>
-                                            </div>
-                                            <span>2015-02.23</span>
-                                            <span>-</span>
-                                            <span>2016-02-23</span>
-                                        </div>
-                                    </div>
-                                    <div class="work-content">
-                                        微信，qq，微博，facebook，支付宝 接入开发。主要基于OAuth2.0技术，回调第三方网页验证获取token，调用第三方资源
-                                    </div>
+                                    <span class="sa-head-l"></span>
+                                        <span class="sa-head-a add-btn" rel="project-experience"><i
+                                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
                                 </div>
+
                             </div>
 
-                            <form id ="project-experience-form" class="form-horizontal" method="post" style="display: none;">
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">项目名称</label>
-                                    <div class="col-xs-6">
-                                        <input id="currentCity" type="text" class="form-control currentCity" name="currentCity">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">时间</label>
-                                    <div class="col-xs-3">
-                                        <select class="form-control job-"  name = "job-" id="">
-                                            <option value = "杭州">2016</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <select class="form-control job-"  name = "job-" id="">
-                                            <option value = "杭州">2017</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">项目描述</label>
-                                    <div class="col-xs-6" >
-                                        <textarea class=" form-control"></textarea>
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="col-xs-3"></div>
-                                    <div class="col-xs-3">
-                                        <button class="btn btn-danger submit">提交</button>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <button class="btn cancel" rel="job-hope">取消</button>
-                                    </div>
-                                    <div class="col-xs-2"><span>删除该条目</span></div>
-                                </div>
-                            </form>
-                        </div>
-
-
-                        <!--附加信息 -->
-                        <div id="other">
-                            <div class="sa-head">
-                                <span class="sa-head-l"></span>
+                            <!--附加信息 -->
+                            <div id="other">
+                                <div class="sa-head">
+                                    <span class="sa-head-l"></span>
                                 <span class="sa-head-title">
                                 附加信息
                                 </span>
-                                <span class="sa-head-l"></span>
-                                <span class="sa-head-a"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
-                            </div>
-                            <div id="other-span">
+                                    <span class="sa-head-l"></span>
+                                        <span class="sa-head-a"><i
+                                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;添加</span>
+                                </div>
+
+
+                                <div class="language-ability-context">
+                                    <div class="language-ability-span">
+                                        <div class="user-info-view">
+                                            <div style="height: 50px;">
+                                                <div class="work-info-l">
+                                                    <h4 class="otherTitle">
+                                                        雅思证书
+                                                    </h4>
+
+                                                </div>
+                                                <div class="work-info-r">
+                                                    <div class="edit-div">
+                                                        <i class="glyphicon glyphicon-edit edit-2"></i>
+                                                        <span>编辑</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="work-content  projectDescription">
+                                                我在什么时候项目
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <form  class="form-horizontal language-ability-form" method="post" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">语言</label>
+                                            <div class="col-xs-6">
+                                                <select class="form-control language"  name = "language " id="language">
+                                                    <option value="0">汉语</option>
+                                                    <option value="1">英语</option>
+                                                    <option value="2">日语</option>
+                                                    <option value="3">法语</option>
+                                                    <option value="4">韩语</option>
+                                                    <option value="5">德语</option>
+                                                    <option value="6">俄语</option>
+                                                    <option value="7">西班牙语</option>
+                                                    <option value="8">葡萄牙语</option>
+                                                    <option value="9">阿拉伯语</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">语言</label>
+                                            <div class="col-xs-6">
+                                                <select class="form-control grade"  name = "grade " id="grade">
+                                                    <option value="0">简单沟通</option>
+                                                    <option value="1">精通读写</option>
+                                                    <option value="2">商务洽谈</option>
+                                                    <option value="3">同声翻译</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-xs-3"></div>
+                                            <div class="col-xs-3">
+                                                <button class="btn btn-danger submit">提交</button>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <button class="btn btn-cancel" rel="language-ability">取消</button>
+                                            </div>
+                                            <div class="delete_info" rel="language-ability"><span>删除该条目</span></div>
+                                        </div>
+                                    </form>
+                                    </div>
+
+
+
 
                             </div>
+
+
                         </div>
-
-
-                    </div>
                     </div>
                 </div>
 
@@ -395,16 +444,16 @@
                     <div class="base-panel ">
                         <div class="account-nav">
                             <ul>
-                               <li class="active">
-                                   <a href="#user-info">
-                                       <i class="glyphicon glyphicon-user"></i>
+                                <li class="active">
+                                    <a href="#user-info">
+                                        <i class="glyphicon glyphicon-user"></i>
                                        <span>
                                            基本信息
                                        </span>
-                                   </a>
-                               </li>
+                                    </a>
+                                </li>
                                 <li>
-                                    <a  href="#job-hope">
+                                    <a href="#job-hope">
                                         <i class="glyphicon glyphicon-heart"></i>
                                        <span>
                                            求职意向
@@ -412,7 +461,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  href="#job-experience">
+                                    <a href="#job-experience">
                                         <i class="glyphicon glyphicon-briefcase"></i>
                                        <span>
                                            工作经历
@@ -420,7 +469,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  href="#education">
+                                    <a href="#education">
                                         <i class="glyphicon glyphicon-education"></i>
                                        <span>
                                            教育经历
@@ -428,7 +477,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  href="#language">
+                                    <a href="#language">
                                         <i class="glyphicon glyphicon-globe"></i>
                                        <span>
                                            语言能力
@@ -436,7 +485,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  href="#project-experience">
+                                    <a href="#project-experience">
                                         <i class="glyphicon glyphicon-object-align-bottom"></i>
                                        <span>
                                            项目经验
@@ -444,7 +493,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  href="#other">
+                                    <a href="#other">
                                         <i class="glyphicon glyphicon-saved"></i>
                                        <span>
                                            附加信息
@@ -462,9 +511,13 @@
     </div>
 </div>
 <div id="footer"></div>
+
+
 <div id="clone" style="display: none;">
-    <div class="education-clone">
-        <div class="education-span" school_name="" formDate="" toDate="" deploma="" profession="" gpa="" description="">
+    <!--学校 -->
+    <div class="education-context">
+        <div class="education-span" school_name="" formDate="" toDate="" deploma="" profession="" gpa=""
+             description="">
             <div class="user-info-view">
                 <div class="work-info">
                     <div class="work-info-l">
@@ -481,7 +534,7 @@
                             <i class="glyphicon glyphicon-edit edit-2"></i>
                             <span>编辑</span>
                         </div>
-                        <span class="formDate">2015-02.23</span>
+                        <span class="fromDate">2015-02.23</span>
                         <span>-</span>
                         <span class="toDate">2016-02-23</span>
                     </div>
@@ -491,65 +544,297 @@
                 </div>
             </div>
         </div>
+
+
+        <form class="form-horizontal education-form" method="post" style="display: none;">
+            <div class="form-group">
+                <label class="col-xs-3 control-label">学校名称</label>
+
+                <div class="col-xs-6">
+                    <input id="schoolName" type="text" class="form-control schoolName" name="schoolName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label">学位</label>
+
+                <div class="col-xs-6">
+                    <input id="deploma" type="text" class="form-control deploma" name="deploma">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label">专业</label>
+
+                <div class="col-xs-6">
+                    <input id="profession" type="text" class="form-control profession" name="profession">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label">学分绩</label>
+
+                <div class="col-xs-6">
+                    <input id="gpa" type="text" class="form-control gpa" name="gpa">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label">时间</label>
+
+                <div class="col-xs-3">
+                    <input class="form-control fromDate timeControl" name="job-fromDate" id="fromDate"/>
+                </div>
+                <div class="col-xs-3">
+                    <input class="form-control toDate timeControl" name="job-toDate" id="toDate"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-3 control-label">介绍</label>
+
+                <div class="col-xs-6">
+                    <textarea class="form-control description" id="description" name="description"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-3">
+                    <button class="btn btn-danger submit education-submit">提交</button>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-cancel" rel="education">取消</button>
+                </div>
+                <div class="col-xs-2"><span class="delete_info" rel="education">删除该条目</span></div>
+            </div>
+        </form>
     </div>
 
-    <form id ="education-form" class="form-horizontal" method="post">
-        <div class="form-group">
-            <label class="col-xs-3 control-label">学校名称</label>
-            <div class="col-xs-6">
-                <input id="school_name" type="text" class="form-control school_name" name="school_name">
+    <!--工作经历 -->
+    <div class="job-experience-context">
+        <div class="job-experience-span">
+            <div class="user-info-view">
+                <div class="work-info">
+                    <div class="work-info-l">
+                        <h4 class="companyName">
+                            海归发展有限公司
+                        </h4>
+                        <span class="title" >高级软件工程师</span><span>.</span><span class="companyCity"></span>
+                    </div>
+                    <div class="work-info-r">
+                        <div class="edit-div">
+                            <i class="glyphicon glyphicon-edit edit-2"></i>
+                            <span>编辑</span>
+                        </div>
+                        <span class="companyFrom">2015-02.23</span>
+                        <span>-</span>
+                        <span id=“companyEndTime” class="companyEndTime">2016-02-23</span>
+                    </div>
+                </div>
+                <div class="work-info-content">
+                                        <span class="companyDuty">
+                                            负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。
+                                        </span>
+                </div>
+
             </div>
+
+
         </div>
-        <div class="form-group">
-            <label class="col-xs-3 control-label">学位</label>
-            <div class="col-xs-6">
-                <input id="deploma" type="text" class="form-control deploma" name="deploma">
+
+        <form class ="job-experience-form form-horizontal" method="post" style="display: none">
+            <div class="form-group">
+                <label class="col-xs-3 control-label">职位名称</label>
+                <div class="col-xs-6">
+                    <input id="title" type="text" class="form-control title" name="title">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-3 control-label">专业</label>
-            <div class="col-xs-6">
-                <input id="profession" type="text" class="form-control profession" name="profession">
+            <div class="form-group">
+                <label class="col-xs-3 control-label">公司名称</label>
+                <div class="col-xs-6">
+                    <input id="companyName" type="text" class="form-control companyName" name="companyName" >
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-3 control-label">学分绩</label>
-            <div class="col-xs-6">
-                <input id="gpa" type="text" class="form-control gpa" name="gpa">
+            <div class="form-group">
+                <label class="col-xs-3 control-label">公司行业</label>
+                <div class="col-xs-6">
+                    <select class="form-control companyBusinessType "  name = "companyBusinessType " id="companyBusinessType">
+
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-3 control-label">时间</label>
-            <div class="col-xs-3">
-                <select class="form-control fromDate"  name = "job-fromDate" id="fromDate">
-                    <option value = "杭州">2016</option>
-                </select>
+            <div class="form-group">
+                <label class="col-xs-3 control-label">地点</label>
+                <div class="col-xs-6">
+                    <select class="form-control companyCity"  name = "companyCity" id="companyCity" name="companyCity">
+
+                    </select>
+                </div>
             </div>
-            <div class="col-xs-3">
-                <select class="form-control toDate"  name = "toDate" id="toDate">
-                    <option value = "杭州">2017</option>
-                </select>
+            <div class="form-group">
+                <label class="col-xs-3 control-label">时间</label>
+                <div class="col-xs-3">
+                    <input type="text" class="form-control companyFrom timeControl"  name = "companyFrom" id="companyFrom" name="companyFrom">
+                </div>
+                <div class="col-xs-3">
+                    <input type="text" class="form-control companyEndTime timeControl"  name = "companyEndTime" id="companyEndTime" name="companyEndTime">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-3 control-label">职责描述</label>
+                <div class="col-xs-6" >
+                    <textarea class=" form-control companyDuty" class="companyDuty" id="companyDuty" name="companyDuty"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-3">
+                    <button class="btn btn-danger submit">提交</button>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-cancel" rel="job-hope">取消</button>
+                </div>
+                <div class="col-xs-2"><span>删除该条目</span></div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 项目经验-->
+
+    <div class="project-experience-context">
+        <div class="project-experience-span">
+            <div class="user-info-view">
+                <div class="work-info">
+                    <div class="work-info-l">
+                        <h4 class="projectName">
+                            海归找工作web开发
+                        </h4>
+                        <span>java后台开发负责</span>
+
+                    </div>
+                    <div class="work-info-r">
+                        <div class="edit-div">
+                            <i class="glyphicon glyphicon-edit edit-2"></i>
+                            <span>编辑</span>
+                        </div>
+                        <span class="projectTimeFrom">2015-02</span>
+                        <span>-</span>
+                        <span class="projectTimeTo">2016-02-23</span>
+                    </div>
+                </div>
+                <div class="work-content  projectDescription">
+                    微信，qq，微博，facebook，支付宝 接入开发。主要基于OAuth2.0技术，回调第三方网页验证获取token，调用第三方资源
+                </div>
             </div>
         </div>
 
+        <form  class="form-horizontal project-experience-form" method="post" style="display: none;">
+            <div class="form-group">
+                <label class="col-xs-3 control-label">项目名称</label>
+
+                <div class="col-xs-6">
+                    <input id="projectName" type="text" class="form-control projectName" name="projectName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label">时间</label>
+
+                <div class="col-xs-3">
+                    <input class="form-control projectTimeFrom timeControl" name="projectTimeFrom" id="projectTimeFrom">
+                </div>
+                <div class="col-xs-3">
+                    <input class="form-control projectTimeTo timeControl" name="projectTimeTo" id="projectTimeTo">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label ">项目描述</label>
+
+                <div class="col-xs-6">
+                        <textarea class="form-control projectDescription" name="projectDescription"
+                                  id="projectDescription"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-3">
+                    <button class="btn btn-danger submit">提交</button>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-cancel" rel="project-experience">取消</button>
+                </div>
+                <div class="col-xs-2"><span class="delete_info" rel="project-experience">删除该条目</span></div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 语音能力 -->
+    <div class="language-ability-context">
+        <div class="language-ability-span">
+            <div class="user-info-view" style="margin-bottom: 20px">
+                <div class="work-info-l">
+
+                        <span class="language" style="color: black">英语</span>
+                        <span style="color: black">&nbsp;-&nbsp;</span>
+                        <span class="grade" style="color: black">熟练</span>
+
+                </div>
+                    <div class="work-info-r">
+                        <div class="edit-div">
+                            <i class="glyphicon glyphicon-edit edit-2"></i>
+                            <span>编辑</span>
+                        </div>
+                    </div>
+
+            </div>
+
+        </div>
+
+
+        <form  class="form-horizontal language-ability-form" method="post" style="display: none;">
         <div class="form-group">
-            <label class="col-xs-3 control-label">介绍</label>
-            <div class="col-xs-6" >
-                <textarea class="form-control description" id="description" name="description"></textarea>
+            <label class="col-xs-3 control-label">语言</label>
+            <div class="col-xs-6">
+                <select class="form-control language"  name = "language " id="language">
+                    <option value="0">中文</option>
+                    <option value="1">英语</option>
+                    <option value="2">日语</option>
+                    <option value="3">法语</option>
+                    <option value="4">韩语</option>
+                    <option value="5">德语</option>
+                    <option value="6">俄语</option>
+                    <option value="7">西班牙语</option>
+                    <option value="8">葡萄牙语</option>
+                    <option value="9">阿拉伯语</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 control-label">语言</label>
+            <div class="col-xs-6">
+                <select class="form-control grade"  name = "grade " id="grade">
+                    <option value="0">简单沟通</option>
+                    <option value="1">精通读写</option>
+                    <option value="2">商务洽谈</option>
+                    <option value="3">同声翻译</option>
+
+                </select>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-xs-3"></div>
             <div class="col-xs-3">
-                <button class="btn btn-danger submit education-submit">提交</button>
+                <button class="btn btn-danger submit">提交</button>
             </div>
             <div class="col-xs-3">
-                <button class="btn btn-cancel" rel="education">取消</button>
+                <button class="btn btn-cancel" rel="language-ability">取消</button>
             </div>
-            <div class="col-xs-2"><span>删除该条目</span></div>
+            <div class="delete_info" rel="language-ability"><span>删除该条目</span></div>
         </div>
     </form>
+</div>
+
 </div>
 </body>
 </html>

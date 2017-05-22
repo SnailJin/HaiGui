@@ -170,3 +170,17 @@ function handleCode(code){
         return false;
     }
 }
+
+//插入数据 feildDiv 插入位置div 列表 val插入数据
+function insertVal(feildDivList,val){
+    for(var i=0;i<feildDivList.length ; i++){
+        feildDiv = feildDivList.eq(i);
+        if(feildDiv.is('span') || feildDiv.is('p') || feildDiv.is('h4')){
+            feildDiv.text(val);
+        }else if(feildDiv.is('select')){
+            feildDiv.val(val);
+        }else if(feildDiv.is('input') || feildDiv.is('textarea') ){
+            feildDiv.val(val);
+        }
+    }
+}
