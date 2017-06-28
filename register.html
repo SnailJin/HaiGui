@@ -19,6 +19,14 @@
                 maxDate:new Date(new Date().setFullYear(new Date().getFullYear()-16)),
                 defaultDate:new Date(new Date().setFullYear(new Date().getFullYear()-18))
             })
+            //修改昵称
+            $('input[name="type"]').change(function(){
+                message ="昵&#12288;&#12288;称";
+                if(this.value == 'company'){
+                    message ="企&nbsp;&nbsp;业&nbsp;&nbsp;名";
+                }
+                $('input[name="name"]').closest('.form-group').find('.control-label').html(message)
+            })
             //提交表单
             $('[name="registerForm"]').bind('submit',function(){
                 var data =$(this).serializeObject();

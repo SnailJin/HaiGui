@@ -119,10 +119,13 @@ function init(){
 
 
     //数据初始化
-    parseInfo([{ schoolName:"浙江工业大学之江学院",fromDate:"2015-02",toDate:"2016-02", deploma:"本科",profession:"软件工程",gpa:"8.0",description:"浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一"}],"education")
-    parseInfo([{title:"java开发1",companyName:"杭州拼爱网路有限公司1",companyBusinessType:"软件工程",companyCity:"杭州",companyFrom:"2015-04",companyEndTime:"2016-5",companyDuty:"负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。"}],'job-experience');
-    parseInfo([{projectName:'海归项目',projectTimeFrom:"2013-2",projectTimeTo:"2015-12",projectDescription:"主要负责架构设计分析"}],"project-experience");
-    parseInfo([{language:0,grade:3},{language:1,grade:2}],"language-ability");
+    //parseInfo([{ schoolName:"浙江工业大学之江学院",fromDate:"2015-02",toDate:"2016-02", deploma:"本科",profession:"软件工程",gpa:"8.0",description:"浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一"}],"education")
+    //parseInfo([{title:"java开发1",companyName:"杭州拼爱网路有限公司1",companyBusinessType:"软件工程",companyCity:"杭州",companyFrom:"2015-04",companyEndTime:"2016-5",companyDuty:"负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。"}],'job-experience');
+    //parseInfo([{projectName:'海归项目',projectTimeFrom:"2013-2",projectTimeTo:"2015-12",projectDescription:"主要负责架构设计分析"}],"project-experience");
+    //parseInfo([{language:0,grade:3},{language:1,grade:2}],"language-ability");
+    parseInfo([{honourType:0,honourContent:"sfdsdfsdfsd"}],"other");
+
+    loadEnterpriseInformation();
 }
 
 
@@ -181,4 +184,18 @@ function insertAccountVal(feildDivList,val,key){
             feildDiv.val(val);
         }
     }
+}
+
+
+
+
+//获取个人信息数据
+function loadEnterpriseInformation(async){
+    formData.key="LoadPersonalStatmenList";
+    formData.body={pageNo:0,pageSize:20};
+    success=function(data){
+        data = JSON.parse(data);
+    }
+    opt={data:formData,async:false}
+    ajaxLoad(opt)
 }

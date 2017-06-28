@@ -508,3 +508,33 @@ function sendVerifyCode(email,context){
     });
 }
 
+//ajax 封装
+//opt={url:url,data:data,success}
+function ajaxLoad(opt){
+    $.ajax({
+        type: opt.type || 'post',
+        url:url,
+        async:opt.async || true,
+        data:JSON.stringify(opt.data),
+        beforeSend: function(XMLHttpRequest){
+            if(opt.beforeSend != undefined){
+                opt.beforeSend();
+            }
+        },
+        success: function(data, textStatus){
+            if(opt.success != undefined){
+                opt.success(data);
+            }
+        },
+        complete: function(XMLHttpRequest, textStatus){
+            if(opt.complete != undefined){
+                opt.complete();
+            }
+        },
+        error: function(response){
+            if(opt.error != undefined){
+                opt.error();
+            }
+        }
+    });
+}
