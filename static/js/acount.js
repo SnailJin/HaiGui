@@ -20,7 +20,8 @@ $(function(){
         return false;
     })
     $('.btn-cancel').click(cancel_info);
-    $('.submit').click(function(){
+    //基本信息和求职提交
+    $('.base-submit').click(function(){
         form = $(this).closest('form');
         className = form.attr('id').split('-form')[0]
         spanDiv = $('#'+className+'-span');
@@ -29,10 +30,23 @@ $(function(){
         spanDiv.show();
         return false;
     })
+    //其他的提交
+    $('.new-submit').click(function(){
+        form = $(this).closest('form');
+        className = form.attr('rel').split('-form')[0]
+        context =form.closest("."+className+"-context")
+        spanDiv = context.find('.'+className+'-span');
+        paseSpan(spanDiv,form);
+        form.hide();
+        return false;
+    })
+
     //添加按钮
     $('.add-btn').click(function(){
         rel = $(this).attr('rel');
         form = $('#'+rel+' #'+rel+'-form');
+        //是新增
+        form.attr("type","new");
         form.show();
     })
     //
@@ -57,13 +71,11 @@ function parseForm(spanDiv,formDiv){
 }
 //转成span
 function paseSpan(spanDiv,formDiv){
-    formFieldList = formDiv.find("input,select");
-    for(var i=0 ;i < formFieldList.length ; i++){
-        contentForm = formFieldList[i];
-        className = contentForm.getAttribute("name");
-        val = $(contentForm).val();
-        feild =spanDiv.find('.'+className+'_span');
-        feild.text(val)
+    formFieldObject = formDiv.serializeObject();
+    for(var i in formFieldObject){
+        contentForm = formFieldObject[i];
+        feild =spanDiv.find('.'+i+'_span');
+        feild.text(contentForm)
     }
 }
 //获取简历列表
@@ -93,7 +105,7 @@ function parseInfo(data,field){
         var infoSpan = infoDiv.find("."+field+"-span");
         for(var key in info){
             infoSpan.attr(key,info[key]);
-            insertAccountVal(infoDiv.find("."+key),info[key],field);
+            insertAccountVal(infoDiv.find("."+key+",."+key+"_span"),info[key],field);
         }
         $('#'+field).append(infoDiv);
         addEvent(infoDiv,field);
@@ -108,7 +120,7 @@ function parseInfo(data,field){
 
 //初始化字段
 function init(){
-    priceList = ["propose_salary","current_alarys"];
+    priceList = ["proposeSalary","currentSalarys"];
     for(var i= 0 ;i<priceList.length ;i++){
         for(j=10;j<100;j=j+10){
             value = j+"万-"+(j+10)+"万";
@@ -121,11 +133,11 @@ function init(){
     //数据初始化
     //parseInfo([{ schoolName:"浙江工业大学之江学院",fromDate:"2015-02",toDate:"2016-02", deploma:"本科",profession:"软件工程",gpa:"8.0",description:"浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一"}],"education")
     //parseInfo([{title:"java开发1",companyName:"杭州拼爱网路有限公司1",companyBusinessType:"软件工程",companyCity:"杭州",companyFrom:"2015-04",companyEndTime:"2016-5",companyDuty:"负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。"}],'job-experience');
-    //parseInfo([{projectName:'海归项目',projectTimeFrom:"2013-2",projectTimeTo:"2015-12",projectDescription:"主要负责架构设计分析"}],"project-experience");
-    //parseInfo([{language:0,grade:3},{language:1,grade:2}],"language-ability");
-    parseInfo([{honourType:0,honourContent:"sfdsdfsdfsd"}],"other");
+    //parseInfo([{projectName:'海归项目',projectTimeFrom:"2013-2",projectTimeTo:"2015-12",projectDescription:"主要负责架构设计分析",projectPosition:"java开发工程师"}],"project-experience");
+    parseInfo([{language:0,grade:3},{language:1,grade:2}],"language-ability");
+    //parseInfo([{honourType:0,honourContent:"sfdsdfsdfsd"}],"other")
 
-    loadEnterpriseInformation();
+   // loadEnterpriseInformation();
 }
 
 
@@ -143,6 +155,7 @@ function addEvent(div,key){
         $(this).closest('.'+key+'-context').find('.'+key+'-form').show();
     })
     div.find('.btn-cancel').click(cancel_info);
+    //
 }
 
 //删除条目
@@ -170,7 +183,7 @@ function insertAccountVal(feildDivList,val,key){
 
     for(var i=0;i<feildDivList.length ; i++){
         feildDiv = feildDivList.eq(i);
-        if(feildDiv.is('span') || feildDiv.is('p') || feildDiv.is('h4')){
+        if(feildDiv.is('span') || feildDiv.is('p') || feildDiv.is('h4') || feildDiv.is('div') ){
             if(selectFlag){
                 text =feildDiv.closest('.'+key+"-context").find('form').find("."+feildDiv.attr('class')).find("option:selected").text();
                 feildDiv.text(text);

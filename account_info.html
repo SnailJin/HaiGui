@@ -14,7 +14,7 @@
     <script style="text/javascript" src="./static/js/jquery.poplayer.js"></script>
     <script style="text/javascript" src="./static/js/jquery.datetimepicker.full.min.js"></script>
     <script style="text/javascript" src="./static/js/acount.js"></script>
-    <script style="text/javascript" src="./static/js/base.js"></script>
+   <!-- <script style="text/javascript" src="./static/js/base.js"></script>-->
     <title>个人中心</title>
 </head>
 <body>
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
 
-                                <form id="user-info-form" class="form-horizontal" method="post" style="display: none;">
+                                <form id="user-info-form" class="form-horizontal" method="post" style="display: none;" rel="user-info-form">
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">姓&#12288;&#12288;名</label>
 
@@ -137,7 +137,7 @@
                                     <div class="form-group">
                                         <div class="col-xs-3"></div>
                                         <div class="col-xs-3">
-                                            <button class="btn btn-danger submit">提交</button>
+                                            <button class="btn btn-danger submit base-submit">提交</button>
                                         </div>
                                         <div class="col-xs-3">
                                             <button class="btn cancel" rel="user-info">取消</button>
@@ -191,7 +191,7 @@
                                     </div>
                                 </div>
 
-                                <form id="job-hope-form" class="form-horizontal" method="post" style="display: none;">
+                                <form id="job-hope-form" class="form-horizontal" method="post" style="display: none;" rel="job-hope-form">
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">求职领域</label>
 
@@ -244,7 +244,7 @@
                                     <div class="form-group">
                                         <div class="col-xs-3"></div>
                                         <div class="col-xs-3">
-                                            <button class="btn btn-danger submit">提交</button>
+                                            <button class="btn btn-danger submit base-submit">提交</button>
                                         </div>
                                         <div class="col-xs-3">
                                             <button class="btn cancel" rel="job-hope">取消</button>
@@ -452,32 +452,32 @@
             <div class="user-info-view">
                 <div class="work-info">
                     <div class="work-info-l">
-                        <h4 class="school_name">
-                            浙江工业大学之江学院
+                        <h4 class="schoolName_span">
+
                         </h4>
-                        <span class="deploma">本科</span>
+                        <span class="deploma_span"></span>
                         <span>.</span>
-                        <span class="profession">软件工程</span>
-                        <span class="gpa">.80(学分绩)</span>
+                        <span class="profession_span"></span>
+                        <span class="gpa_span">.</span>
                     </div>
                     <div class="work-info-r">
                         <div class="edit-div">
                             <i class="glyphicon glyphicon-edit edit-2"></i>
                             <span>编辑</span>
                         </div>
-                        <span class="fromDate">2015-02.23</span>
+                        <span class="fromDate_span"></span>
                         <span>-</span>
-                        <span class="toDate">2016-02-23</span>
+                        <span class="toDate_span"></span>
                     </div>
                 </div>
-                <div class="description">
-                    浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一。
+                <div class="description_span">
+
                 </div>
             </div>
         </div>
 
 
-        <form class="form-horizontal education-form" method="post" style="display: none;">
+        <form class="form-horizontal education-form" method="post" style="display: none;" rel="education-form">
             <div class="form-group">
                 <label class="col-xs-3 control-label">学校名称</label>
 
@@ -510,10 +510,10 @@
                 <label class="col-xs-3 control-label">时间</label>
 
                 <div class="col-xs-3">
-                    <input class="form-control fromDate timeControl" name="job-fromDate" id="fromDate"/>
+                    <input class="form-control fromDate timeControl" name="fromDate" id="fromDate"/>
                 </div>
                 <div class="col-xs-3">
-                    <input class="form-control toDate timeControl" name="job-toDate" id="toDate"/>
+                    <input class="form-control toDate timeControl" name="toDate" id="toDate"/>
                 </div>
             </div>
 
@@ -528,7 +528,7 @@
             <div class="form-group">
                 <div class="col-xs-3"></div>
                 <div class="col-xs-3">
-                    <button class="btn btn-danger submit education-submit">提交</button>
+                    <button class="btn btn-danger submit new-submit">提交</button>
                 </div>
                 <div class="col-xs-3">
                     <button class="btn btn-cancel" rel="education">取消</button>
@@ -544,25 +544,25 @@
             <div class="user-info-view">
                 <div class="work-info">
                     <div class="work-info-l">
-                        <h4 class="companyName">
-                            海归发展有限公司
+                        <h4 class="companyName_span">
+
                         </h4>
-                        <span class="title" >高级软件工程师</span><span>.</span><span class="companyCity"></span>
+                        <span class="title_span" ></span><span>.</span><span class="companyCity_span"></span>
                     </div>
                     <div class="work-info-r">
                         <div class="edit-div">
                             <i class="glyphicon glyphicon-edit edit-2"></i>
                             <span>编辑</span>
                         </div>
-                        <span class="companyFrom">2015-02.23</span>
+                        <span class="companyFrom_span"></span>
                         <span>-</span>
-                        <span id=“companyEndTime” class="companyEndTime">2016-02-23</span>
+                        <span id=“companyEndTime” class="companyEndTime_span"></span>
                     </div>
                 </div>
                 <div class="work-info-content">
-                                        <span class="companyDuty">
-                                            负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。
-                                        </span>
+                    <span class="companyDuty_span">
+
+                    </span>
                 </div>
 
             </div>
@@ -570,7 +570,7 @@
 
         </div>
 
-        <form class ="job-experience-form form-horizontal" method="post" style="display: none">
+        <form class ="job-experience-form form-horizontal" method="post" style="display: none" rel="job-experience-form">
             <div class="form-group">
                 <label class="col-xs-3 control-label">职位名称</label>
                 <div class="col-xs-6">
@@ -620,7 +620,7 @@
             <div class="form-group">
                 <div class="col-xs-3"></div>
                 <div class="col-xs-3">
-                    <button class="btn btn-danger submit">提交</button>
+                    <button class="btn btn-danger submit new-submit" rel="job-experience">提交</button>
                 </div>
                 <div class="col-xs-3">
                     <button class="btn btn-cancel" rel="job-hope">取消</button>
@@ -637,10 +637,10 @@
             <div class="user-info-view">
                 <div class="work-info">
                     <div class="work-info-l">
-                        <h4 class="projectName">
-                            海归找工作web开发
+                        <h4 class="projectName_span">
+
                         </h4>
-                        <span>java后台开发负责</span>
+                        <span class="projectPosition_span"></span>
 
                     </div>
                     <div class="work-info-r">
@@ -648,18 +648,25 @@
                             <i class="glyphicon glyphicon-edit edit-2"></i>
                             <span>编辑</span>
                         </div>
-                        <span class="projectTimeFrom">2015-02</span>
+                        <span class="projectTimeFrom_span">-</span>
                         <span>-</span>
-                        <span class="projectTimeTo">2016-02-23</span>
+                        <span class="projectTimeTo_span"></span>
                     </div>
                 </div>
-                <div class="work-content  projectDescription">
-                    微信，qq，微博，facebook，支付宝 接入开发。主要基于OAuth2.0技术，回调第三方网页验证获取token，调用第三方资源
+                <div class="work-content  projectDescription_span">
+
                 </div>
             </div>
         </div>
 
-        <form  class="form-horizontal project-experience-form" method="post" style="display: none;">
+        <form  class="form-horizontal project-experience-form" method="post" style="display: none;" rel="project-experience">
+            <div class="form-group">
+                <label class="col-xs-3 control-label">项目岗位</label>
+
+                <div class="col-xs-6">
+                    <input id="projectPosition" type="text" class="form-control projectPosition" name="projectPosition">
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-xs-3 control-label">项目名称</label>
 
@@ -689,7 +696,7 @@
             <div class="form-group">
                 <div class="col-xs-3"></div>
                 <div class="col-xs-3">
-                    <button class="btn btn-danger submit">提交</button>
+                    <button class="btn btn-danger submit new-submit">提交</button>
                 </div>
                 <div class="col-xs-3">
                     <button class="btn btn-cancel" rel="project-experience">取消</button>
