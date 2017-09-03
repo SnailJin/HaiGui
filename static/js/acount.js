@@ -49,7 +49,8 @@ $(function(){
         form.attr("type","new");
         form.show();
     })
-    //
+
+
 });
 //转成form
 function parseForm(spanDiv,formDiv){
@@ -97,7 +98,11 @@ function getStatement(){
     }
 }
 
-//填充信息
+/**填充信息
+ *
+ * @param data
+ * @param field
+ */
 function parseInfo(data,field){
     for(var i in data){
         info = data[i];
@@ -113,8 +118,24 @@ function parseInfo(data,field){
     var infoForm = $('#clone').find('.'+field+'-form').clone();
     infoForm.attr("id",field+"-form");
     infoForm.find('.delete_info').remove();
+    infoForm.find('.adv-submit').click(advSumbit)
     $('#'+field).append(infoForm)
 
+}
+/**
+ * 更新现有信息
+ * @param data
+ * @param field
+ */
+function updateInfo(data,field,infoDiv){
+    for(var i in data){
+        info = data[i];
+        var infoSpan = infoDiv.find("."+field+"-span");
+        for(var key in info){
+            infoSpan.attr(key,info[key]);
+            insertAccountVal(infoDiv.find("."+key),info[key],field);
+        }
+    }
 }
 
 
@@ -131,13 +152,14 @@ function init(){
 
 
     //数据初始化
-    //parseInfo([{ schoolName:"浙江工业大学之江学院",fromDate:"2015-02",toDate:"2016-02", deploma:"本科",profession:"软件工程",gpa:"8.0",description:"浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一"}],"education")
+    parseInfo([{ schoolName:"浙江工业大学之江学院",fromDate:"2015-02",toDate:"2016-02", deploma:"本科",profession:"软件工程",gpa:"8.0",description:"浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一"}],"education")
     //parseInfo([{title:"java开发1",companyName:"杭州拼爱网路有限公司1",companyBusinessType:"软件工程",companyCity:"杭州",companyFrom:"2015-04",companyEndTime:"2016-5",companyDuty:"负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。"}],'job-experience');
     //parseInfo([{projectName:'海归项目',projectTimeFrom:"2013-2",projectTimeTo:"2015-12",projectDescription:"主要负责架构设计分析",projectPosition:"java开发工程师"}],"project-experience");
     parseInfo([{language:0,grade:3},{language:1,grade:2}],"language-ability");
     //parseInfo([{honourType:0,honourContent:"sfdsdfsdfsd"}],"other")
 
    // loadEnterpriseInformation();
+
 }
 
 
@@ -155,7 +177,6 @@ function addEvent(div,key){
         $(this).closest('.'+key+'-context').find('.'+key+'-form').show();
     })
     div.find('.btn-cancel').click(cancel_info);
-    //
 }
 
 //删除条目
@@ -199,7 +220,24 @@ function insertAccountVal(feildDivList,val,key){
     }
 }
 
-
+//提交数据处理
+function advSumbit(){
+    context = $(this);
+    rel = context.attr("rel")
+    form = context.closest("."+rel+"-form");
+    context = context.closest("."+rel+"-context");
+    jsonList = [];
+    json = form.serializeObject();
+    jsonList.push(json)
+    if(context == undefined||context.length==0){
+        parseInfo(jsonList,rel)
+        cleanContent(form)
+    }else{
+        updateInfo(jsonList,rel,context);
+    }
+    form.hide();
+    return false;
+}
 
 
 //获取个人信息数据
@@ -211,4 +249,14 @@ function loadEnterpriseInformation(async){
     }
     opt={data:formData,async:false}
     ajaxLoad(opt)
+}
+/**
+ * 清空内容
+ * @param context
+ */
+function cleanContent(context){
+    inputlist = context.find("input,textarea");
+    for(var i in inputlist){
+        inputlist.eq(i).val("");
+    }
 }
