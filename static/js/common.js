@@ -56,15 +56,65 @@ jQuery.deleteCookie = function (sName, sPath, sDomain) {
 
 //*****************Cookie******************************
 //form�?json
+//如何 name contain _Range 那表示内容是A-B，进行分割
 jQuery.prototype.serializeObject = function () {
     var obj = new Object();
     $.each(this.serializeArray(), function (index, param) {
+        if (!(param.name in obj)) {
+            if(param.name.length>0;){
+
+            }else{
+
+            }
+            obj[param.name] = param.value;
+        }
+    });
+    return obj;
+};
+//转成span对select进行处理
+jQuery.prototype.serializeObjectSpan = function () {
+    var obj = new Object();
+    $.each(this.serializeustomArray(), function (index, param) {
         if (!(param.name in obj)) {
             obj[param.name] = param.value;
         }
     });
     return obj;
 };
+
+jQuery.prototype.serializeustomArray=function (){
+    //jQuery.fn.map
+    return this.map(function() {
+        // Can add propHook for "elements" to filter or add form elements
+        // 如果当前对象具有elements的prop，则使用，反之使用自身
+        // elements是原生js中表单所有的input。 如：document.forms[0].elements
+        var elements = jQuery.prop( this, "elements" );
+        return elements ? jQuery.makeArray( elements ) : this;
+    })
+        .filter(function() {//jQuery.fn.filter
+            var type = this.type;
+            // Use .is(":disabled") so that fieldset[disabled] works
+            // 过滤掉没有name、disabled的、可以提交的几个标签，如过是可选中的元素，则checked为真
+            return this.name && !jQuery( this ).is( ":disabled" );
+        })
+        .map(function( i, elem ) {////jQuery.fn.map
+            var val;
+            if(jQuery( this).is("select")){
+                val = jQuery( this ).find("option:selected").text()
+            }else{
+                val = jQuery( this ).val();
+            }
+
+            //设置value
+            return val == null ?
+                null :
+                jQuery.isArray( val ) ?
+                    jQuery.map( val, function( val ) {
+                        return { name: elem.name, value: val.replace( /\r?\n/g, "\r\n" ) };
+                    }) :
+                { name: elem.name, value: val.replace( /\r?\n/g, "\r\n" ) };
+        }).get();//转为真正的数组
+}
 
 //��ȡurl����
 function get_url_param(param) {
@@ -126,7 +176,7 @@ function settime(context) {
 //ajax请求
 //必填uccess:succsess,data:data,url:url
 //args={success:succsess,data:data,url:url,type:type,beforeSend:beforeSend,complete:complete，error:error}
-function loadData(args)
+function ajaxLoad(args)
 {
     type = 'POST';
     if(args.type != undefined){
@@ -134,10 +184,10 @@ function loadData(args)
     }
     $.ajax({
         type: type,
-        url:args.url,
-        data:args.data,
+        url:url,
+        data:JSON.stringify(args.data),
         beforeSend: function(XMLHttpRequest){
-            loading(true);
+            //loading(true);
             if(args.beforeSend != undefined){
                 args.beforeSend();
             }
@@ -148,7 +198,7 @@ function loadData(args)
             }
         },
         complete: function(XMLHttpRequest, textStatus){
-            loading(false);
+            //loading(false);
             if(args.complete != undefined){
                 args.complete();
             }
