@@ -61,12 +61,18 @@ jQuery.prototype.serializeObject = function () {
     var obj = new Object();
     $.each(this.serializeArray(), function (index, param) {
         if (!(param.name in obj)) {
-            if(param.name.length>0;){
-
+            //如果字符串以range结尾
+            if(param.name.endsWith("Range")){
+                var rangeObj = {}
+                var rangeList = param.value.split('-');
+                if(rangeList.length==2){
+                    rangeObj.from =rangeList[0];
+                    rangeObj.to = rangeList[1];
+                }
+                obj[param.name] = rangeObj
             }else{
-
+                obj[param.name] = param.value;
             }
-            obj[param.name] = param.value;
         }
     });
     return obj;
