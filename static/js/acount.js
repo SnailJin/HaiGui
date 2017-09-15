@@ -108,8 +108,33 @@ function newSubmit() {
     } else {
         paseSpan(spanDiv, form);
     }
+    listDataSubmit(rel);
     form.hide();
     return false;
+}
+/**
+ * 列表数据提交
+ * @constructor
+ */
+function listDataSubmit(rel){
+    formList = $("#"+rel).find("."+rel+"-context").find("form");
+    var dataList =[];
+    for( var i=0 ;i< formList.length ;i++){
+        var data = formList.eq(i).serializeObject();
+        dataList.push(data);
+    }
+    if(rel == 'job-experience'){
+        jsonbody["workHistory"]=dataList;
+    }else if(rel == 'education'){
+        jsonbody["educationHistory"]=dataList;
+    }else if(rel == 'language-ability'){
+        jsonbody["languageSkill"]=dataList;
+    }else if(rel == 'other'){
+        jsonbody["propose"]=dataList;
+    }else if(rel == ' project-experience'){
+        jsonbody["projectHistory"]=dataList;
+    }
+    addAndModifyStatement(true);
 }
 
 /**填充信息
@@ -224,7 +249,9 @@ function addEvent(div, key) {
 
 //删除条目
 function delete_info() {
-    $(this).closest("." + $(this).attr('rel') + "-context").remove();
+    var rel =$(this).attr('rel');
+    $(this).closest("." +rel + "-context").remove();
+    listDataSubmit(rel);
 }
 //取消
 function cancel_info() {
@@ -278,6 +305,7 @@ function getStatementList(async) {
             body = data.body;
             if (body.total > 0) {
                 psId = body.list[0].id
+                getStatementDetail(psId)
                 console.log(body.list[0].id);
             }
         }
@@ -285,6 +313,21 @@ function getStatementList(async) {
     opt = {data: formData, async: false,success:success}
     ajaxLoad(opt)
 }
+
+//获取简历详情
+function getStatementDetail(id) {
+    formData.key = "LoadPersonalStatementDetail";
+    formData.body = {personalStatementId:id};
+    success = function (data) {
+        data = JSON.parse(data);
+        if (handleCode(data.code)) {
+            //jsonbody=data.body.body;
+        }
+    }
+    opt = {data: formData, async: false,success:success}
+    ajaxLoad(opt)
+}
+
 
 //添加或修改简历列表
 function addAndModifyStatement(async) {
