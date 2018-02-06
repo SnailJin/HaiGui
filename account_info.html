@@ -41,37 +41,37 @@
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>姓名:</span>
-                                                <span class="name_span">金李广</span>
+                                                <span class="realName_span"></span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>邮箱:</span>
-                                                <span class="email_span">jin21234@163.com</span>
+                                                <span class="email_span"></span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>性别:</span>
-                                                <span class="gender_span">男</span>
+                                                <span class="gender_span"></span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>出生年月:</span>
-                                                <span class="birthday_span">1991-01-23</span>
+                                                <span class="birthday_span"></span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>国籍:</span>
-                                                <span class="nationality_span">中国</span>
+                                                <span class="nationality_span"></span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>联系电话:</span>
-                                                <span class="mobilePhone_span">15558177991</span>
+                                                <span class="mobile_span"></span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>做在城市:</span>
-                                                <span class="city_span">杭州</span>
+                                                <span class="city_span"></span>
                                             </div>
 
                                         </div>
@@ -83,7 +83,7 @@
                                         <label class="col-xs-3 control-label">姓&#12288;&#12288;名</label>
 
                                         <div class="col-xs-6">
-                                            <input type="text" class="form-control name" name="name">
+                                            <input type="text" class="form-control realName" name="realName">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -123,14 +123,15 @@
                                         <label class="col-xs-3 control-label">联系电话</label>
 
                                         <div class="col-xs-6">
-                                            <input id="mobilePhone" type="text" class="form-control mobilePhone"
-                                                   name="mobilePhone">
+                                            <input id="mobile" type="text" class="form-control mobile"
+                                                   name="mobile">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">所在城市</label>
 
                                         <div class="col-xs-6">
+                                            <input id="city" type="text" class="form-control city"  name="city">
                                         </div>
                                     </div>
 
@@ -165,27 +166,27 @@
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>求职领域:</span>
-                                                <span class="proposeBusinessType_span">IT,金融</span>
+                                                <span class="proposeBusinessType_span"></span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>期望职能:</span>
-                                                <span class="proposeDuty_span">IT</span>
+                                                <span class="proposeDuty_span"></span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>期望地点:</span>
-                                                <span class="proposeCity_span">杭州，上海</span>
+                                                <span class="proposeCity_span"></span>
                                             </div>
                                             <div class="content-right col-xs-6">
                                                 <span>期望年薪:</span>
-                                                <span class="proposeSalary_span">20万-30万</span>
+                                                <span class="proposeSalary_span"></span>
                                             </div>
                                         </div>
                                         <div class="user-info-r">
                                             <div class="col-xs-6">
                                                 <span>目前年薪:</span>
-                                                <span class="currenSalary_span">30万-40万</span>
+                                                <span class="currenSalary_span"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -500,7 +501,7 @@
             <div class="form-group">
                 <div class="col-xs-3"></div>
                 <div class="col-xs-3">
-                    <button class="btn btn-danger submit new-submit">提交</button>
+                    <button class="btn btn-danger submit new-submit"  rel="education">提交</button>
                 </div>
                 <div class="col-xs-3">
                     <button class="btn btn-cancel" rel="education">取消</button>
@@ -598,9 +599,9 @@
                     <button class="btn btn-danger submit new-submit" rel="job-experience">提交</button>
                 </div>
                 <div class="col-xs-3">
-                    <button class="btn btn-cancel" rel="job-hope">取消</button>
+                    <button class="btn btn-cancel" rel="job-experience">取消</button>
                 </div>
-                <div class="col-xs-2"><span class="delete_info" rel="project-experience">删除该条目</span></div>
+                <div class="col-xs-2"><span class="delete_info" rel="job-experience">删除该条目</span></div>
             </div>
         </form>
     </div>
@@ -660,18 +661,18 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-xs-3 control-label ">项目描述</label>
+            <label class="col-xs-3 control-label ">项目描述</label>
 
-                <div class="col-xs-6">
+            <div class="col-xs-6">
                         <textarea class="form-control projectDescription" name="projectDescription"
                                   id="projectDescription"></textarea>
-                </div>
             </div>
+        </div>
 
             <div class="form-group">
                 <div class="col-xs-3"></div>
                 <div class="col-xs-3">
-                    <button class="btn btn-danger submit new-submit">提交</button>
+                    <button class="btn btn-danger submit new-submit" rel="project-experience">提交</button>
                 </div>
                 <div class="col-xs-3">
                     <button class="btn btn-cancel" rel="project-experience">取消</button>
@@ -738,7 +739,7 @@
         <div class="form-group">
             <div class="col-xs-3"></div>
             <div class="col-xs-3">
-                <button class="btn btn-danger submit">提交</button>
+                <button class="btn btn-danger  submit new-submit"  rel="language-ability">提交</button>
             </div>
             <div class="col-xs-3">
                 <button class="btn btn-cancel" rel="language-ability">取消</button>
@@ -799,7 +800,7 @@
             <div class="form-group">
                 <div class="col-xs-3"></div>
                 <div class="col-xs-3">
-                    <button class="btn btn-danger submit">提交</button>
+                    <button class="btn btn-danger submit"  rel="language-ability">提交</button>
                 </div>
                 <div class="col-xs-3">
                     <button class="btn btn-cancel" rel="language-ability">取消</button>

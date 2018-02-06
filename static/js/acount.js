@@ -13,6 +13,8 @@ jsonbody = {
 var psId = null; //简历id
 $(function () {
     init();
+
+    //==============================基本信息和用户模块=============================================
     $('.user-edit').click(function () {
         rel = $(this).attr('rel');
         span = $(this).closest("#" + rel + "-span");
@@ -45,7 +47,7 @@ $(function () {
         addAndModifyStatement(true);
         return false;
     })
-
+//==============================基本信息和用户模块=============================================
     //添加按钮
     $('.add-btn').click(function () {
         rel = $(this).attr('rel');
@@ -131,7 +133,7 @@ function listDataSubmit(rel){
         jsonbody["languageSkill"]=dataList;
     }else if(rel == 'other'){
         jsonbody["propose"]=dataList;
-    }else if(rel == ' project-experience'){
+    }else if(rel == 'project-experience'){
         jsonbody["projectHistory"]=dataList;
     }
     addAndModifyStatement(true);
@@ -148,7 +150,7 @@ function parseInfo(data, field) {
         var infoDiv = $('#clone').find('.' + field + '-context').clone();
         var infoSpan = infoDiv.find("." + field + "-span");
         for (var key in info) {
-            infoSpan.attr(key, info[key]);
+           // infoSpan.attr(key, info[key]);
             insertAccountVal(infoDiv.find("." + key + ",." + key + "_span"), info[key], field);
         }
         $('#' + field).append(infoDiv);
@@ -159,21 +161,6 @@ function parseInfo(data, field) {
 
 
 }
-/**
- * 更新现有信息
- * @param data
- * @param field
- */
-//function updateInfo(data, field, infoDiv) {
-//    for (var i in data) {
-//        info = data[i];
-//        var infoSpan = infoDiv.find("." + field + "-span");
-//        for (var key in info) {
-//            infoSpan.attr(key, info[key]);
-//            insertAccountVal(infoDiv.find("." + key), info[key], field);
-//        }
-//    }
-//}
 
 
 //初始化字段
@@ -197,6 +184,8 @@ function init() {
 
     getStatementList(true);
 
+    //初始化基本信息和求职意向
+    initBaseInfoAndPropose();
     //数据初始化
     //parseInfo([{
     //    schoolName: "浙江工业大学之江学院",
@@ -207,8 +196,12 @@ function init() {
     //    gpa: "8.0",
     //    description: "浙江大学，简称浙大，坐落于素有“人间天堂”美誉的历史文化名城杭州。前身是1897年创建的求是书院，是中国人自己最早创办的现代高等学府之一"
     //}], "education")
-    parseInfo([{title:"java开发1",companyName:"杭州拼爱网路有限公司1",companyBusinessType:0,companyCity:"杭州",companyFrom:"2015-04",companyEndTime:"2016-5",companyDuty:"负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。"}],'job-experience');
-    parseInfo([],"project-experience")
+    parseInfo(jsonbody.workHistory,'job-experience');
+
+    //parseInfo([{title:"java开发1",companyName:"杭州拼爱网路有限公司1",companyBusinessType:0,companyCity:"杭州",companyFrom:"2015-04",companyEndTime:"2016-5",companyDuty:"负责公司的交友app么么哒后台的开发，维护，版本迭代，以及和ios，Android和产品之间的交互，根据主管要求进行任务分配。"}],'job-experience');
+    parseInfo(jsonbody.projectHistory,"project-experience")
+    parseInfo(jsonbody.educationHistory,"education")
+    parseInfo(jsonbody.languageSkill, "language-ability");
     //parseInfo([{projectName:'海归项目',projectTimeFrom:"2013-2",projectTimeTo:"2015-12",projectDescription:"主要负责架构设计分析",projectPosition:"java开发工程师"}],"project-experience");
     //parseInfo([{language: 0, grade: 3}, {language: 1, grade: 2}], "language-ability");
     //parseInfo([{honourType:0,honourContent:"sfdsdfsdfsd"}],"other")
@@ -216,6 +209,22 @@ function init() {
     // loadEnterpriseInformation();
 
 }
+
+//ajax返回数据初始化基本信息和求职意向
+function initBaseInfoAndPropose(){
+    for(key in jsonbody.basicInfomation){
+        if(key == "birthday"){
+           temp = new Date(jsonbody.basicInfomation[key]).format("yyyy-MM-dd");
+            $('#user-info').find("."+key+"_span").text(temp)
+        }else{
+            $('#user-info').find("."+key+"_span").text(jsonbody.basicInfomation[key]);
+        }
+    }
+    for(key in jsonbody.propose){
+        $('#job-hope').find("."+key+"_span").text(jsonbody.propose[key]);
+    }
+}
+
 
 //讲所有的添加form初始化完成
 function initAddForm(keyList) {
@@ -321,6 +330,7 @@ function getStatementDetail(id) {
     success = function (data) {
         data = JSON.parse(data);
         if (handleCode(data.code)) {
+            jsonbody = JSON.parse(data.body.body);
             //jsonbody=data.body.body;
         }
     }
@@ -340,11 +350,11 @@ function addAndModifyStatement(async) {
     }
     formData.body.title = "中文简历";
     formData.body.realName = "金李广"
-    formData.body.body = jsonbody;
+    formData.body.personalStatementStructure = jsonbody;
     success = function (data) {
         data = JSON.parse(data);
         if (handleCode(data.code)) {
-            psId = data.body.id
+            //psId = data.body.id
         } else {
             alert(data.message)
         }

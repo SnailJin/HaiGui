@@ -188,9 +188,14 @@ function ajaxLoad(args)
     if(args.type != undefined){
         type = args.type;
     }
+    async = true;
+    if(args.async != undefined){
+        async =args.async;
+    }
     $.ajax({
         type: type,
         url:url,
+        async:async,
         data:JSON.stringify(args.data),
         beforeSend: function(XMLHttpRequest){
             //loading(true);
